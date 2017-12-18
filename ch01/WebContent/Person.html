@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 신상 정보</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.pass1.value) {
+			alert("암호를 입력하세요");
+			frm.pass1.focus();
+			return false;
+		}
+		if (!frm.pass2.value) {
+			alert("암호 확인을 입력하세요.")
+			frm.pass2.focus();
+			return false;
+		}
+		if (frm.pass1.value != frm.pass2.value) {
+			alert("암호 입력 값이 서로 다릅니다.")
+			frm.pass1.value = "";
+			frm.pass2.value = "";
+			frm.pass1.focus();
+			return false;
+		}
+		var chk = false;
+		for (i = 0; i < frm.gender.length; i++) {
+			if (frm.gender[i].checked == true) {
+				chk = true;
+				break;
+			}
+			if (chk == false) {
+				alert("성별체크가 되지 않았습니다.")
+				return false;
+			}
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="Person" name="frm" method="get" onsumbit="return chk()">
+		<table border=1 bgcolor="yellow" align=center>
+			<caption>
+				<h1>개인정보</h1>
+			</caption>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name" required placeholder = "홍길동"></td>
+			</tr>
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" name="id" required placeholder = "hong"></td>
+			</tr>
+			<tr>
+				<td>암호</td>
+				<td><input type="password" name="pass1"></td>
+			</tr>
+			<tr>
+				<td>암호확인</td>
+				<td><input type="password" name="pass2"></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td>남<input type="radio" name="gender" value="남자"> 여<input
+					type="radio" name="gender" value="여자"></td>
+			</tr>
+			<tr>
+				<td>메일수신</td>
+				<td>공지<input type="checkbox" name="inotice" value="공지">
+					광고<input type="checkbox" name="cnotice" value="광고"> 배송<input
+					type="checkbox" name="dnotice" value="배송"></td>
+			</tr>
+			<tr>
+				<td>직업</td>
+				<td><select name="job">
+						<option value="회사원">회사원</option>
+						<option value="수강생">수강생</option>
+						<option value="기타">기타</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td colspan=2 align=center><input type="submit" value="확인">
+					<input type="reset" value="취소"></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>

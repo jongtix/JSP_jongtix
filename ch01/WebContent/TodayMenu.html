@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Select & Post</title>
+</head>
+<body>
+	<h3>오늘 점심은 무엇을 먹을까?(2 개 이상 선택하기)</h3>
+	<form action="/ch01/TodayMenu">
+		<select name="lunch" multiple size=5> <!-- 2 개 이상의 값을 배열로 전송 -->
+			<option>떡볶이
+			<option>버섯덮밥
+			<option>칼국수
+			<option>치즈김밥
+			<option>피자
+		</select>
+		<input type = "submit" value = "전송">
+	</form>
+</body>
+</html>

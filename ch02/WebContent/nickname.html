@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<label for="nick">nickname</label>
+	<input type="text" id="nick">
+	<script type="text/javascript">
+	var nick = document.getElementById('nick');
+	nick.value = '별명을 입력하세요.';
+	nick.onfocus = function() {
+		this.style.background = "orange";
+		<!-- this.style.backgroundColor = "red"; 둘 다 가능 -->
+		this.value = "";
+	}
+	</script>
+</body>
+</html>
