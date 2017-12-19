@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이름 입력하기</title>
+<script type="text/javascript">
+function chk() {
+	if (!forms.yourname.value) {
+		alert("이름을 입력하세요.");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	당신의 이름을 입력하세요
+	<br>
+	<form action="http://localhost:8181/ch02/Hi.jsp" method="get"
+		name="forms" onsubmit="return chk()">
+		이름 : <input type="text" name="yourname" id="name" placeholder="홍길동">
+		<input type="submit" value="전송"> <input type="reset"
+			value="취소">
+	</form>
+	<script type="text/javascript">
+	var nick = document.getElementById('name');
+	nick.value = '이름을 입력하세요.';
+	nick.onfocus = function() {
+		this.style.background = "orange";
+		<!-- this.style.backgroundColor = "red"; 둘 다 가능 -->
+		this.value = "";
+	}
+	</script>
+</body>
+</html>
