@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 글쓰기 - 입력화면</title>
+<script type="text/javascript">
+function chk() {
+	if (!frm.name.value) {
+		alert("이름을 밉력하세요.");
+		frm.name.onfocus;
+		return false;
+	}
+	if(!frm.title.value) {
+		alert("제목을 입력하세요.");
+		return false;
+	}
+	if (!frm.content.value) {
+		alert("내용을 입력하세요.");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<h2>글쓰기</h2>
+	<form name="frm" action="BoardPost.jsp" method="post"
+		onsubmit="return chk()">
+		<table border=1 bgcolor="yellow">
+			<caption>
+				<h3>글쓰기</h3>
+			</caption>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name" placeholder="홍길동"></td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td><input type="text" name="title" placeholder="글쓰기"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td><textarea rows="10" cols="30" name="content"
+						placeholder="내용을 입력하세요."></textarea>
+			</tr>
+			<tr align="center">
+				<td colspan=2><input type="submit" value="전송"> <input
+					type="reset" value="지우기"></td>
+			</tr>
+
+		</table>
+	</form>
+</body>
+</html>

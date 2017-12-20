@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사칙연산</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.num1.value) {
+			alert("num1값을 입력하세요.");
+			return false;
+		}
+		if (!document.forms[0].num2.value) {
+			alert("num2값을 입력하세요.");
+			return false;
+		}
+		if (isNaN(document.forms[0].num1.value)) {
+			alert("숫자가 아닙니다.");
+			frm.num1.value = "";
+			frm.num1.focus();
+			return false;
+		}
+		if (isNaN(frm.num2.value)) {
+			alert("숫자가 아닙니다.");
+			frm.num2.value = "";
+			frm.num2.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form name = "frm" action="FourRules.jsp" onsubmit="return chk()">
+		첫 번째 수 : <input type="text" name="num1" id="num1"><br> 두
+		번째 수 : <input type="text" name="num2" id="num2"><br> 연산자
+		: <select name="op">
+			<option value="sum">+
+			<option value="min">-
+			<option value="mul">x
+			<option value="div">/
+		</select> <input type="submit" value="전송">
+	</form>
+</body>
+</html>
