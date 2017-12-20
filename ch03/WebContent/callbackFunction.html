@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/* callback function : 특정 이벤트 발생시 호출되는 메소드 */
+	function sum(a, b, callback) {
+		var result = a + b;
+		callback(); // 콜백함수 호출
+		return result;
+	}
+	
+	var r = sum(10, 20, function() {/* 무명함수 */
+		alert("a + b를 더했습니다.");
+	});
+	document.write("결과 : " + r);
+</script>
+</head>
+<body>
+
+</body>
+</html>

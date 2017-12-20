@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jsp 조건문</title>
+<script type="text/javascript">
+	function chk() {
+		var value = document.forms[0].number.value;
+		if (!value) {
+			alert("값을 입력하세요.");
+			document.forms[0].number.focus();
+			return false;
+		}
+		if (isNaN(value)) {
+			alert("숫자를 입력하세요.");
+			document.getElementById('number').value = "";
+			document.forms[0].number.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<h2>숫자를 입력하세요.</h2>
+	<form action="ifTest.jsp" method="post" onsubmit="return chk()">
+		<input type="text" name="number" id="number"><br> <input
+			type="submit" value="전송">
+	</form>
+</body>
+</html>

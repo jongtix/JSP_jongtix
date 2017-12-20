@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="requestTest.jsp">
+		<table border=1 bgcolor="yellow">
+			<caption>
+				<h3>정보</h3>
+			</caption>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name" style="ime-mode: active" required></td>
+			</tr>
+			<tr>
+				<td>나이</td>
+				<td><input type="text" name="age" style="ime-mode: inactive" required></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td><label><input type="radio" name="gender" id="m" value="m" checked>남자</label><!-- label을 사용하여 글자를 눌러도 버튼이 선택되도록 변경 -->
+					<label><input type="radio" name="gender" id="f" value="f">여자</label></td>
+			</tr>
+			<tr>
+				<td>취미</td>
+				<td><select name="hobby">
+						<option selected value="잠자기">잠자기</option>
+						<option value="TV시청">TV시청</option>
+						<option value="독서">독서</option>
+						<option value="게임">게임</option>
+						<option value="등산">등산</option>
+				</select></td>
+			</tr>
+			<tr align="center">
+				<td colspan=2><input type="submit" value="전송"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

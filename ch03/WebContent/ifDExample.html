@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>If - else Example</title>
+</head>
+<body>
+	<form action="ifElseExam.jsp">
+		이름 : <input type="text" name="name" id="name">
+		<p>
+			좋아하는 색깔 : <select name="color">
+				<option value="blue">파랑</option>
+				<option value="red">빨강</option>
+				<option value="orange">오렌지</option>
+				<option value="etc">기타</option>
+			</select>
+		<p>
+			<input type="submit" value="보내기">
+	</form>
+	<script type="text/javascript">
+		var nick = document.getElementById('name');
+		nick.value = '이름을 입력하세요.';
+		nick.onfocus = function() {
+			this.style.background = "orange";
+			this.value = '';
+		}
+	</script>
+</body>
+</html>

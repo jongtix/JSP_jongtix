@@ -5,12 +5,12 @@
 <title>회원 신상 정보</title>
 <script type="text/javascript">
 	function chk() {
-		if (!frm.pass1.value) {
+		if (frm.pass1.value == null) {
 			alert("암호를 입력하세요");
 			frm.pass1.focus();
 			return false;
 		}
-		if (!frm.pass2.value) {
+		if (frm.pass2.value == null) {
 			alert("암호 확인을 입력하세요.")
 			frm.pass2.focus();
 			return false;
@@ -28,28 +28,28 @@
 				chk = true;
 				break;
 			}
-			if (chk == false) {
-				alert("성별체크가 되지 않았습니다.")
-				return false;
-			}
+		}
+		if (chk == false) {
+			alert("성별체크가 되지 않았습니다.")
+			return false;
 		}
 		return true;
 	}
 </script>
 </head>
 <body>
-	<form action="Person" name="frm" method="get" onsumbit="return chk()">
+	<form action="Person" name="frm" method="get" onsubmit="return chk()">
 		<table border=1 bgcolor="yellow" align=center>
 			<caption>
 				<h1>개인정보</h1>
 			</caption>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" name="name" required placeholder = "홍길동"></td>
+				<td><input type="text" name="name" required placeholder="홍길동"></td>
 			</tr>
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="id" required placeholder = "hong"></td>
+				<td><input type="text" name="id" required placeholder="hong"></td>
 			</tr>
 			<tr>
 				<td>암호</td>

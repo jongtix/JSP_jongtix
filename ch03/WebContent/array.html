@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	// 자바스크립트 배열
+	// 자바스크립트는 객체(Object)기반
+	var customer_name = [ 'Michael Kwon', 'Steve Jobs', 'Jhon Denver' ];
+	document.write(customer_name[0] + "<br>");
+	document.write(customer_name[1] + "<br>");
+	document.write(customer_name[2] + "<br>");
+
+	// 배열의 값 변경
+	customer_name[1] = 'John Park';
+	document.write(customer_name[1] + "<br>");
+
+	// 배열 값 추가
+	customer_name[3] = 'new name';
+	document.write(customer_name[3] + "<br>");
+
+	// 배열 선언
+	var my_list = [ 'string', 5, [ 'sub1', 'sub2' ] ]; // 서로 다른 타입의 값도 저장 가능
+	for (var i = 0; i < my_list.length + 1; i++) {
+		document.write(my_list[i] + "<br>");
+	}
+	document.write(my_list[2][0] + "<br>");
+	document.write(my_list[2][1] + "<br>");
+
+	// 배열의 길이
+	var length = my_list.length;
+	document.write("length는 " + length + "<br>");
+
+	// 반복출력
+	for (var i = 0; i < length; i++) {
+		document.write(my_list[i] + "<br>");
+	}
+
+	// 배열 조회
+	var search_name = prompt("이름 조회", '조회할 이름을 입력하세요.');
+	for (var i = 0; i < customer_name.length; i++) {
+		if (search_name == customer_name[i]) {
+			alert(search_name + '을 찾았습니다.');
+			break;
+		} else if (i == customer_name.length - 1) {
+			alert("해당하는 이름이 없습니다.");
+		}
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>
