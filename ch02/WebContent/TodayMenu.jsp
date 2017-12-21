@@ -22,5 +22,6 @@
 		// include(request, response)메소드로 파일 포함
 		dispatcher.include(request, response);
 	%>
+	<p>가나다
 </body>
 </html>

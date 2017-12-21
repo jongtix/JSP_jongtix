@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.num1.value) {
+			alert("첫 번째 수를 입력하세요.");
+			frm.num1.focus();
+			return false;
+		}
+		if (!frm.num2.value) {
+			alert("두 번째 수를 입력하세요.");
+			frm.num2.focus();
+			return false;
+		}
+		if (isNaN(frm.num1.value)) {
+			alert("숫자를 입력하세요.");
+			frm.num1.value = "";
+			frm.num1.focus();
+			return false;
+		}
+		if (isNaN(frm.num2.value)) {
+			alert("숫자를 입력하세요.");
+			frm.num2.value = "";
+			frm.num2.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form name="frm" action="AdderResult.jsp" onsubmit="return chk()">
+		첫 번째 수 : <input type="text" name="num1"><br> 두 번째 수 : <input
+			type="text" name="num2"><br> <input type="submit"
+			value="전송">
+	</form>
+</body>
+</html>
