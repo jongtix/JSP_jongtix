@@ -17,6 +17,10 @@
 			out.print(num1 + " + " + num2 + " = " + (num1 + num2));
 		} catch (Exception e) {
 			out.print("오류 발생 : " + e.getMessage());
+			out.print("<script>");
+			out.print("alert('숫자가 아닙니다.');");
+			out.print("history.back();");
+			out.print("</script>");
 		}
 	%>
 </body>

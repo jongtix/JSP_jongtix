@@ -7,26 +7,24 @@
 <title>Insert title here</title>
 <!-- 과제 -->
 <script type="text/javascript">
+	var num = prompt("원하는 구구단을 입력하세요.");
 	document.write('<table border = 1 bgcolor="yellow">');
 	document.write('<caption><h3>구구단</h3></caption>');
-	document.write('</table>');
-	/* var body = document.getElementsByTagName('body')[0];
-	var tbl = document.createElement('table');
-	tbl.setAttribute('border', '1');
-	var tbdy = document.createElement('tbody');
-	var num = prompt("원하는 구구단을 입력하세요.");
-	for (i = 2; i <= num; i++) {
-		var tr = document.createElement('tr');
-		for (j = 1; j < 10; j++) {
-			var td = document.createElement('td');
-			var text = i + " x " + j + " = " + i * j;
-			td.appendChild(document.createTextNode(text));
-			tr.appendChild(td);
-		}
-		tbdy.appendChild(tr);
+	document.write('<tr>');
+	for (var i = 2; i <= num; i++) {
+		document.write("<th>" + i + "단</th>");
 	}
-	tbl.appendChild(tbdy);
-	body.appendChild(tbl); */
+	document.write('</tr>');
+	for (j = 1; j < 10; j++) {
+		document.write('<tr>');
+		for (i = 2; i <= num; i++) {
+			document.write('<td>');
+			document.write(i + " x " + j + " = " + i * j);
+			document.write('</td>');
+		}
+		document.write('</tr>');
+	}
+	document.write('</table>');
 </script>
 </head>
 <body>

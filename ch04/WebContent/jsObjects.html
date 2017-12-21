@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/* 객체 */
+	// 책 정보를 객체로 정의
+	var book = {
+		title : "채식주의자",
+		author : "한강",
+		price : "12000"
+	};
+	document.write('제목 : ' + book.title + '<br>');
+	document.write('저자 : ' + book.author + '<br>');
+	document.write('가격 : ' + book.price + '<br><hr>');
+
+	// 배열
+	var bookArray = [
+			[ [ 'title', '채식주의자' ], [ 'author', '한강' ], [ 'price', '12000' ] ],
+			[ [ 'title', '종의 기원' ], [ 'author', '홍길동' ], [ 'price', '10000' ] ] ];
+	document.write('제목 : ' + bookArray[0][0][1] + '<br>');
+	document.write('저자 : ' + bookArray[0][1][1] + '<br>');
+	document.write('가격 : ' + bookArray[0][2][1] + '<br>');
+	document.write('제목 : ' + bookArray[1][0][1] + '<br>');
+	document.write('저자 : ' + bookArray[1][1][1] + '<br>');
+	document.write('가격 : ' + bookArray[1][2][1] + '<br><hr>');
+
+	// 배열과 객체의 혼용
+	var bookObj = [ {
+		title : "채식주의자",
+		author : "한강",
+		price : "12000"
+	}, {
+		title : "종의 기원",
+		author : "홍길동",
+		price : "10000"
+	} ];
+	document.write('제목 : ' + bookObj[0].title + '<br>');
+	document.write('저자 : ' + bookObj[0].author + '<br>');
+	document.write('가격 : ' + bookObj[0].price + '<br>');
+	document.write('제목 : ' + bookObj[1].title + '<br>');
+	document.write('저자 : ' + bookObj[1].author + '<br>');
+	document.write('가격 : ' + bookObj[1].price + '<br><hr>');
+
+	// 과제
+	var car = [ "sonata", "avante", "matiz" ];
+	var firstCar = car.shift();
+	car.shift();
+	car.unshift("sm5");
+	car.unshift(firstCar);
+	document.write(car + '<br><hr>');
+
+	// Person 객체를 정의 (속성, firstname : "길동", lastname : "홍")
+	// country 속성, 값 korea 추가
+	var Person = {
+		firstname : "길동",
+		lastname : "홍"
+	};
+	Person.country = "korea";
+	document.write(Person.lastname + Person.firstname + '의 고향은 '
+			+ Person.country + '입니다.');
+</script>
+</head>
+<body>
+
+</body>
+</html>
