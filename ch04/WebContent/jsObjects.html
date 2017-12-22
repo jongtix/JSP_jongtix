@@ -45,19 +45,19 @@
 
 	// 과제
 	var car = [ "sonata", "avante", "matiz" ];
-	var firstCar = car.shift();
+	car.splice(1, 1, "sm5"); // 배열에서 두 번째 객체를 sm5로
+	/* var firstCar = car.shift();
 	car.shift();
 	car.unshift("sm5");
-	car.unshift(firstCar);
+	car.unshift(firstCar); */
 	document.write(car + '<br><hr>');
 
 	// Person 객체를 정의 (속성, firstname : "길동", lastname : "홍")
-	// country 속성, 값 korea 추가
 	var Person = {
 		firstname : "길동",
 		lastname : "홍"
 	};
-	Person.country = "korea";
+	Person.country = "korea"; // country 속성, 값 korea 추가
 	document.write(Person.lastname + Person.firstname + '의 고향은 '
 			+ Person.country + '입니다.');
 </script>

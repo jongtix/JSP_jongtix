@@ -12,6 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
 	<!-- 에러 페이지 설정 -->
 	<error-page>
 		<error-code>404</error-code>

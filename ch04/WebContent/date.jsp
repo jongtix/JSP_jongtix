@@ -13,7 +13,7 @@
 	<%
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd(E)");
-		String strDate = sdf.format(dated);
+		String strDate = sdf.format(dated); // 의도적 오류
 	%>
 	일반 jsp페이지의 형태입니다.
 	<br> 오늘의 날짜는

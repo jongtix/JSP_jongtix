@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.num.value) {
+			alert("값을 입력하세요.");
+			frm.num.focus();
+			return false;
+		}
+		if (isNaN(frm.num.value)) {
+			alert("숫자를 입력하세요.");
+			frm.num.value = "";
+			frm.num.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="../fibonacciServlet" name="frm" onsubmit="return chk()">
+		<input type="text" name="num"><br> <input type="submit"
+			value="전송">
+	</form>
+</body>
+</html>

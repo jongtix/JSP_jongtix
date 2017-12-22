@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<ul>
+		<li>first</li>
+		<li>second</li>
+		<li>third</li>
+	</ul>
+	<script type="text/javascript">
+		/* querySelector(css선택자) - ie8에서 추가 */
+		var li = document.querySelector('li'); // 첫 번째 li 선택
+		li.style.color = 'red';
+		li.style.background = 'blue';
+	</script>
+	<!-- DOM 메소드
+		document.getElementsByTagName(요소명)[Index] 태그명으로 여러 문서 객체 선택 가능
+		document.getElementsByClassName(클래스명)[Index] 클래스명으로 여러 문서 객체 선택 가능(ie9 이상)
+		document.querySelectorAll(css선택자) css선택자로 여러 문서 객체 선택 가능(배열로 저장)(ie9 이상)
+	 -->
+</body>
+</html>

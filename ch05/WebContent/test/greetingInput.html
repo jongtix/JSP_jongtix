@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		if (!document.forms[0].name.value) {
+			alert("이름을 입력하세요.");
+			document.forms[0].name.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="/ch05/greetingServlet" onsubmit="return chk()">
+		이름 : <input type="text" name="name"><br> <input
+			type="submit" value="전송">
+	</form>
+</body>
+</html>
