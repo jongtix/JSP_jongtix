@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Box 속성 DOM</title>
+<style type="text/css">
+#box {
+	width: 100px;
+	height: 100px;
+	border: 3px solid black;
+}
+
+.box {
+	background: green;
+}
+</style>
+</head>
+<body>
+	<div id="box">색상 바꾸기</div>
+	<button onclick="setColor()">클릭</button>
+	<br>
+	<button onclick="changeColor()">색상변경 클릭</button>
+	<button onclick="removeColor()">속성 제거 클릭</button>
+
+	<script type="text/javascript">
+		function setColor() {
+			var box = document.getElementById('box');
+			box.style.color = 'white';
+			box.style.background = 'orange';
+		}
+	</script>
+	<script type="text/javascript">
+		function changeColor() {
+			var box = document.getElementById('box');
+			box.setAttribute('class', 'box');
+
+			var getAttr = box.getAttribute('class');
+			alert(getAttr);
+		}
+	</script>
+	<script type="text/javascript">
+		function removeColor() {
+			var box = document.getElementById('box');
+			box.removeAttribute('class');
+		}
+	</script>
+</body>
+</html>
