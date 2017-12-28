@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#box {
+	postion: relative;
+	width: 200px;
+	height: 200px;
+	border: 3px solid black;
+}
+</style>
+</head>
+<body>
+	<h1>터치이벤트</h1>
+	<div id="box">
+		<p>나를 터치해주세요</p>
+	</div>
+
+	<script type="text/javascript">
+		var box = document.getElementById('box');
+		// 터치 제어 객체 선언
+		var touch = {
+			tstart : function() {
+				box.innerHTML = '나를 건드렸군요!';
+				this.style.background = 'red';
+			},
+			tend : function() {
+				box.innerHTML = '손을 뗐군요!';
+				this.style.background = '';
+			},
+			tmove : function(e) {/* 디오시 이벤트를 매개ㅕㄴ수로 받음 */
+				// 현재 터치 이벤트의 위치(배열) 감지
+				var touchObj = e.changedTouches[0];
+				// 현재 손가락 위치
+				var x = parseInt(touchObj.clientX);
+				var y = parseInt(touchObj.clientY);
+				var ex = x - 100, ey = y - 200;
+				box.innerHTML = '만지는 중입니다.';
+				this.style.background = 'yellow';
+
+				this.style.left = ex + 'px';
+				this.style.top = ey + 'px';
+				console.log(touchObj);
+			}
+		};
+		box.addEventListener('touchstart', touch.tstart);
+		box.addEventListener('touchend', touch.tend);
+		box.addEventListener('touchmove', touch.tmove);
+	</script>
+</body>
+</html>
