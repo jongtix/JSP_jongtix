@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 #box {
-	postion: relative;
+	position: relative;
 	width: 200px;
 	height: 200px;
 	border: 3px solid black;
@@ -30,13 +30,13 @@
 				box.innerHTML = '손을 뗐군요!';
 				this.style.background = '';
 			},
-			tmove : function(e) {/* 디오시 이벤트를 매개ㅕㄴ수로 받음 */
+			tmove : function(e) {/* 디오시 이벤트를 매개변수로 받음 */
 				// 현재 터치 이벤트의 위치(배열) 감지
 				var touchObj = e.changedTouches[0];
 				// 현재 손가락 위치
 				var x = parseInt(touchObj.clientX);
 				var y = parseInt(touchObj.clientY);
-				var ex = x - 100, ey = y - 200;
+				var ex = x - 100, ey = y - 100;
 				box.innerHTML = '만지는 중입니다.';
 				this.style.background = 'yellow';
 
