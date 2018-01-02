@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		var frm = document.forms[0].deptno;
+		if (!frm.value) {
+			alert("값을 입력하세요.");
+			frm.focus();
+			return false;
+		}
+		if (isNaN(frm.value)) {
+			alert("숫자를 입력하세요.");
+			frm.value = '';
+			frm.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="empInfo.jsp" method="post" onsubmit="return chk()">
+		부서 번호: <input type="text" name="deptno"> <input type="submit"
+			value="전송">
+	</form>
+</body>
+</html>
