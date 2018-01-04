@@ -11,32 +11,32 @@
 	Connection conn = null;
 
 	PreparedStatement pstmt = null;
-	String sql = "select count(*) from member2 where id=?";
+	String sql = "select count(*) from member2info where email=?";
 	ResultSet rs = null;
 	//파라미터 받기
-	String id = request.getParameter("id");
+	String email = request.getParameter("email");
 
 	try {
 		Context init = new InitialContext();
 		DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/OraDB");
 		conn = ds.getConnection();
 
+		//3단계 - 1.쿼리 객체 설정
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
+		pstmt.setString(1, email);
 
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
 			if (rs.getInt(1) == 0) {
 				out.print("<script>");
-				out.print("alert('사용할수 있는 id입니다.');");
-				out.print("window.opener.frm.password.focus();");
+				out.print("alert('사용할수 있는 email입니다.');");
 				out.print("window.self.close();");
 				out.print("</script>");
 			} else {
 				out.print("<script>");
-				out.print("alert('사용할수 없는 id입니다.');");
-				out.print("window.opener.frm.id.value='';");
-				out.print("window.opener.frm.id.focus();");
+				out.print("alert('사용할수 없는 email입니다.');");
+				out.print("window.opener.frm.email.value='';");
+				out.print("window.opener.frm.email.focus();");
 				out.print("window.self.close();");
 				out.print("</script>");
 			}

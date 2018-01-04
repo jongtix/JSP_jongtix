@@ -43,7 +43,8 @@
 			<tr>
 				<td>ID</td>
 				<td><input type="text" name="id" id="id"></td>
-				<td><input type="button" name="btm_id" id="btm_id" value="중복체크"></td>
+				<td><input type="button" name="btn_id" id="btn_id" value="중복체크"
+					onclick="open_chk()"></td>
 			</tr>
 			<tr>
 				<td>Password</td>
@@ -72,18 +73,24 @@
 			<tr>
 				<td>E-mail</td>
 				<td><input type="email" name="email" id="email" required></td>
-				<td><input type="button" name="btm_email" id="btm_email"
+				<td><input type="button" name="btn_email" id="btn_email"
 					value="중복체크"></td>
 			</tr>
 			<tr>
-				<td colspan=2 align="center"><input type="submit" value="확인"><input
+				<td colspan=3 align="center"><input type="submit" value="확인"><input
 					type="reset" value="다시 작성"></td>
 			</tr>
 		</table>
 	</form>
 	<script type="text/javascript">
-		document.getElementById('btn_id').onclick = function() {
-
+		function open_chk() {
+			var id = document.getElementById('btn_id');
+			if (id.value == '') {
+				alert("아이디를 입력하세요.");
+				id.focus();
+				return;
+			}
+			window.open("idCheck.jsp? id = " + id);
 		}
 	</script>
 </body>

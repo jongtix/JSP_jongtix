@@ -1,13 +1,13 @@
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>개인정보 취급방침</title>
 <script type="text/javascript">
 	function chk() {
 		if (!document.frm.ok.checked) {
-			alert("약관에 동의하셔야 회원가입이 됩니다.");
+			alert("개인정보 취급방침에 동의하셔야 회원가입이 됩니다.");
 			return false;
 		}
 		return true;
@@ -15,10 +15,10 @@
 </script>
 </head>
 <body>
-	<h2>이용약관</h2>
-	<form action="joinProc2.jsp" name="frm" onsubmit="return chk()">
+	<h2>개인정보 취급방침</h2>
+	<hr>
+	<form name="frm" action="join.jsp" onsubmit="return chk()">
 		<pre>
-<hr>
 <중앙정보기술인재개발원 /중앙정보처리학원>(‘www.choongang.co.kr’이하 ‘홈페이지’)은(는) 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.
 <중앙정보기술인재개발원 /중앙정보처리학원>(‘홈페이지’) 은(는) 개인정보처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
 ○ 본 방침은부터 2016년 10월 17일부터 시행됩니다.
@@ -102,10 +102,11 @@
   -파기방법
   전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.
   종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.
+		
 		</pre>
 		<hr>
-		이용약관 동의 <input type="checkbox" name="ok"><br> <input
-			type="submit" value="다음">
+		<br> 동의여부 : <input type="checkbox" name="ok"><br>
+		<br> <input type="submit" value="다음">
 	</form>
 </body>
 </html>
