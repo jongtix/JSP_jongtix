@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function() {
+		loadStorage();
+	}
+
+	// 로컬 스토리지로부터 아이디와 자동 저장 여부 추출
+	function loadStorage() {
+		var saveId = window.localStorage.getItem("saveId");
+		var userId = window.localStorage.getItem("userId");
+		if (saveId == "Y") {
+			document.getElementById('saveId').checked = true;
+			document.getElementById('id').value = userId;
+		}
+	}
+
+	// 아이디와 자동 저장 여부를 로컬 스토리지에 저장
+	function saveStorage() {
+		var saveId = document.getElementById('saveId').checked;
+		var userId = document.getElementById('id').value;
+		var userPassword = document.getElementById('password').value;
+		if (userId.length == 0) {
+			alert('아이디는 비어있을 수 없습니다.');
+			document.getElementById('id').focus();
+			return false;
+		}
+		if (userPassword.length == 0) {
+			alert('패스워드를 입력하세요.');
+			document.getElementById('password').focus();
+			return false;
+		}
+		if (saveId) {
+			window.localStorage.setItem('saveId', "Y");
+			window.localStorage.setItem('userId', userId);
+		} else {
+			window.localStorage.removeItem('saveId');
+			window.localStorage.removeItem('userId');
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<h2>로그인(Web Storage)</h2>
+	<form action="login.jsp" method="post" onsubmit="return saveStorage()">
+		<fieldset>
+			<legend>로그인 폼</legend>
+			아이디 : <input type="text" name="id" id="id" autocomplete="name">
+			<input type="checkbox" id="saveId">아이디 저장<br> 비밀번호 : <input
+				type="password" name="password" id="password"><br> <input
+				type="submit" value="로그인">
+		</fieldset>
+	</form>
+</body>
+</html>

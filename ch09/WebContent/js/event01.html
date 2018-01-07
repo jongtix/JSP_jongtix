@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/* 문서가 로딩 완료 후에 스크립트 실행 window.onload */
+		window.onload = function() {
+			var h1 = document.querySelector('h1');
+			/* onclick이벤트 핸들러 */
+			h1.onclick = function() {
+				this.innerHTML = '클릭했습니다.';
+			}
+		}
+	</script>
+
+	<h1>홈페이지에 오신 것을 환영합니다.</h1>
+</body>
+</html>

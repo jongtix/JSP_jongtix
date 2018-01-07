@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.deptno.value) {
+			alert("부서코드를 입력하세요");
+			frm.deptno.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<h3>확인할 부서 코드를 입력하세요</h3>
+	<form action="oraTest3.jsp" name="frm" onsubmit="return chk()">
+		부서코드 : <input type="text" name="deptno">
+		<p>
+			<input type="submit" value="확인">
+	</form>
+</body>
+</html>

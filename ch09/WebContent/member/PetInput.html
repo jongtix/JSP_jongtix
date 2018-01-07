@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 반려동물 정보</title>
+</head>
+<body>
+	<h2>반려동물 리스트</h2>
+	<form action="PetResult.jsp" method="post">
+		아이디 : <input type="text" name="id" id="id" required> <br>
+		<br> 다음 중 회원님이 키우는 반려동물은 무엇인가요? <br> <br> <label
+			for="dog"><input type="checkbox" name="animal" value="개"
+			id="dog">개</label> <label for="cat"><input type="checkbox"
+			name="animal" value="고양이" id="cat">고양이</label> <label for="fish"><input
+			type="checkbox" name="animal" value="금붕어" id="fish">금붕어</label><br>
+		<br> <input type="submit" value="확인"><input type="reset"
+			value="취소">
+	</form>
+</body>
+</html>
