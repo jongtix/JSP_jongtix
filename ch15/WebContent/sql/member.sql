@@ -1,7 +1,5 @@
 select * from user_tables where table_name like upper('%member%');
 
-select * from member2;
-
 drop table member;
 
 create table member2 (
@@ -15,3 +13,5 @@ tel varchar2(20),
 regdate date default sysdate,
 use_flag char(1) default 0
 );
+
+select * from member2;
