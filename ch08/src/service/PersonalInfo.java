@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Customer;
 
-@WebServlet(description = "회원정보 객체 이동 서블릿", urlPatterns = { "/personalInfo" })
+@WebServlet(description = "�쉶�썝�젙蹂� 媛앹껜 �씠�룞 �꽌釉붾┸", urlPatterns = { "/personalInfo" })
 public class PersonalInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Bean(Model)객체 생성
+		// Bean(Model)媛앹껜 �깮�꽦
 		Customer customer = new Customer();
-		customer.setName("임꺽정");
+		customer.setName("�엫爰쎌젙");
 		customer.setGender('남');
 		customer.setAge(new Integer(27));
 
 		request.setAttribute("pinfo", customer);
 
-		// 이동 경로 설정
+		// �씠�룞 寃쎈줈 �꽕�젙
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/member/CustomerInfoView.jsp");
 		dispatcher.forward(request, response);
 	}

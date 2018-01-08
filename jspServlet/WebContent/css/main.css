@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+/* main.css -> index.jsp에 대한 디자인 적용 파일 */
+#main_wrap{
+	width : 1024px;
+	height : 960px;
+	/* 문서 가운데 정렬 기능 */
+	margin-left: auto; margin-right: auto;
+	margin-top: 20px;
+	border: 1px solid blue;
+	border-radius : 20px; /* css3에 추가된 기능 */
+}
+#header{ /* 헤더 영역 */
+	width : 1004px;      /* 헤더 영역의 폭 */
+	height : 200px;      /* 헤더 영역의 높이 */
+	margin: 10px;        /* 바깥쪽 여백 */ 
+	border: 1px solid red; /* 테두리 */
+	border-radius : 15px;  /* 모서리가 둥근 사각형 */
+}
+#logo{ /* 헤더 영역에 들어갈 로그 영역 */
+	width: 240px;
+	height: 180px;
+	margin: 10px 0 0 10px;
+	border: 1px solid blue;
+	border-radius : 15px;
+	float: left;  /* 수직 정렬을 수평정렬로 바꾸는 명령어 */ 
+}
+#top_menu{ /* 헤더 영역에 들어갈 탑 메뉴 영역 */
+	width: 500px;
+	height: 180px;
+	margin: 10px 0 0 10px;
+	border: 1px solid blue;
+	border-radius : 15px;
+	float: left;  /* 수직 정렬을 수평정렬로 바꾸는 명령어 */
+}
+#top_login{ /* 헤더 영역에 들어갈 탑 로그인 영역 */
+	width: 220px;
+	height: 180px;
+	margin: 10px 0 0 10px;
+	border: 1px solid blue;
+	border-radius : 15px;
+	float: left;  /* 수직 정렬을 수평정렬로 바꾸는 명령어 */
+}
+.clear{
+	clear : both;  /* div 영역 간 간섭을 없앰 */
+}
+/* 본문 영역 디자인 */
+#article{
+	width : 1004px; height : 600px; /* 폭과 높이 지정 */
+	margin-left : auto; margin-right : auto; /* 가운데 정렬 */
+	margin-top : 10px;
+	border : 1px solid red; /* 빨강색 테두리 */
+	border-radius : 15px;
+}
+#left_menu{ /* 왼쪽 로그인 부분 디자인 */
+   width : 240px; height : 580px;
+   margin : 10px 0 0 10px;
+   border : 1px solid blue; /* 빨강색 테두리 */
+   border-radius : 10px;
+   float : left;   /* 다음 항목을 오른쪽에 배치함 */
+}
+#article_c{ /* 오른쪽 본문 내용 디자인 */
+   width : 730px; height : 580px;
+   margin : 10px 0 0 10px;
+   border : 1px solid blue; /* 빨강색 테두리 */
+   border-radius : 10px;
+   float : left;   /* 다음 항목을 오른쪽에 배치함 */	
+}
+#article_c .article_cont{ /* 본문 내용 디자인 */
+	margin:80px 0 0 80px;
+	color : red;
+	font-size : 20px;
+}
+/* 하단 내용 footer 디자인 */
+#footer{
+	width : 1004px; height : 114px;
+	margin-left : auto; margin-right : auto;
+	margin-top:10px;
+	border : 1px solid red;
+	border-radius : 15px;
+}
+/* 각 영역에 대한 세부 UI 적용 */
+#logo img{
+	margin : 45px 0 0 18px; /* 상단과 왼쪽 바깥쪽 여백 지정 */
+}
+#top_menu ul li{ /* ul li태그 디자인 */
+	list-style : none; /* 목록의 앞에 점을 없앤다. */
+	float : left; /* 세로 메뉴를 가로 메뉴로 변경 */
+	margin : 120px 0 0 10px;
+	padding : 0 50px 0 0; /* 안쪽 여백(위, 오른, 아래, 왼쪽) */ 	
+}
+a:link{ /* a태그 초기 상태 디자인 */
+   text-decoration:none;  /* 링크 밑줄을 제거한다. */
+   color : blue;
+}
+a:hover{ /* a태그 마우스 오버 시  */
+   text-decoration:none;  /* 링크 밑줄을 제거한다. */
+   color : red;
+}
+a:action{ /* a태그 마우스 클릭 시  */
+   text-decoration:none;  /* 링크 밑줄을 제거한다. */
+   color : blue;   
+}
+a:visited{ /* a태그 링크 방문 시  */
+   text-decoration:none;  /* 링크 밑줄을 제거한다. */
+   color : blue;
+}
+#top_login ul li{  /* 로그인 메뉴 li태그 디자인 */
+	list-style : none;  /* 목록 앞의 점 제거 */
+	font-size : 9pt;   /* 글자 크기 작게 */
+	float : left;      /*세로 메뉴를 가로 메뉴로 변경 */
+	padding : 0 10px 0 0; /* 오른쪽 안쪽 여백  지정*/
+	margin : 0 0 0 10px;  /* 왼쪽 바깥쪽 여백 지정 */	
+}
+/* 본문내용 상세 디자인 */
+#login_t{  /* 본문내용 로그인 부분 여백 지정 */
+	margin : 40px 0 0 20px; 
+}
+#login_t th{ /* th태그 부분 디자인 */
+	background : skyblue;
+	border-radius : 20px; 
+}
+.input_box{  /* 입력상자 디자인 부분 */
+	border-radius : 10px;  /* 입력상자 라운딩 처리 */
+	padding : 2px;
+	border : 1px solid blue;
+}
+.input_box:hover{ /* 입력상자에 마우스 오버 시 */
+	background : #ccc; /* 입력상자 배경색 변경 */
+}
+#login_menu{  /* 로그인 버튼 디자인 */
+	margin : 15px 0 0 30px;
+}
+.input_b:hover{ /* 로그인 버튼에 마우스 오버 시 */
+	cursor : pointer; /*마우스 커서 모양을 손가락으로*/
+	border : 1px solid red; /* 버튼 외곽선 */
+	border-radius : 10px;   /* 버튼 라운딩 처리 */
+	padding : 2px;       /* 버튼 간의 사이 간격 */
+	font-weight : bold;  /* 글자를 진하게 */
+}
+/* 하단 영역 디자인 */
+#footer .footer_title{ /* 하단 영역 내용 */
+   margin : 40px 0 0 120px;
+   font-size : 18px;	
+}
+
+
+
+
+
