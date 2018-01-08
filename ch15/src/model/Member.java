@@ -11,6 +11,7 @@ public class Member {
 	private String address1;
 	private String address2;
 	private String tel;
+	private String email;
 	private Date regdate;
 	private char use_flag;
 
@@ -68,6 +69,14 @@ public class Member {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Date getRegdate() {

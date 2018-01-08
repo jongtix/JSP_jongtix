@@ -1,6 +1,6 @@
 select * from user_tables where table_name like upper('%member%');
 
-drop table member;
+drop table member2;
 
 create table member2 (
 id varchar2(12) primary key,
@@ -10,6 +10,7 @@ zipno varchar2(7),
 address1 varchar2(80),
 address2 varchar2(50),
 tel varchar2(20),
+email varchar2(20),
 regdate date default sysdate,
 use_flag char(1) default 0
 );

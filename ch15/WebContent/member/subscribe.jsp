@@ -60,14 +60,15 @@
 </script>
 <script type="text/javascript">
 	function open_emailChk() {
-		var email = document.getElementById('email').value;
-		if (email.length == 0) {
+		var emailId = document.getElementById('emailId').value;
+		var emailDomain = document.getElementById('email2').value;
+		if (emailId.length == 0 || emailDomain.length == 0) {
 			alert("email을 입력하세요");
-			document.getElementById('email').focus();
+			document.getElementById('emailId').focus();
 			return;
 		}
-		window.open("emailCheck.jsp?email=" + email, "emailchk",
-				"height=100,width=450,resize=yes");
+		window.open("emailCheck.jsp?email=" + emailId + "@" + emailDomain,
+				"emailchk", "height=100,width=450,resize=yes");
 	}
 </script>
 </head>
@@ -95,32 +96,54 @@
 			</tr>
 			<tr>
 				<td>우편번호</td>
-				<td><input type="text" name="zipno" id="zipno" maxlength="7" size="7" required></td>
+				<td><input type="text" name="zipno" id="zipno" maxlength="7"
+					size="7" required></td>
 			</tr>
 			<tr>
 				<td>*주소1</td>
-				<td><input type="text" name="address1" id="address1" maxlength="80" size="80" required></td>
+				<td><input type="text" name="address1" id="address1"
+					maxlength="80" size="80" required></td>
 			</tr>
 			<tr>
 				<td>*주소2</td>
-				<td><input type="text" name="address2" id="address2" maxlength="50" size="50" required></td>
+				<td><input type="text" name="address2" id="address2"
+					maxlength="50" size="50" required></td>
 			</tr>
 			<tr>
 				<td>tel</td>
-				<td><input type="text" name="tel" id="tel"></td>
+				<td><select name="tel1" id="tel1">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="02">02</option>
+						<option value="031">031</option>
+						<option value="032">032</option>
+				</select> - <input type="text" name="tel2" id="tel2" size="4" maxlength="4">
+					- <input type="text" name="tel3" id="tel3" size="4" maxlength="4"></td>
 			</tr>
 			<tr>
 				<td>*email</td>
-				<td><input type="email" name="email" id="email" required>
-					<input type="button" name="isEmail" id="isEmail" value="EmailCheck"
+				<td><input type="text" name="emailId" id="emailId" required>
+					@ <input type="text" name="email2" id="email2"> <select
+					name="emailDomain" id="emailDomain" onchange="select(this.value)">
+						<option value="">직접입력</option>
+						<option value="naver.com">네이버</option>
+						<option value="daum.net">다음</option>
+						<option value="google.com">구글</option>
+						<option value="nate.com">네이트</option>
+				</select> <input type="button" name="isEmail" id="isEmail" value="EmailCheck"
 					onclick="open_emailChk()"></td>
 			</tr>
 			<tr>
 				<td colspan=2 align="center"><input type="submit" value="확인">
 					<input type="reset" value="다시작성"></td>
 			</tr>
-
 		</table>
 	</form>
+	<script type="text/javascript">
+		function select(value) {
+			document.getElementById('email2').value = value;
+		}
+	</script>
 </body>
 </html>
