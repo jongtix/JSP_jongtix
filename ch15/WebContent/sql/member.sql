@@ -6,6 +6,7 @@ create table member2 (
 id varchar2(12) primary key,
 password varchar2(12) not null,
 name varchar2(20) not null,
+birth date,
 zipno varchar2(7),
 address1 varchar2(80),
 address2 varchar2(50),

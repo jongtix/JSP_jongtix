@@ -7,6 +7,7 @@ public class Member {
 	private String id;
 	private String password;
 	private String name;
+	private String birth;
 	private String zipno;
 	private String address1;
 	private String address2;
@@ -37,6 +38,14 @@ public class Member {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public String getZipno() {
