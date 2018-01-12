@@ -61,9 +61,9 @@
 <body>
 	- 원본 이미지 -
 	<br>
-	<img src="image/<%=filename%>">
+	<img src="../image/<%=filename%>">
 	<p>
-		- 썸네일 이미지 - <br> <img src="image/sm_<%=filename%>">
+		- 썸네일 이미지 - <br> <img src="../image/sm_<%=filename%>">
 	<p>
 </body>
 </html>
