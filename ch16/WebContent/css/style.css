@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+body {
+	font-size: 9pt;
+}
+
+td {
+	font-size: 9pt;
+}
+
+select {
+	font-size: 9pt;
+}
+
+form {
+	font-size: 9pt;
+}
+
+body, td {
+	text-align: center;
+}
+
+.left {
+	text-align: left;
+}

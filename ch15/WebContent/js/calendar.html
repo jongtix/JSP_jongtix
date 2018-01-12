@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var d = new Date();
+	h = d.getHours();
+	m = d.getMinutes();
+	s = d.getSeconds();
+	time = h + "시 " + m + "분 " + s + "초";
+	document.write(time + "<br>");
+</script>
+<script type="text/javascript">
+	var d = new Date();
+	h = d.getHours();
+	m = d.getMinutes();
+	s = d.getSeconds();
+	time = h + "시 " + m + "분 " + s + "초";
+	var h12 = (h > 12) ? (h - 12) : h;
+	var ampm = (h > 12) ? "오후" : "오전";
+	var min_0 = (m < 10) ? "0" : "";
+	var sec_0 = (s < 10) ? "0" : "";
+
+	var time = ampm + " " + h12 + " : " + min_0 + m + " : " + sec_0 + s;
+
+	document.write(time + "<br>");
+</script>
+<script type="text/javascript">
+	var d = new Date();
+	var year = d.getFullYear();
+	month = d.getMonth() + 1;
+	date = d.getDate();
+	day = d.getDay();
+	dd = "";
+	switch (day) {
+	case 0:
+		dd = "일";
+		break;
+	case 1:
+		dd = "월";
+		break;
+	case 2:
+		dd = "화";
+		break;
+	case 3:
+		dd = "수";
+		break;
+	case 4:
+		dd = "목";
+		break;
+	case 5:
+		dd = "금";
+		break;
+	case 6:
+		dd = "토";
+		break;
+	default:
+		break;
+	}
+	document.write(year + "년 " + month + "월 " + date + "일 " + dd + "요일");
+</script>
+</head>
+<body>
+
+</body>
+</html>

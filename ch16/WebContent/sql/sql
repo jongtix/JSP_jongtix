@@ -1,0 +1,14 @@
+CREATE TABLE board (
+    num         NUMBER PRIMARY KEY, -- primary key
+    writer      VARCHAR2(20) NOT NULL, -- 작성자
+    subject     VARCHAR2(50) NOT NULL, -- 제목
+    content     VARCHAR2(500) NOT NULL, -- 내용
+    email       VARCHAR2(30), -- 이메일
+    readcount   NUMBER DEFAULT 0, -- 읽은 횟수
+    password    VARCHAR2(20) NOT NULL, -- 암호
+    ref         NUMBER NOT NULL, -- 답변글끼리 그룹
+    re_step     NUMBER NOT NULL, -- ref내의 순서
+    re_level    NUMBER NOT NULL, -- emfduTmrl
+    ip          VARCHAR2(30) NOT NULL, -- 작성자 ip
+    reg_date    DATE DEFAULT SYSDATE -- 작성일
+);
