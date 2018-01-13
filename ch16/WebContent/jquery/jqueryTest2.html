@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<h1>타입 선택자</h1>
+	<h2 id="myId">아이디 선택자</h2>
+	<h2 class="myClass">클래스 선택자</h2>
+	<!-- $('h1').css('속성', '값') -->
+	<script type="text/javascript">
+		#(document).ready(function() {
+			// 전체 요소 선택
+			$('*').css('font-size', '32px');
+			// h1요소 선택
+			$('h1').css('color', 'red');
+			// id = 'myId' 요소 선택
+			$(#'myId').css('color', 'blue');
+			// class = 'myClass' 요소 선택
+			$(.'myClass').css('color', 'green');
+		});
+	</script>
+</body>
+</html>

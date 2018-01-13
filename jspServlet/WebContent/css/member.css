@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+/* member.css UI 작성 */
+#pwd_wrap{  /* 전체 영역 디자인 */
+	width : 250px; height : 250px;
+	margin-left : auto; margin-right : auto;
+	margin-top : 25px; /* 상단 여백 지정 */
+	border : 1px solid red;
+	/* css3에 추가된 기능들 */
+	line-height : 30px;  /* 간격 지정 */
+	border-radius : 20px;
+	box-shadow : 10px 10px 50px red;  /* 박스 그림자 지정 */
+}
+#pwd_wrap .pwd_title{ /* 타이틀 부분 디자인 */
+    margin : 30px 0 0 80px;
+    width : 100px;
+    background : skyblue;
+    border-radius : 15px;
+    text-align : center;   /* 글자 정렬 가운데 */
+    font-size : 20px;
+}
+#pwd_t{ /* 테이블 영역 디자인 */
+	margin : 30px 0 0 20px;
+}
+#pwd_t th{
+	background : pink;
+	border-radius : 15px;
+}
+#pwd_menu{ /* 버튼 영역 디자인 */
+	margin : 20px 0 0 80px;
+}
+
+
+
+
+
+
+
+
+

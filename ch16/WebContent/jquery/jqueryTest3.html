@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>필터 메소드</title>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<ul>
+		<li>first</li>
+		<li>second</li>
+		<li>third</li>
+		<li class="fourth">fourth</li>
+		<li><em>fifth</em></li>
+	</ul>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// 두 번째 li요소에 선택자
+			$("li").eq(1).css("font-size", "2em");
+			// 현재 li 중 .fourth 요소 선택
+			$("li").filter(".fourth").css("font-style", "italic");
+			// 첫 번째 li요소 선택
+			$("li").first().css("background-color", "orange");
+			// 마지막 li요소
+			$("li").last().css("border", "3px solid");
+			// em 요소를 포함한 li요소 선택
+			$("li").has("em").css("border", "3px solid");
+		})
+	</script>
+</body>
+</html>

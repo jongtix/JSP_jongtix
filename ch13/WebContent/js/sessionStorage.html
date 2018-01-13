@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>Insert title here</title></head><body>
+<h3>세션 스토리지 </h3>
+<hr>
+상품명:<input type="text" id="item" size="10">
+수량:<input type="text" id="count" size="5">
+<button id="save" onclick="save()">카트에 담기</button>
+<button id="retrieve" onclick="retrieve()">조회</button><p>
+세션 스토리지의 변경 내용(storage 이벤트):<br>
+<textarea rows="6" cols="60" id="textarea"></textarea>
+
+<script type="text/javascript">
+	window.addEventListener("storage",storageEventListener,false);
+	
+	function storageEventListener(e){/* e는 StorageEvent 객체 */
+		var eventDetail = "key:\t\t\t"+e.key+"\n"+
+		                 "oldValue:\t\t"+e.oldValue+"\n"+
+		                 "newValue:\t\t"+e.newValue+"\n"+
+		                 "storageArea:\t"+e.storageArea+"\n"+
+		                 "url:\t\t\t"+e.url;
+	  document.getElementById("textarea").innerHTML = eventDetail;
+	}
+</script>
+<script>
+/*함수 밖에 선언된 변수는 전역(Global변수)  */
+var item = document.getElementById("item");
+var count = document.getElementById("count");
+function save(){
+	 if(!window.sessionStorage){/* BOM의 요소중 sessionStorage 존재여부 확인 */
+		 alert("세션스토리지를 지원하지 않습니다.");
+	 	 return;
+	 }
+	 sessionStorage.setItem(item.value,count.value);/*name과 value형태로 저장  */
+}
+function retrieve(){
+	if(!window.sessionStorage){/* BOM의 요소중 sessionStorage 존재여부 확인 */
+		 alert("세션스토리지를 지원하지 않습니다.");
+	 	 return;
+	 }
+	var val = sessionStorage.getItem(item.value);//조회,키이름으로 값을 추출
+	if(val ==null)
+		 alert(item.value +'는 구입 리스트에 없습니다.');
+	else
+		count.value=val;
+}
+</script>
+</body>
+</html>
