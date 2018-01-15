@@ -12,7 +12,7 @@
 <body bgcolor="<%=bodyback_c%>">
 	<div align="center">
 		<h2>책 등록</h2>
-		<form action="bookRegisterProc.jsp" name="writeform"
+		<form action="bookRegisterPro.jsp" name="writeform"
 			enctype="multipart/form-data" method="post">
 			<table border="2" width="500">
 				<tr>
@@ -34,12 +34,12 @@
 				<tr>
 					<td><b>가격</b></td>
 					<td><input type="text" size="10" maxlength="9"
-						name="book_price"></td>
+						name="book_price"> 원</td>
 				</tr>
 				<tr>
 					<td><b>수량</b></td>
 					<td><input type="text" size="10" maxlength="5"
-						name="book_count"></td>
+						name="book_count"> 권</td>
 				</tr>
 				<tr>
 					<td><b>저자</b></td>
@@ -65,7 +65,7 @@
 				<tr>
 					<td><b>할인율</b></td>
 					<td><input type="text" size="5" maxlength="2"
-						name="discount_rate" value="0"></td>
+						name="discount_rate" value="0"> %</td>
 				</tr>
 				<tr>
 					<td colspan="2" bgcolor="<%=value_c%>" align="center"><input
