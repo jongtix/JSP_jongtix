@@ -53,15 +53,20 @@
 		request.setAttribute("book_kindName", book_kindName);
 	%>
 	<a href="../managerMain.jsp">관리자 메인으로</a> &nbsp;
-	<b>${book_kindName} 분류의 목록 : <c:if test="${count > 0}">
+	<b>
+		<!-- <select >
+			<option value="100">문학</option>
+			<option value="200">외국어</option>
+			<option value="300">컴퓨터</option>
+			<option value="all">전체</option>
+	</select>  -->${book_kindName} 분류의 목록 : <c:if test="${count > 0}">
 			<c:if test="${book_kind == all}">
 	${count}개
 	</c:if>
 			<c:if test="${book_kind != all}">
 	${bookListSize}개
 	</c:if>
-		</c:if>
-	</b>
+		</c:if> </b>
 	<table width="100%" align="center">
 		<tr>
 			<td align="right" bgcolor="<%=value_c%>"><a

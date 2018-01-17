@@ -205,6 +205,58 @@ public class BookDao {
 		return bookList;
 	}
 
+	// 도서정보 조회-쇼핑몰 메인에 출력하기위한 도서분류별 신간목록
+	public Book[] getBooks(String book_kind, int count) {
+		Book[] bookLists = null;// 배열 생성
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from" + " (select * from book " + "  where book_kind = ?" + "   order by reg_date desc)"
+				+ "  where rownum <= ? ";
+		try {
+			conn = getConnection();// DB연결 맺기
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, book_kind);
+			pstmt.setInt(2, count);
+			rs = pstmt.executeQuery();
+			int j = 0;
+			bookLists = new Book[count];
+			while (rs.next()) {
+				int i = 0;
+				Book book = new Book();
+				book.setBook_id(rs.getInt(++i));
+				book.setBook_kind(rs.getString(++i));
+				book.setBook_title(rs.getString(++i));
+				book.setBook_price(rs.getInt(++i));
+				book.setBook_count(rs.getInt(++i));
+				book.setAuthor(rs.getString(++i));
+				book.setPublishing_com(rs.getString(++i));
+				book.setPublishing_date(rs.getString(++i));
+				book.setBook_image(rs.getString(++i));
+				book.setBook_content(rs.getString(++i));
+				book.setDiscount_rate(rs.getInt(++i));
+				book.setReg_date(rs.getDate(++i));
+
+				bookLists[j] = book;
+				j++;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} // finally끝.
+		return bookLists;
+	}// getBooks()메소드 끝.
+
 	public Book getBookInfo(int book_id) {
 		Book book = new Book();
 		Connection conn = null;
