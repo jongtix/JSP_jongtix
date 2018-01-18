@@ -4,8 +4,6 @@
 	request.setCharacterEncoding("utf-8");
 	String id = request.getParameter("id");
 	String password = request.getParameter("password");
-	System.out.println(id);
-	System.out.println(password);
 
 	///DB에서 id,password확인
 	MemberDao1 dao = MemberDao1.getInstance();

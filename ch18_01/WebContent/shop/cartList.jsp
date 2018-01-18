@@ -70,7 +70,9 @@
 								value="${cart.buy_count}"> <input type="hidden"
 								name="cart_id" value="${cart.cart_id}"> <input
 								type="hidden" name="book_kind" value="${book_kind}"> <input
-								type="submit" value="수정">
+								type="submit" value="수정"> <input type="button"
+								value="비우기"
+								onclick="location.href='cartDel.jsp?list=${cart.cart_id}&book_kind=${book_kind}'">
 						</form>
 					</td>
 					<td align="center" width="150">\<fmt:formatNumber
