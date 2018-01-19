@@ -115,14 +115,21 @@ public class BookDao {
 		return result;
 	}
 
-	public int getBookCount() {
+	public int getBookCount(String book_kind) {
+		int count = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int count = 0;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select count(*) from book");
+			if (book_kind.equals("all")) {
+				pstmt = conn.prepareStatement("select count(*) from book");
+			} else if (book_kind.equals("new")) {
+				pstmt = conn.prepareStatement("select count(*) from book where rownum <= 5");
+			} else {
+				pstmt = conn.prepareStatement("select count(*) from book where book_kind = ?");
+				pstmt.setString(1, book_kind);
+			}
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -156,10 +163,14 @@ public class BookDao {
 		ArrayList<Book> bookList = null;
 		String sql1 = "select * from book order by reg_date desc";
 		String sql2 = "select * from book where book_kind = ? order by reg_date desc";
+		String sql3 = "select * from book where rownum <= 5 order by reg_date desc";
+
 		try {
 			conn = getConnection();
 			if (book_kind.equals("all")) {
 				pstmt = conn.prepareStatement(sql1);
+			} else if (book_kind.equals("new")) {
+				pstmt = conn.prepareStatement(sql3);
 			} else {
 				pstmt = conn.prepareStatement(sql2);
 				pstmt.setString(1, book_kind);
@@ -205,6 +216,71 @@ public class BookDao {
 		return bookList;
 	}
 
+	public ArrayList<Book> getBooks(String book_kind, int startRow, int endRow) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Book> bookList = null;
+		String sql1 = "select * from (select rownum rn, a.* from (select * from book order by reg_date desc) a) where rn between ? and ?";
+		String sql2 = "select * from (select rownum rn, a.* from (select * from book where book_kind = ? order by book_id) a) where rn between ? and ?";
+		String sql3 = "select a.* from (select * from book order by reg_date desc) a where rownum <= 5";
+
+		try {
+			conn = getConnection();
+			if (book_kind.equals("all")) {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			} else if (book_kind.equals("new")) {
+				pstmt = conn.prepareStatement(sql3);
+			} else {
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, book_kind);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			rs = pstmt.executeQuery();
+
+			bookList = new ArrayList<Book>();
+			while (rs.next()) {
+				Book book = new Book();
+				book.setBook_id(rs.getInt("book_id"));
+				book.setBook_kind(rs.getString("book_kind"));
+				book.setBook_title(rs.getString("book_title"));
+				book.setBook_price(rs.getInt("book_price"));
+				book.setBook_count(rs.getInt("book_count"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublishing_com(rs.getString("publishing_com"));
+				book.setPublishing_date(rs.getString("publishing_date"));
+				book.setBook_image(rs.getString("book_image"));
+				book.setBook_content(rs.getString("book_content"));
+				book.setDiscount_rate(rs.getInt("discount_rate"));
+				book.setReg_date(rs.getDate("reg_date"));
+
+				bookList.add(book);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+				}
+		}
+		return bookList;
+	}
+
 	// 도서정보 조회-쇼핑몰 메인에 출력하기위한 도서분류별 신간목록
 	public Book[] getBooks(String book_kind, int count) {
 		Book[] bookLists = null;// 배열 생성
@@ -218,6 +294,55 @@ public class BookDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, book_kind);
 			pstmt.setInt(2, count);
+			rs = pstmt.executeQuery();
+			int j = 0;
+			bookLists = new Book[count];
+			while (rs.next()) {
+				int i = 0;
+				Book book = new Book();
+				book.setBook_id(rs.getInt(++i));
+				book.setBook_kind(rs.getString(++i));
+				book.setBook_title(rs.getString(++i));
+				book.setBook_price(rs.getInt(++i));
+				book.setBook_count(rs.getInt(++i));
+				book.setAuthor(rs.getString(++i));
+				book.setPublishing_com(rs.getString(++i));
+				book.setPublishing_date(rs.getString(++i));
+				book.setBook_image(rs.getString(++i));
+				book.setBook_content(rs.getString(++i));
+				book.setDiscount_rate(rs.getInt(++i));
+				book.setReg_date(rs.getDate(++i));
+
+				bookLists[j] = book;
+				j++;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} // finally끝.
+		return bookLists;
+	}// getBooks()메소드 끝.
+
+	public Book[] getBooks(int count) {
+		Book[] bookLists = null;// 배열 생성
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from (select * from book order by reg_date desc) where rownum <= ? ";
+		try {
+			conn = getConnection();// DB연결 맺기
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, count);
 			rs = pstmt.executeQuery();
 			int j = 0;
 			bookLists = new Book[count];

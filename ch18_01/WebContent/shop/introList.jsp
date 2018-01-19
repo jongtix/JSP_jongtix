@@ -12,32 +12,42 @@
 <body>
 	<%
 		Book[] bookLists = null;
-		int number = 0;
+		String book_kind = "";
 		String book_kindName = "";
 
 		BookDao dao = BookDao.getInstance();
 
-		for (int i = 1; i <= 3; i++) {
-			bookLists = dao.getBooks(i + "00", 2);
-			if (bookLists[0].getBook_kind().equals("100")) {
-				book_kindName = "문학";
-			} else if (bookLists[0].getBook_kind().equals("200")) {
-				book_kindName = "외국어";
-			} else if (bookLists[0].getBook_kind().equals("300")) {
-				book_kindName = "컴퓨터";
-			}
-			String book_kind = bookLists[0].getBook_kind();
+		bookLists = dao.getBooks(5);
 
-			request.setAttribute("book_kind", book_kind);
-			request.setAttribute("bookLists", bookLists);
-			request.setAttribute("book_kindName", book_kindName);
-			request.setAttribute("number", number);
+		if (request.getParameter("book_kind") == null || request.getParameter("book_kind").equals("")) {
+			book_kind = "new";
+		} else {
+			book_kind = request.getParameter("book_kind");
 		}
+
+		request.setAttribute("book_kind", book_kind);
+		request.setAttribute("bookLists", bookLists);
+		request.setAttribute("book_kindName", book_kindName);
+
+		/* 		for (int i = 1; i <= 3; i++) {
+					bookLists = dao.getBooks(i + "00", 2);
+					if (bookLists[0].getBook_kind().equals("100")) {
+						book_kindName = "문학";
+					} else if (bookLists[0].getBook_kind().equals("200")) {
+						book_kindName = "외국어";
+					} else if (bookLists[0].getBook_kind().equals("300")) {
+						book_kindName = "컴퓨터";
+					} else {
+						book_kindName = "all";
+					}
+		
+				} */
 	%>
 	<br>
-	<font size="+1"><b>${book_kindName}분류의 신간 목록 : <a
-			href="list.jsp?book_kind=${book_kind}"><b>더보기</b></a>
+	<font size="+1"><b>신간 목록 <a
+			href="list.jsp?book_kind=${book_kind}"><b>--더보기--</b></a>
 	</b></font>
+	<br>
 	<c:forEach var="book" items="${bookLists}">
 		<c:if test="${!empty book}">
 			<table border="0" width="600" align="center">
@@ -64,10 +74,10 @@
 				</tr>
 				<tr height="30">
 					<td width="350">정가: <s><fmt:formatNumber
-								value="${book.book_price}" pattern="###,##0" /> </s> 원<br>
-						판매가:<b> <fmt:formatNumber
+								value="${book.book_price}" pattern="###,##0" /></s> 원<br> 판매가:
+						<b><fmt:formatNumber
 								value="${book.book_price*(100-book.discount_rate)/100}"
-								pattern="###,##0" /></td>
+								pattern="###,##0" /> 원</b></td>
 				</tr>
 			</table>
 		</c:if>

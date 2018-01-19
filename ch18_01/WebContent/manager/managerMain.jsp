@@ -29,7 +29,7 @@
 			<td align="center" bgcolor="<%=bar%>">구매된 상품관련 작업</td>
 		</tr>
 		<tr>
-			<td><a href="orderdProduct/orderedList.jsp">전체구매목록 확인</a></td>
+			<td><a href="../orderedProduct/orderedList.jsp">전체구매목록 확인</a></td>
 		</tr>
 	</table>
 </body>

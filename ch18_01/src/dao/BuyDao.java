@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -11,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import model.Bank;
+import model.Book;
 import model.Buy;
 import model.Cart;
 
@@ -164,6 +166,36 @@ public class BuyDao {
 		return count;
 	}
 
+	public int getBuyListCount() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from buy";
+		try {
+			conn = getConection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return count;
+	}
+
 	public ArrayList<Buy> getBuyList(String buyer) {
 		ArrayList<Buy> list = new ArrayList<>();
 		Connection conn = null;
@@ -176,8 +208,53 @@ public class BuyDao {
 			pstmt.setString(1, buyer);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int i = 0;
 				Buy buy = new Buy();
+				int i = 0;
+				buy.setBuy_id(rs.getInt(++i));
+				buy.setBuyer(rs.getString(++i));
+				buy.setBook_id(rs.getInt(++i));
+				buy.setBook_title(rs.getString(++i));
+				buy.setBuy_price(rs.getInt(++i));
+				buy.setBuy_count(rs.getInt(++i));
+				buy.setBook_image(rs.getString(++i));
+				buy.setBuy_date(rs.getDate(++i));
+				buy.setAccount(rs.getString(++i));
+				buy.setDeliveryname(rs.getString(++i));
+				buy.setDeliverytel(rs.getString(++i));
+				buy.setDeliveryaddress(rs.getString(++i));
+				buy.setSanction(rs.getString(++i));
+				list.add(buy);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return list;
+	}
+
+	public ArrayList<Buy> getBuyList() {
+		ArrayList<Buy> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from buy order by buy_id, book_id";
+		try {
+			conn = getConection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Buy buy = new Buy();
+				int i = 0;
 				buy.setBuy_id(rs.getInt(++i));
 				buy.setBuyer(rs.getString(++i));
 				buy.setBook_id(rs.getInt(++i));
@@ -209,5 +286,74 @@ public class BuyDao {
 			}
 		}
 		return list;
+	}
+
+	public ArrayList<Buy> getBuyList(String buyer, int startRow, int endRow) {
+		ArrayList<Buy> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select buy_id, book_id, book_title, buy_price, buy_count, book_image, sanction from (select rownum rn, a.* from (select * from buy where buyer = ? order by buy_id) a) where rn between ? and ?";
+		try {
+			conn = getConection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, buyer);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Buy buy = new Buy();
+				int i = 0;
+				buy.setBuy_id(rs.getInt(++i));
+				buy.setBook_id(rs.getInt(++i));
+				buy.setBook_title(rs.getString(++i));
+				buy.setBuy_price(rs.getInt(++i));
+				buy.setBuy_count(rs.getInt(++i));
+				buy.setBook_image(rs.getString(++i));
+				buy.setSanction(rs.getString(++i));
+
+				list.add(buy);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return list;
+	}
+
+	public int updateOrderStatus(int buy_id, String status) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update buy set sanction = ? where buy_id = ?";
+		try {
+			conn = getConection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, status);
+			pstmt.setInt(2, buy_id);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
 	}
 }

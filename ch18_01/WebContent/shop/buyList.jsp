@@ -1,3 +1,5 @@
+<%@page import="model.PagingBean"%>
+<%@page import="util.Paging"%>
 <%@page import="dao.BuyDao"%>
 <%@page import="model.Buy"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,6 +22,23 @@
 		total += list.get(i).getBuy_price() * list.get(i).getBuy_count();
 	}
 
+	String pageNum = request.getParameter("pageNum");
+	if (pageNum == null || pageNum.equals("")) {
+		pageNum = "1";
+	}
+	int pageSize = 5;
+	int BLOCKSIZE = 5;
+	int count = 0;
+	count = dao.getBuyListCount(buyer);
+	Paging pg = new Paging();
+	PagingBean pb = pg.getPaging(pageNum, pageSize, BLOCKSIZE, count);
+	list = dao.getBuyList(buyer, pb.getStartRow(), pb.getEndRow());
+
+	request.setAttribute("startPage", pb.getStartPage());
+	request.setAttribute("endPage", pb.getEndPage());
+	request.setAttribute("pageCount", pb.getPageCount());
+	request.setAttribute("pageSize", pageSize);
+	request.setAttribute("BLOCKSIZE", BLOCKSIZE);
 	request.setAttribute("path", path);
 	request.setAttribute("buyer", buyer);
 	request.setAttribute("buyList", list);
@@ -66,14 +85,29 @@
 							value="${buy.buy_count}" pattern="###,##0" /></td>
 					<td align="center" width="150"><fmt:formatNumber
 							value="${buy.buy_count * buy.buy_price}" pattern="###,##0" /></td>
-					<td><select name="status" disabled>
-							<option <c:if test="${buy.sanction == '준비중'}">seleced</c:if>>준비중</option>
-							<option <c:if test="${buy.sanction == '배송중'}">seleced</c:if>>배송중</option>
-							<option <c:if test="${buy.sanction == '배송완료'}">seleced</c:if>>배송완료</option>
-							<option <c:if test="${buy.sanction == '반품처리'}">seleced</c:if>>반품처리</option>
-					</select></td>
+					<td align="center" width="300"><span>${buy.sanction}</span> <span>
+							<c:if test="${buy.sanction == '배송완료'}">
+								<input type="button" value="구매확정"
+									onclick="location.href='memberOrderStatusPro.jsp?buy_id=${buy.buy_id}&sanction=구매확정'">
+								<br>
+								<input type="button" value="반품신청"
+									onclick="location.href='memberOrderStatusPro.jsp?buy_id=${buy.buy_id}&sanction=반품신청'">
+								<br>
+								<input type="button" value="교환신청"
+									onclick="location.href='memberOrderStatusPro.jsp?buy_id=${buy.buy_id}&sanction=교환신청'">
+							</c:if>
+					</span></td>
 				</tr>
 			</c:forEach>
+			<tr>
+				<td colspan="6"><c:if test="${startPage > BLOCKSIZE}">
+						<a href="buyList.jsp?pageNum=${startPage - BLOCKSIZE}">[이전]</a>
+					</c:if> <c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<a href="buyList.jsp?pageNum=${i}">[${i}]</a>
+					</c:forEach> <c:if test="${endPage < pageCount}">
+						<a href="buyList.jsp?pageNum=${startPage + BLOCKSIZE}">[다음]</a>
+					</c:if></td>
+			</tr>
 			<tr>
 				<td colspan="6" align="right"><b>총 금액: <fmt:formatNumber
 							value="${total}" type="currency" currencySymbol=" ￦" />

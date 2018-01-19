@@ -1,3 +1,5 @@
+<%@page import="model.PagingBean"%>
+<%@page import="util.Paging"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.BookDao"%>
@@ -11,25 +13,40 @@
 
 	String path = request.getContextPath();
 	List<Book> bookList = null;
-	Book book = null;
 	String book_kindName = "";
 
 	BookDao dao = BookDao.getInstance();
-	bookList = dao.getBooks(book_kind);
+
 	if (book_kind.equals("100")) {
-		book_kindName = " 문학";
+		book_kindName = "문학 분류의 ";
 	} else if (book_kind.equals("200")) {
-		book_kindName = "외국어";
+		book_kindName = "외국어 분류의 ";
 	} else if (book_kind.equals("300")) {
-		book_kindName = "컴퓨터";
-	} else if (book_kind.equals("")) {
-		book_kindName = "전체";
+		book_kindName = "컴퓨터 분류의 ";
+	} else if (book_kind.equals("all")) {
+		book_kindName = "전체 ";
+	} else if (book_kind.equals("new")) {
+		book_kindName = "신간 ";
 	}
+
+	String pageNum = request.getParameter("pageNum");
+	int pageSize = 10;
+	int BLOCKSIZE = 10;
+	int count = 0;
+	count = dao.getBookCount(book_kind);
+	Paging pg = new Paging();
+	PagingBean pb = pg.getPaging(pageNum, pageSize, BLOCKSIZE, count);
+	bookList = dao.getBooks(book_kind, pb.getStartRow(), pb.getEndRow());
 
 	request.setAttribute("path", path);
 	request.setAttribute("book_kind", book_kind);
 	request.setAttribute("bookList", bookList);
 	request.setAttribute("book_kindName", book_kindName);
+	request.setAttribute("startPage", pb.getStartPage());
+	request.setAttribute("endPage", pb.getEndPage());
+	request.setAttribute("pageCount", pb.getPageCount());
+	request.setAttribute("pageSize", pageSize);
+	request.setAttribute("BLOCKSIZE", BLOCKSIZE);
 %>
 <html>
 <head>
@@ -48,7 +65,7 @@
 					page="../module/left.jsp" flush="false" /></td>
 			<td width="700" valign="top">
 
-				<h3>${book_kindName} 분류의목록</h3> <a href="${path}/shop/shopMain.jsp"><b>메인으로</b></a>
+				<h3>${book_kindName}목록</h3> <a href="${path}/shop/shopMain.jsp"><b>메인으로</b></a>
 				<c:if test="${!empty bookList}">
 					<c:forEach var="book" items="${bookList}">
 						<table width="600" align="center">
@@ -87,6 +104,20 @@
 							</tr>
 						</table>
 					</c:forEach>
+					<c:if test="${book_kindName != '신간 ' }">
+						<br>
+						<c:if test="${startPage > BLOCKSIZE}">
+							<a
+								href="list.jsp?book_kind=${book_kind}&pageNum=${startPage - BLOCKSIZE}">[이전]</a>
+						</c:if>
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<a href="list.jsp?book_kind=${book_kind}&pageNum=${i}">[${i}]</a>
+						</c:forEach>
+						<c:if test="${endPage < pageCount}">
+							<a
+								href="list.jsp?book_kind=${book_kind}&pageNum=${startPage + BLOCKSIZE}">[다음]</a>
+						</c:if>
+					</c:if>
 				</c:if> <br>
 			</td>
 		</tr>
@@ -97,6 +128,5 @@
 					page="../module/bottom.jsp" flush="flase" /></td>
 		</tr>
 	</table>
-
 </body>
 </html>

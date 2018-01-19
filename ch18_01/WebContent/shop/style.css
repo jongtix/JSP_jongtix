@@ -1,16 +1,16 @@
 body {
 	FONT-SIZE: 9pt;
-	background-color: "#e0ffff";
+	background-color: #e0ffff;
 	text-align: center;
 }
 
 table {
-	background-color: "#e0ffff";
+	background-color: blue;
 }
 
 td {
 	FONT-SIZE: 9pt;
-	background-color: "#b0e0e6";
+	background-color: #b0e0e6;
 }
 
 select {
@@ -22,5 +22,5 @@ form {
 }
 
 .value_c {
-	background-color: rgba(214, 219, 204, 1);
+	background-color: yellow;
 }
