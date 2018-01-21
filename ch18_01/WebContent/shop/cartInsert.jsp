@@ -11,6 +11,10 @@
 <jsp:setProperty property="*" name="cart" />
 <%
 	cart.setBuyer(buyer);
+	int book_price = Integer.parseInt(request.getParameter("book_price"));
+	int discount_rate = Integer.parseInt(request.getParameter("discount_rate"));
+	int buy_price = book_price * (100 - discount_rate) / 100;
+	cart.setBuy_price(buy_price);
 	CartDao dao = CartDao.getInstance();
 	int result = dao.insertCart(cart, buyer);
 	if (result > 0) {

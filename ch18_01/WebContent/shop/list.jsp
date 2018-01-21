@@ -51,7 +51,12 @@
 <html>
 <head>
 <title>도서 리스트</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/main_v171221_1.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/webfont_v170623.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://ssl.pstatic.net/sstatic/search/pc/css/api_atcmp_170914.css" />
 </head>
 <body>
 	<table width="850">
@@ -85,8 +90,18 @@
 									<c:if test="${book.book_count==0}">
 										<b>일시품절</b>
 									</c:if> <c:if test="${book.book_count>0}">
-	            &nbsp;
-	    </c:if>
+										<input type="hidden" name="book_id" value="${book.book_id}">
+										<input type="hidden" name="book_image"
+											value="${book.book_image}">
+										<input type="hidden" name="book_title"
+											value="${book.book_title}">
+										<input type="hidden" name="buy_price"
+											value="${book.book_price}">
+										<input type="hidden" name="book_kind"
+											value="${book.book_kind}">
+										<input type="button" value="구매하기"
+											onclick="location.href='cartInsert.jsp?book_kind=${book.book_kind}'">
+									</c:if>
 								</td>
 							</tr>
 							<tr height="30">
@@ -96,11 +111,11 @@
 								<td width="350">저자:${book.author}</td>
 							</tr>
 							<tr height="30">
-								<td width="350">정가: <s> <fmt:formatNumber
+								<td width="350">정가: <s><fmt:formatNumber
 											value="${book.book_price}" pattern="###,##0" /></s> 원<br>
-									판매가:<b> <fmt:formatNumber
-											value="${ book.book_price*(100-book.discount_rate)/100}"
-											pattern="###,##0" /></td>
+									판매가: <b><fmt:formatNumber
+											value="${book.book_price*(100-book.discount_rate)/100}"
+											pattern="###,##0" /></b></td>
 							</tr>
 						</table>
 					</c:forEach>

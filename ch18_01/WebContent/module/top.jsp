@@ -21,6 +21,7 @@
 			<tr>
 				<td>아이디:</td>
 				<td><input type="text" name="id" size="15" maxlength="12"></td>
+				<td rowspan="2"><input type="submit" value="로그인"></td>
 			</tr>
 			<tr>
 				<td>패스워드:</td>
@@ -28,9 +29,9 @@
 					maxlength="12"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="submit" value="로그인">
-					<input type="reset" value="지우기"> <input type="button"
-					value="회원가입" onclick="location.href='${path}/member/joinProc1.jsp'">
+				<td colspan="3" align="center"><a
+					href="${path}/member/joinProc1.jsp">회원가입</a> <a
+					href="">아이디</a> / <a href="">비밀번호 찾기</a></td>
 		</table>
 	</form>
 	<font color="red"><b>* 로그인을 하셔야 쇼핑을 하실수 있습니다*</b></font>

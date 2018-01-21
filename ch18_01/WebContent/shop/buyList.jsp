@@ -68,7 +68,7 @@
 		</tr>
 		<c:if test="${empty buyList}">
 			<tr>
-				<td><b>구매 목록이 없습니다.</b></td>
+				<td colspan="6"><b>구매 목록이 없습니다.</b></td>
 			</tr>
 		</c:if>
 		<c:if test="${!empty buyList}">

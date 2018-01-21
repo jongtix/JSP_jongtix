@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/main_v171221_1.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/webfont_v170623.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://ssl.pstatic.net/sstatic/search/pc/css/api_atcmp_170914.css" />
 <%
 	String ok = request.getParameter("ok");
 	if (ok == null) {
@@ -13,6 +19,8 @@
 	}
 %>
 <title>회원가입 화면</title>
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 	function chk() {
 		var id = document.getElementById('id');
@@ -62,22 +70,37 @@
 	function open_emailChk() {
 		var emailId = document.getElementById('emailId').value;
 		var emailDomain = document.getElementById('email2').value;
-		if (emailId.length == 0 || emailDomain.length == 0) {
+		if (emailId.length == 0) {
 			alert("email을 입력하세요");
 			document.getElementById('emailId').focus();
+			return;
+		}
+		if (emailDomain.length == 0){
+			alert("도매인을 선택하세요");
+			$("#emailDomain").val("").prop("selected", true);
+			document.getElementById('email2').focus();
 			return;
 		}
 		window.open("emailCheck.jsp?email=" + emailId + "@" + emailDomain,
 				"emailchk", "height=100,width=450,resize=yes");
 	}
 </script>
+<script type="text/javascript">
+	function plus(value) {
+		console.log(value);
+		document.getElementById('jibunAddress').value += ' ' + value;
+	}
+</script>
 </head>
 <body>
 	<form action="sessionSubscribeProc.jsp" onsubmit="return chk()"
 		name="frm">
-		<table border=1 bgcolor="yellow">
+		<table border="1">
+			<caption>
+				<p align="right" style="color: red">*은 필수 입력 항목입니다.
+			</caption>
 			<tr>
-				<td>*ID:</td>
+				<td>*ID</td>
 				<td><input type="text" name="id" id="id"> <input
 					type="button" name="isId" id="isId" value="IDcheck"
 					onclick="open_chk()"></td>
@@ -111,17 +134,17 @@
 					style="color: #999"></span></td>
 			</tr>
 			<tr>
+				<td>*주소2</td>
+				<td><input type="text" name="address2" id="address2"
+					maxlength="50" size="50" required onchange="plus(this.value)"></td>
+			</tr>
+			<tr>
 				<td>지번주소</td>
 				<td><input type="text" name="jibunAddress" id="jibunAddress"
 					maxlength="80" size="80"></td>
 			</tr>
 			<tr>
-				<td>*주소2</td>
-				<td><input type="text" name="address2" id="address2"
-					maxlength="50" size="50" required></td>
-			</tr>
-			<tr>
-				<td>tel</td>
+				<td>휴대폰 번호</td>
 				<td><select name="tel1" id="tel1">
 						<option value="010">010</option>
 						<option value="011">011</option>

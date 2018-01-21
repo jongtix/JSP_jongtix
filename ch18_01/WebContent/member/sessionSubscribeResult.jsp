@@ -9,9 +9,9 @@ ID : ${member.id}
 <br>
 주소 : (${member.zipno}) ${member.address1} ${member.address2}
 <br>
-전화번호 : ${member.tel}
+전화번호 : ${member.tel1} - ${member.tel2} - ${member.tel3}
 <br>
 E-mail : ${member.email}
 <br>
 <br>
-<a href="loginform.html">로그인 하기</a>
+<a href="../shop/shopMain.jsp">메인으로</a>

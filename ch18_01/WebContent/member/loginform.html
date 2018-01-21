@@ -30,19 +30,20 @@
 <body>
 	<form action="sessionLoginProc.jsp" method="post"
 		onsubmit="return chk()">
-		<fieldset>
-			<legend>로그인</legend>
-			<p>
-				아이디:<input type="text" name="id" id="id" />
-			<p>
-			<p>
-				비밀번호:<input type="password" name="password" id="password" />
-			<p>
-			<p>
-				<input type="submit" value="로그인"> <input type="reset"
-					value="지우기"> <input type="button" value="회원가입"
-					onclick="app()">
-		</fieldset>
+		<table border="1">
+			<caption>로그인</caption>
+			<tr>
+				<td>아이디: <input type="text" name="id" id="id" /></td>
+				<td rowspan="2"><input type="submit" value="로그인"></td>
+			</tr>
+			<tr>
+				<td>비밀번호:<input type="password" name="password" id="password" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="button" value="회원가입"
+					onclick="app()"></td>
+			</tr>
+		</table>
 	</form>
 </body>
 </html>

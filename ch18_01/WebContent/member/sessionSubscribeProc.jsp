@@ -24,7 +24,6 @@
 	/* 회원가입 처리 */
 	MemberDao1 dao = MemberDao1.getInstance();
 	int result = dao.insertMember(member);
-	System.out.println("result = " + result);
 	if (result > 0) {
 		session.setAttribute("member", member);
 		response.sendRedirect("sessionSubscribeResult.jsp");

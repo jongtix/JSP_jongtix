@@ -183,13 +183,11 @@
 부  칙
 
 제 1 조 (시행일) 이 약관은 2016년 10월 12일부터 시행한다.제1조(목적)
-   						            			 	
 
 <hr>
 </pre>
-		<hr>
-		<br> 동의여부: <input type="checkbox" name=ok><br> <input
-			type="submit" value="다음">
+		<label for="ok">동의여부: <input type="checkbox" name="ok" id="ok"></label>
+		<input type="submit" value="다음">
 	</form>
 </body>
 </html>

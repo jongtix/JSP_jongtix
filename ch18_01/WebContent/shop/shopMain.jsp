@@ -9,7 +9,12 @@
 <html>
 <head>
 <title>Book Shop Mall</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/main_v171221_1.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://pm.pstatic.net/css/webfont_v170623.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://ssl.pstatic.net/sstatic/search/pc/css/api_atcmp_170914.css" />
 </head>
 <body>
 	<table width="850" border="1" cellpadding="2" cellspacing="0">

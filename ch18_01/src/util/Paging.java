@@ -22,7 +22,7 @@ public class Paging {
 		int BLOCKSIZE = blocksize;// 한 블럭당 출력되는 페이지 수
 		int startPage = (int) ((currentPage - 1) / BLOCKSIZE) * BLOCKSIZE + 1;// 현재페이지가 속한 시작번호
 		int endPage = 0;
-		if (pageCount < BLOCKSIZE) {
+		if (pageCount < BLOCKSIZE || pageCount < (startPage + BLOCKSIZE - 1)) {
 			endPage = pageCount;
 		} else {
 			endPage = startPage + BLOCKSIZE - 1;// 한 화면에 보여지는 페이지 끝 번호

@@ -103,7 +103,10 @@
 							<input type="hidden" name="book_image" value="${book.book_image}">
 							<input type="hidden" name="book_title" value="${book.book_title}">
 							<input type="hidden" name="buy_price" value="${book.book_price}">
-							<input type="hidden" name="book_kind" value="${book.book_kind }">
+							<input type="hidden" name="book_kind" value="${book.book_kind}">
+							<input type="hidden" name="book_price" value="${book.book_price}">
+							<input type="hidden" name="discount_rate"
+								value="${book.discount_rate}">
 
 							<input type="submit" value="장바구니에 담기">
 						</c:if>

@@ -14,7 +14,7 @@
 	String book_kind = request.getParameter("book_kind");
 
 	BookDao dao = BookDao.getInstance();
-	int count = dao.getBookCount();
+	int count = dao.getBookCount(book_kind);
 	int booklistSize = 0;
 	if (count > 0) {
 		booklist = dao.getBooks(book_kind);
