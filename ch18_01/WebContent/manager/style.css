@@ -5,8 +5,7 @@ body {
 }
 
 table {
-	background-color: blue;
-	overflow: auto;
+	background-color: #FF0000;
 }
 
 td {

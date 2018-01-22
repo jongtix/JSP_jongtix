@@ -31,7 +31,8 @@
 			<tr>
 				<td colspan="3" align="center"><a
 					href="${path}/member/joinProc1.jsp">회원가입</a> <a
-					href="">아이디</a> / <a href="">비밀번호 찾기</a></td>
+					href="../member/searchId.jsp">아이디</a> / <a
+					href="../member/searchPassword.jsp">비밀번호 찾기</a></td>
 		</table>
 	</form>
 	<font color="red"><b>* 로그인을 하셔야 쇼핑을 하실수 있습니다*</b></font>

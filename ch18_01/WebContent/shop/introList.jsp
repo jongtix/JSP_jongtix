@@ -64,7 +64,16 @@
 							test="${book.book_count==0}">
 							<b>일시품절</b>
 						</c:if> <c:if test="${book.book_count>0}">
-							<b>&nbsp;</b>
+							<input type="hidden" name="book_id" value="${book.book_id}">
+							<input type="hidden" name="book_image" value="${book.book_image}">
+							<input type="hidden" name="book_title" value="${book.book_title}">
+							<input type="hidden" name="buy_price" value="${book.book_price}">
+							<input type="hidden" name="book_kind" value="${book.book_kind}">
+										재고수량: <input type="text" size="5" name="book_count"
+								value="${book.book_count}" disabled>권
+										수량: <input type="text" size="5" name="buy_count" value="1">권
+										<input type="button" value="구매하기"
+								onclick="location.href='cartInsert.jsp?book_kind=${book.book_kind}&book_price=${book.book_price}&discount_rate=${book.discount_rate}'">
 						</c:if></td>
 				<tr height="30">
 					<td width="350">출판사:${book.publishing_com}</td>
@@ -74,8 +83,10 @@
 				</tr>
 				<tr height="30">
 					<td width="350">정가: <s><fmt:formatNumber
-								value="${book.book_price}" pattern="###,##0" /></s> 원<br> 판매가:
-						<b><fmt:formatNumber
+								value="${book.book_price}" pattern="###,##0" /></s> 원<c:if
+							test="${book.discount_rate != 0}">
+							<font color="red">${book.discount_rate}% 할인!</font>
+						</c:if><br> 판매가: <b><fmt:formatNumber
 								value="${book.book_price*(100-book.discount_rate)/100}"
 								pattern="###,##0" /> 원</b></td>
 				</tr>

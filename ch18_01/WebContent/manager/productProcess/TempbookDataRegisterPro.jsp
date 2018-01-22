@@ -1,3 +1,5 @@
+<%@page import="sun.security.krb5.Confounder"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="dao.BookDao"%>
@@ -18,14 +20,24 @@
 		book.setBook_count(rc * 10);
 		book.setAuthor("author" + i);
 		book.setPublishing_com("publishing_com" + i);
-		book.setPublishing_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		book.setBook_image("filename" + i);
 		book.setBook_content("book_content" + i);
 		int rd = (int) (Math.random() * 50);
 		book.setDiscount_rate(rd);
 
 		/* java.sql.Date()생성자의 매개변수로 java.util.Date().getTime()를 넘김 */
-		book.setReg_date(new java.sql.Date(new Date().getTime()));
+		Date conFromDate = new Date();
+		long ttl = conFromDate.parse("Jan 1, 1990 0:0:0");
+		long now = conFromDate.getTime();
+		long randomDate = (long) (Math.random() * (now - ttl)) + ttl;
+		book.setReg_date(new java.sql.Date(new Date(randomDate).getTime()));
+		long randomDate2 = 0;
+		do {
+			randomDate2 = (long) (Math.random() * (now - ttl)) + ttl;
+			if (randomDate >= randomDate2)
+				break;
+		} while (true);
+		book.setPublishing_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date(randomDate2)));
 
 		BookDao bookProcess = BookDao.getInstance();
 		int result = bookProcess.insertBook(book);

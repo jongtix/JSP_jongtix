@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -330,5 +331,64 @@ public class MemberDao1 {
 			}
 		}
 		return result;
+	}
+
+	public String searchMember(String name, String birth) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select id from member2 where name like ? and birth = ?";
+		String id = "";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, birth);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				id = rs.getString(1);
+			} else
+				id = "";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return id;
+	}
+
+	public String searchMember(String name, String birth, String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select password from member2 where name like ? and birth = ? and id = ?";
+		String password = "";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, birth);
+			pstmt.setString(3, id);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				password = rs.getString(1);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return password;
 	}
 }
