@@ -45,7 +45,8 @@
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="확인"> <input
-					type="reset" value="다시쓰기"></td>
+					type="reset" value="글목록"
+					onclick="location.href='list.do?pageNum=${pageNum}'"></td>
 			</tr>
 		</table>
 	</form>

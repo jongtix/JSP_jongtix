@@ -19,8 +19,9 @@ public class ListAction implements CommandProcess {
 		int total = dao.getTotal();
 		Paging pg = new Paging();
 		PagingBean pb = pg.getPaging(request, total);
-		List<Board> list = dao.selectList(pb.getStartRow(), pb.getEndRow())
+		List<Board> list = dao.selectList(pb.getStartRow(), pb.getEndRow());
 
+		request.setAttribute("total", total);
 		request.setAttribute("list", list);
 		request.setAttribute("pb", pb);
 		return "board/list.jsp";

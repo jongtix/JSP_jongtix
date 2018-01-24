@@ -7,7 +7,7 @@
 <body>
 	<c:if test="${result > 0}">
 		<script>
-			location.href = 'list.do?pageNum=${pageNum};'
+			location.href = 'list.do?pageNum=${pageNum}';
 		</script>
 	</c:if>
 	<c:if test="${result == 0}">

@@ -13,15 +13,6 @@
 %>
 <title>게시글 조회 폼</title>
 <link href="/ch16/css/style.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-body, td {
-	text-align: center;
-}
-
-td {
-	background-color: "<%=value_c%>";
-}
-</style>
 <script type="text/javascript" src="/ch16/js/script.js"></script>
 </head>
 

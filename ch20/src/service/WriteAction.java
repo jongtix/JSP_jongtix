@@ -41,7 +41,6 @@ public class WriteAction implements CommandProcess {
 		board.setRef_level(ref_level);
 
 		int result = dao.insert(board);
-
 		request.setAttribute("result", result);
 		request.setAttribute("board", board);
 		request.setAttribute("pageNum", pageNum);
