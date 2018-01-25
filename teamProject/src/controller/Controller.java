@@ -50,7 +50,7 @@ public class Controller extends HttpServlet {
 				System.out.println(command);
 
 				CommandProcess commandInstance = (CommandProcess) commandClass.newInstance();
-				commandMap.put(command, commandInstance);// 명령어 와 객체 저장
+				commandMap.put(command, commandInstance);// 명령어와 객체 저장
 			} catch (Exception e) {
 				throw new ServletException(e);
 			}

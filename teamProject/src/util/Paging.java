@@ -18,8 +18,11 @@ public class Paging {
 		int pageCount = (int) Math.ceil((double) total / pb.getPAGESIZE());
 		int startPage = (currPage - 1) / pb.getBLOCKSIZE() * pb.getBLOCKSIZE() + 1;
 		int endPage = startPage + pb.getBLOCKSIZE() - 1;
-		if (endPage > pageCount)
+		if (pageCount < pb.getBLOCKSIZE() || pageCount < (startPage + pb.getBLOCKSIZE() - 1)) {
 			endPage = pageCount;
+		} else {
+			endPage = startPage + pb.getBLOCKSIZE() - 1;// 한 화면에 보여지는 페이지 끝 번호
+		}
 		int rowNum = total - startRow + 1;
 
 		pb.setPageNum(pageNum);
