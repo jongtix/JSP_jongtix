@@ -28,6 +28,10 @@
 				<td colspan="3" class="left">${board.subject}</td>
 			</tr>
 			<tr>
+				<th>판매물품</th>
+				<td></td>
+			</tr>
+			<tr>
 				<th>글내용</th>
 				<td colspan="3" class="left"><pre>
    ${board.content}

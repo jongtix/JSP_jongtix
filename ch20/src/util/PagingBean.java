@@ -1,4 +1,4 @@
-package dto;
+package util;
 
 public class PagingBean {
 	private String pageNum;
