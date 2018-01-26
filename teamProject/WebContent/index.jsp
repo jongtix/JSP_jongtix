@@ -5,7 +5,7 @@
 </head>
 <body>
 	<%
-		response.sendRedirect("list.do");
+		response.sendRedirect("listQna.do");
 	%>
 </body>
 </html>

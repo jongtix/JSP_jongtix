@@ -7,22 +7,21 @@ import controller.CommandProcess;
 import dao.BoardDao;
 import dto.Board;
 
-public class ViewQNA implements CommandProcess {
+public class DeleteQnaFormAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
+
+		Board board = new Board();
 		BoardDao dao = BoardDao.getInstance();
-		Board board = dao.getQnaBoard(num);
+		board = dao.getQnaBoard(num);
 
 		request.setAttribute("num", num);
 		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("board", board);
 
-		return "board/viewQNA.jsp";
+		return "board/deleteQnaForm.jsp";
 	}
 
 }

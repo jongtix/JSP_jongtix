@@ -6,10 +6,10 @@
 <title>리스트 페이지</title>
 </head>
 <body>
-	<h2>게시판</h2>
+	<h2>Q&A 게시판</h2>
 	<table border="1">
 		<caption>
-			<h2>게시판</h2>
+			<h2>Q&A 게시판</h2>
 		</caption>
 		<tr>
 			<th>번호</th>
@@ -33,11 +33,11 @@
 				<c:if test="${board.del != 'Y'}">
 					<tr>
 						<td>${rowNum}</td>
-						<td><c:if test="${board.ref_level > 0}">
+						<td><c:if test="${board.re_level > 0}">
 								<img alt="" src="images/level.gif"
-									width="${board.ref_level * 10}" height="5">
+									width="${board.re_level * 10}" height="5">
 								<img alt="" src="images/re.gif">
-							</c:if><a href="view.do?num=${board.num}&pageNum=${pb.currentPage}">${board.subject}</a>
+							</c:if><a href="viewQna.do?num=${board.num}&pageNum=${pb.currentPage}">${board.subject}</a>
 							<c:if test="${board.readcount > 20}">
 								<img alt="" src="images/hot.gif">
 							</c:if></td>
@@ -55,13 +55,13 @@
 	</table>
 	<p>
 		<c:if test="${pb.startPage > pb.BLOCKSIZE}">
-			<a href="list.do?pageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
+			<a href="listQna.do?pageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
 		</c:if>
 		<c:forEach var="i" begin="${pb.startPage}" end="${pb.endPage}">
-			<a href="list.do?pageNum=${i}">[${i}]</a>
+			<a href="listQna.do?pageNum=${i}">[${i}]</a>
 		</c:forEach>
 		<c:if test="${pb.endPage < pb.pageCount}">
-			<a href="list.do?pageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
+			<a href="listQna.do?pageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
 		</c:if>
 		<a href="writeForm.do?pageNum=${pageNum}"><b>글쓰기</b></a><br>
 </body>

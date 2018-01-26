@@ -47,8 +47,6 @@ public class Controller extends HttpServlet {
 			String className = props.getProperty(command);
 			try {
 				Class commandClass = Class.forName(className);
-				System.out.println(command);
-
 				CommandProcess commandInstance = (CommandProcess) commandClass.newInstance();
 				commandMap.put(command, commandInstance);// 명령어와 객체 저장
 			} catch (Exception e) {

@@ -44,8 +44,8 @@ public class BoardDao {
 
 	public int insert(Board board) {
 		int result = 0;
-		int number = 0;
-		int num = board.getNum();
+		int number = 0; // 글 번호
+		int num = board.getNum(); // 글 존재 확인
 		try {
 			conn = getConnection();
 			sql = "select max(num) from pj_board";
@@ -137,7 +137,7 @@ public class BoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_board where del != 'Y'";
+			sql = "select count(*) from pj_board where flag = '1' and del != 'Y'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -160,11 +160,11 @@ public class BoardDao {
 		return total;
 	}
 
-	public List<Board> selectList(int startRow, int endRow) {
+	public List<Board> selectQnaList(int startRow, int endRow) {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_board where del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_board where flag = '1' and del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -185,7 +185,7 @@ public class BoardDao {
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i).charAt(0));
+				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -232,7 +232,7 @@ public class BoardDao {
 		try {
 			updateReadCount(num);
 			conn = getConnection();
-			sql = "select * from board where num = ? and del != 'Y' and flag = '1'";
+			sql = "select * from pj_board where num = ? and flag = '1' and del != 'Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -251,7 +251,7 @@ public class BoardDao {
 				board.setRe_level(rs.getInt(++i));
 				board.setIp(rs.getString(++i));
 				board.setReg_date(rs.getDate(++i));
-				board.setDel(rs.getString(++i).charAt(0));
+				board.setDel(rs.getString(++i));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -273,9 +273,9 @@ public class BoardDao {
 	public int updateBoard(Board board) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "update board set subject = ?, email = ?, content = ? where num = ?";
 		try {
 			conn = getConnection();
+			sql = "update pj_board set subject = ?, email = ?, content = ? where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getSubject());
 			pstmt.setString(2, board.getEmail());
@@ -300,10 +300,10 @@ public class BoardDao {
 	}
 
 	public int useCheck(int num, String password) {
-		String sql = "select password from board where num = ?";
 		int result = -1;
 		try {
 			conn = getConnection();
+			sql = "select password from pj_board where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -330,7 +330,7 @@ public class BoardDao {
 
 	public int deleteBoard(int num) {
 		int result = 0;
-		String sql = "update board set del = 'Y' where num = ?";
+		String sql = "update pj_board set del = 'Y' where num = ?";
 
 		try {
 			conn = getConnection();
@@ -354,7 +354,7 @@ public class BoardDao {
 
 	public boolean isReply(int num) {
 		boolean isTrue = false;
-		String sql = "select count(*) from board where ref = ? and num != ?";
+		String sql = "select count(*) from pj_board where ref = ? and num != ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

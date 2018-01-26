@@ -16,7 +16,7 @@ public class Board {
 	private int re_level;
 	private String ip;
 	private Date reg_date;
-	private char del;
+	private String del;
 
 	public int getNum() {
 		return num;
@@ -122,11 +122,11 @@ public class Board {
 		this.reg_date = reg_date;
 	}
 
-	public char getDel() {
+	public String getDel() {
 		return del;
 	}
 
-	public void setDel(char del) {
+	public void setDel(String del) {
 		this.del = del;
 	}
 

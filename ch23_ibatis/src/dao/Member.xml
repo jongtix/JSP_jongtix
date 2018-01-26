@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Member">
+	<resultMap id="MemberResult" class="dto.Member">
+		<result property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="reg_date" column="reg_date" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="MemberResult">
+		select * from member3 order by
+		id
+	</select>
+
+	<insert id="insertMember" parameterClass="dto.Member">
+		insert into member3
+		values(#id#,#password#,#name#,sysdate)
+	</insert>
+
+	<select id="selectMemberInfo" parameterClass="String" resultMap="MemberResult">
+		select * from member3 where id = #id#
+	</select>
+
+	<update id="updateMember" parameterClass="dto.Member">
+		update member3 set name = #name#, reg_date = #reg_date# where id = #id#
+	</update>
+</sqlMap>

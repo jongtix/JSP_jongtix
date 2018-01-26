@@ -28,10 +28,6 @@
 				<td colspan="3" class="left">${board.subject}</td>
 			</tr>
 			<tr>
-				<th>판매물품</th>
-				<td></td>
-			</tr>
-			<tr>
 				<th>글내용</th>
 				<td colspan="3" class="left"><pre>
    ${board.content}
@@ -40,16 +36,16 @@
 
 			<tr>
 				<td colspan="4" align="center"><input type="button" value="글수정"
-					onclick="location.href='updateForm.do?num=${board.num}&pageNum=${pageNum}'">
+					onclick="location.href='updateQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
 
 					<input type="button" value="글삭제"
-					onclick="location.href='deleteForm.do?num=${board.num}&pageNum=${pageNum}'">
+					onclick="location.href='deleteQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
 
 					<input type="button" value="답글쓰기"
-					onclick="location.href='writeForm.do?num=${board.num}&pageNum=${pageNum}&ref=${board.ref}&re_step=${board.re_step}&ref_level=${board.ref_level}'">
+					onclick="location.href='writeQnaForm.do?num=${board.num}&pageNum=${pageNum}&ref=${board.ref}&re_step=${board.re_step}&re_level=${board.re_level}'">
 
 					<input type="button" value="글목록"
-					onclick="location.href='list.do?pageNum=${pageNum}'"></td>
+					onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
 			</tr>
 		</table>
 	</form>
