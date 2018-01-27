@@ -42,7 +42,7 @@ public class BoardDao {
 		return conn;
 	}
 
-	public int insert(Board board) {
+	public int insertQna(Board board) {
 		int result = 0;
 		int number = 0; // 글 번호
 		int num = board.getNum(); // 글 존재 확인
@@ -56,15 +56,23 @@ public class BoardDao {
 				number += 1; // 새로운 글번호
 				pstmt.close();
 				if (num != 0) { // 답변글일 경우
-					sql = "update pj_board set re_step = re_step + 1 where ref = ? and re_step > ?";
-					pstmt = conn.prepareStatement(sql);
-					int i = 0;
-					pstmt.setInt(++i, board.getRef());
-					pstmt.setInt(++i, board.getRe_step());
-					pstmt.executeUpdate();
-					pstmt.close();
-					board.setRe_level(board.getRe_level() + 1);
-					board.setRe_step(board.getRe_step() + 1);
+					String id = board.getWriter();
+					String password = board.getPassword();
+					result = managerCheck(id, password);
+					if (result == 1) {
+						conn = getConnection();
+						sql = "update pj_board set re_step = re_step + 1 where ref = ? and re_step > ?";
+						pstmt = conn.prepareStatement(sql);
+						int i = 0;
+						pstmt.setInt(++i, board.getRef());
+						pstmt.setInt(++i, board.getRe_step());
+						pstmt.executeUpdate();
+						pstmt.close();
+						board.setRe_level(board.getRe_level() + 1);
+						board.setRe_step(board.getRe_step() + 1);
+					} else {
+						return result = 0;
+					}
 				} else if (num == 0) { // 답변글이 아닐 경우
 					board.setRef(number);
 				}
@@ -100,44 +108,40 @@ public class BoardDao {
 			}
 		}
 		return result;
-
-		/*
-		 * int result = 0; String sql1 = "select max(num) from board"; String sql2 =
-		 * "insert into board(num, writer, subject, content, email, readcount, password, ref, re_step, ref_level, ip, reg_date) values(?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)"
-		 * ; String sql3 =
-		 * "update board set re_step = re_step + 1 where ref = ? and re_step > ?"; int
-		 * num = board.getNum(); int newNum = 0; try { conn = getConnection(); pstmt =
-		 * conn.prepareStatement(sql1); rs = pstmt.executeQuery(); if (rs.next()) {
-		 * newNum = rs.getInt(1) + 1; } pstmt.close(); if (num == 0) { // 답변 아닐 때
-		 * board.setRef(num); } else { // 답변일 때 pstmt = conn.prepareStatement(sql3); int
-		 * i = 0; pstmt.setInt(++i, board.getRef()); pstmt.setInt(++i,
-		 * board.getRe_step());
-		 * 
-		 * result = pstmt.executeUpdate(); pstmt.close();
-		 * 
-		 * board.setRef_level(board.getRef_level() + 1);
-		 * board.setRe_step(board.getRe_step() + 1); }
-		 * 
-		 * pstmt = conn.prepareStatement(sql2); int i = 0; pstmt.setInt(++i, newNum);
-		 * pstmt.setString(++i, board.getWriter()); pstmt.setString(++i,
-		 * board.getSubject()); pstmt.setString(++i, board.getContent());
-		 * pstmt.setString(++i, board.getEmail()); pstmt.setString(++i,
-		 * board.getPassword()); pstmt.setInt(++i, board.getRef()); pstmt.setInt(++i,
-		 * board.getRe_step()); pstmt.setInt(++i, board.getRef_level());
-		 * pstmt.setString(++i, board.getIp());
-		 * 
-		 * result = pstmt.executeUpdate(); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); } finally { try { if (pstmt != null)
-		 * pstmt.close(); if (conn != null) conn.close(); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); } } return result;
-		 */
 	}
 
-	public int getTotal() {
+	public int getQnaTotal() {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_board where flag = '1' and del != 'Y'";
+			sql = "select count(*) from pj_board where flag like '1%' and del != 'Y'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return total;
+	}
+
+	public int getFaqTotal() {
+		int total = 0;
+		try {
+			conn = getConnection();
+			sql = "select count(*) from pj_board where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y')";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -164,7 +168,53 @@ public class BoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_board where flag = '1' and del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_board where flag like '1%' and del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Board b = new Board();
+				int i = 1;
+				b.setNum(rs.getInt(++i));
+				b.setFlag(rs.getInt(++i));
+				b.setWriter(rs.getString(++i));
+				b.setSubject(rs.getString(++i));
+				b.setContent(rs.getString(++i));
+				b.setEmail(rs.getString(++i));
+				b.setReadcount(rs.getInt(++i));
+				b.setPassword(rs.getString(++i));
+				b.setRef(rs.getInt(++i));
+				b.setRe_step(rs.getInt(++i));
+				b.setRe_level(rs.getInt(++i));
+				b.setIp(rs.getString(++i));
+				b.setReg_date(rs.getDate(++i));
+				b.setDel(rs.getString(++i));
+
+				list.add(b);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return list;
+	}
+
+	public List<Board> selectFaqList(int startRow, int endRow) {
+		List<Board> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			sql = "select * from (select rownum rn, a.* from (select * from pj_board where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y') order by ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -232,7 +282,7 @@ public class BoardDao {
 		try {
 			updateReadCount(num);
 			conn = getConnection();
-			sql = "select * from pj_board where num = ? and flag = '1' and del != 'Y'";
+			sql = "select * from pj_board where num = ? and flag like '1%' and del != 'Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -270,9 +320,8 @@ public class BoardDao {
 		return board;
 	}
 
-	public int updateBoard(Board board) {
+	public int updateQnaBoard(Board board) {
 		int result = 0;
-		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
 			sql = "update pj_board set subject = ?, email = ?, content = ? where num = ?";
@@ -294,7 +343,29 @@ public class BoardDao {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+		}
+		return result;
+	}
 
+	public int moveFac(int num) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			sql = "update pj_board set flag = 11 where num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		return result;
 	}
@@ -328,7 +399,36 @@ public class BoardDao {
 		return result;
 	}
 
-	public int deleteBoard(int num) {
+	public int managerCheck(String id, String password) {
+		int result = -1;
+		try {
+			conn = getConnection();
+			sql = "select password from pj_member where id = ? and manager_flag = 'Y'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString(1).equals(password))
+					result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+	}
+
+	public int deleteQnaBoard(int num) {
 		int result = 0;
 		String sql = "update pj_board set del = 'Y' where num = ?";
 

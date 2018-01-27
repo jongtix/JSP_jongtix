@@ -11,7 +11,6 @@
 
 		Board board = new Board();
 
-		board.setNum(i);
 		int r = (int) (Math.random() * 4);
 		board.setFlag(r);
 		board.setWriter("writer" + i);
@@ -24,7 +23,6 @@
 
 		board.setReadcount(0);
 		board.setPassword("1111");
-		board.setRef(i);
 		board.setRe_step(0);
 		board.setRe_level(0);
 		board.setIp("127.0.0.1");
@@ -38,7 +36,7 @@
 		board.setReg_date(new java.sql.Date(new Date(randomDate).getTime()));
 
 		BoardDao dao = BoardDao.getInstance();
-		int result = dao.insert(board);
+		int result = dao.insertQna(board);
 	} //for문 끝.
 %>
 완료!!

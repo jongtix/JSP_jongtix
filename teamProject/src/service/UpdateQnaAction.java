@@ -31,7 +31,7 @@ public class UpdateQnaAction implements CommandProcess {
 			board.setSubject(subject);
 			board.setEmail(email);
 			board.setContent(content);
-			result = dao.updateBoard(board);
+			result = dao.updateQnaBoard(board);
 			if (result > 0) {
 				view = "listQna.do";
 			} else {

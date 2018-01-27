@@ -21,8 +21,7 @@ public class WriteQnaAction implements CommandProcess {
 		BoardDao dao = BoardDao.getInstance();
 
 		int num = Integer.parseInt(request.getParameter("num"));
-		int flag = Integer.parseInt(request.getParameter("flag"));
-		System.out.println("flag = " + flag);
+		int flag = 1;
 		String writer = request.getParameter("writer");
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");
@@ -43,7 +42,7 @@ public class WriteQnaAction implements CommandProcess {
 		board.setRe_step(re_step);
 		board.setRe_level(re_level);
 
-		int result = dao.insert(board);
+		int result = dao.insertQna(board);
 		request.setAttribute("result", result);
 		request.setAttribute("board", board);
 		request.setAttribute("pageNum", pageNum);

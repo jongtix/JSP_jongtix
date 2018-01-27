@@ -11,21 +11,21 @@ import dto.Board;
 import util.Paging;
 import util.PagingBean;
 
-public class ListQnaAction implements CommandProcess {
+public class ListFaqAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		BoardDao dao = BoardDao.getInstance();
-		int total = dao.getQnaTotal();
+		int total = dao.getFaqTotal();
 		Paging pg = new Paging();
 		PagingBean pb = pg.getPaging(request, total);
-		List<Board> list = dao.selectQnaList(pb.getStartRow(), pb.getEndRow());
+		List<Board> list = dao.selectFaqList(pb.getStartRow(), pb.getEndRow());
 
 		request.setAttribute("total", total);
 		request.setAttribute("list", list);
 		request.setAttribute("pb", pb);
 
-		return "board/listQna.jsp";
+		return "board/listFaq.jsp";
 	}
 
 }

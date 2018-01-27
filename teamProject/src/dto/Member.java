@@ -1,13 +1,13 @@
 package dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Member {
 	private String id;
 	private String password;
 	private String name;
-	private int rrnum1;
-	private int rrnum2;
+	private String rrnum1;
+	private String rrnum2;
 	private String zipno;
 	private String address1;
 	private String address2;
@@ -17,7 +17,7 @@ public class Member {
 	private String email;
 	private Date regdate;
 	private char use_flag;
-	private char manager_falg;
+	private char manager_flag;
 
 	public String getId() {
 		return id;
@@ -43,19 +43,19 @@ public class Member {
 		this.name = name;
 	}
 
-	public int getRrnum1() {
+	public String getRrnum1() {
 		return rrnum1;
 	}
 
-	public void setRrnum1(int rrnum1) {
+	public void setRrnum1(String rrnum1) {
 		this.rrnum1 = rrnum1;
 	}
 
-	public int getRrnum2() {
+	public String getRrnum2() {
 		return rrnum2;
 	}
 
-	public void setRrnum2(int rrnum2) {
+	public void setRrnum2(String rrnum2) {
 		this.rrnum2 = rrnum2;
 	}
 
@@ -131,12 +131,12 @@ public class Member {
 		this.use_flag = use_flag;
 	}
 
-	public char getManager_falg() {
-		return manager_falg;
+	public char getManager_flag() {
+		return manager_flag;
 	}
 
-	public void setManager_falg(char manager_falg) {
-		this.manager_falg = manager_falg;
+	public void setManager_flag(char manager_flag) {
+		this.manager_flag = manager_flag;
 	}
 
 }
