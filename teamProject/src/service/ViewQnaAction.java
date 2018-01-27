@@ -18,7 +18,9 @@ public class ViewQnaAction implements CommandProcess {
 
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
+
 		BoardDao dao = BoardDao.getInstance();
+		dao.updateReadCount(num);
 		Board board = dao.getQnaBoard(num);
 
 		request.setAttribute("num", num);

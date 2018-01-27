@@ -30,7 +30,7 @@ public class Controller extends HttpServlet {
 		try {
 			String filePath = config.getServletContext().getRealPath(conf);
 			fi = new FileInputStream(filePath);
-			props.load(fi);// command.properties파일로부터 Properties객체에 저장
+			props.load(fi);
 		} catch (IOException e) {
 			throw new ServletException();
 		} finally {
@@ -40,7 +40,7 @@ public class Controller extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		} // finally 끝.
+		}
 		Iterator keys = props.keySet().iterator();// 키를 iterator에 저장
 		while (keys.hasNext()) {
 			String command = (String) keys.next();

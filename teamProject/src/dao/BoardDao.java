@@ -280,7 +280,6 @@ public class BoardDao {
 	public Board getQnaBoard(int num) {
 		Board board = new Board();
 		try {
-			updateReadCount(num);
 			conn = getConnection();
 			sql = "select * from pj_board where num = ? and flag like '1%' and del != 'Y'";
 			pstmt = conn.prepareStatement(sql);
