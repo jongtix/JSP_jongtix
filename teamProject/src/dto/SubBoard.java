@@ -4,16 +4,12 @@ import java.util.Date;
 
 public class SubBoard {
 	private int sub_num;
-	private String writer;
-	private String content;
-	private String email;
-	private String password;
+	private String sub_writer;
+	private String sub_content;
+	private String sub_password;
 	private int ref;
-	private int re_step;
-	private int re_level;
-	private String ip;
 	private Date reg_date;
-	private char del;
+	private String del;
 
 	public int getSub_num() {
 		return sub_num;
@@ -23,36 +19,28 @@ public class SubBoard {
 		this.sub_num = sub_num;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getSub_writer() {
+		return sub_writer;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setSub_writer(String sub_writer) {
+		this.sub_writer = sub_writer;
 	}
 
-	public String getContent() {
-		return content;
+	public String getSub_content() {
+		return sub_content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setSub_content(String sub_content) {
+		this.sub_content = sub_content;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getSub_password() {
+		return sub_password;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSub_password(String sub_password) {
+		this.sub_password = sub_password;
 	}
 
 	public int getRef() {
@@ -63,30 +51,6 @@ public class SubBoard {
 		this.ref = ref;
 	}
 
-	public int getRe_step() {
-		return re_step;
-	}
-
-	public void setRe_step(int re_step) {
-		this.re_step = re_step;
-	}
-
-	public int getRe_level() {
-		return re_level;
-	}
-
-	public void setRe_level(int re_level) {
-		this.re_level = re_level;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 	public Date getReg_date() {
 		return reg_date;
 	}
@@ -95,11 +59,11 @@ public class SubBoard {
 		this.reg_date = reg_date;
 	}
 
-	public char getDel() {
+	public String getDel() {
 		return del;
 	}
 
-	public void setDel(char del) {
+	public void setDel(String del) {
 		this.del = del;
 	}
 

@@ -3,18 +3,20 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import model.Member;
-import util.Connections;
 
 public class MemberDao1 {
 	Connection conn = null;
 
 	private Connection getConnection() {
+		Connection conn = null;
 		DataSource ds = null;
 		try {
 			Context init = new InitialContext();
@@ -30,10 +32,8 @@ public class MemberDao1 {
 	public int userCheck(String id, String password) {
 		int result = 2;// 정상1, 패스워드 이상0, 아이디 없을 때 2
 		PreparedStatement pstmt = null;
-		String sql = "select password from member2 where id=?";
-		Connection conn = null;
+		String sql = "select password from member where id=? and use_flag='0'";
 		try {
-			// conn = Connections.getInstance().getConnection();
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -47,6 +47,7 @@ public class MemberDao1 {
 					result = 0;// 패스워드 이상0
 			} else
 				result = 2;// 아이디 없을 때 2
+			conn.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -63,25 +64,25 @@ public class MemberDao1 {
 		return result;
 	}
 
+	// 회원체크 메소드
 	public int userCheck(String id) {
-		int result = 2;// 정상1, 아이디 없을 때 2
+		int result = 2;// 아이디가 있을 때1, 아이디 없을 때 2
 		PreparedStatement pstmt = null;
-		String sql = "select count(*) from member2 where id=?";
-		Connection conn = null;
+		String sql = "select count(*) from member where id=?";
 		try {
-			// conn = Connections.getInstance().getConnection();
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				int cnt = rs.getInt(1);
-				if (cnt > 0) {
-					result = 1;
-				} else {
-					result = 2;
-				}
+
+				if (cnt > 0)
+					result = 1;// 아이디가 있을 때1
+				else
+					result = 2;// 아이디가 없을 때 2
 			}
+			conn.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -94,28 +95,129 @@ public class MemberDao1 {
 				System.out.println(e.getMessage());
 			}
 		}
+		System.out.println("result=" + result);
 		return result;
 	}
 
+	// 이메일 체크 메소드
 	public int emailCheck(String email) {
 		int result = 2;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+		email = "%" + email + "%";// 와일드카드 문자 처리
+		System.out.print("email=" + email);
+		String sql = "select count(*) from member where email like ? and use_flag='0'";
 		ResultSet rs = null;
-		String sql = "select count(*) from member2 where email=?";
+		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
+			System.out.println("Y");
+			System.out.println(conn == null);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			if (rs.next()) {// email이 존재하지 않으면:1, 존재하면 2(사용불가)
 				int cnt = rs.getInt(1);
-				if (cnt > 0) {
-					result = 2;
-				} else {
-					result = 1;
-				}
+				if (cnt > 0)
+					result = 2;// 기존에 email이 존재함,
+				else
+					result = 1;// 사용할수 있는 email이면
+			} else {
+				result = 1;
 			}
+			conn.close();
+		} catch (Exception e) {
+			System.out.println("오류:" + e.getMessage());
+		}
+		return result;
+	}// 메소드끝.
+
+	// 회원가입 처리 메소드
+	public int insertMember(Member member) {
+		System.out.println("-----------------");
+		System.out.println(member.getId());
+		System.out.println(member.getPassword());
+		System.out.println(member.getName());
+		System.out.println(member.getBirth());
+		System.out.println(member.getZipno());
+		System.out.println(member.getAddress1());
+		System.out.println(member.getAddress2());
+		System.out.println(member.getEmail());
+		System.out.println("-----------------");
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "insert into member(id, password, name, birth, zipno,"
+				+ "                            address1, address2, tel1,tel2,tel3, email)"
+				+ " values(?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(sql);
+			int i = 0;
+			pstmt.setString(++i, member.getId());
+			pstmt.setString(++i, member.getPassword());
+			pstmt.setString(++i, member.getName());
+			pstmt.setString(++i, member.getBirth());// date
+			pstmt.setString(++i, member.getZipno());
+			pstmt.setString(++i, member.getAddress1());
+			pstmt.setString(++i, member.getAddress2());
+			pstmt.setString(++i, member.getTel1());
+			pstmt.setString(++i, member.getTel2());
+			pstmt.setString(++i, member.getTel3());
+			pstmt.setString(++i, member.getEmail());
+
+			result = pstmt.executeUpdate();//
+			conn.commit();// 정상인 경우 db에 저장
+			conn.close();
+		} catch (Exception e) {// 비정상인 경우 rollback;
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+			}
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				conn.setAutoCommit(true);// 자동 저장 기능 활성화
+				pstmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return result;
+	}// insertMember()메소드 끝.
+
+	// 회원리스트 조회 메소드
+	public ArrayList<Member> getMemberList() {
+		ArrayList<Member> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		String sql = "select * from member where use_flag='0' order by id";
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				System.out.println("X");
+				int i = 0;
+				// member객체 생성
+				Member member = new Member();
+				// member객체 속성 저장
+				member.setId(rs.getString(++i));
+				member.setPassword(rs.getString(++i));
+				member.setName(rs.getString(++i));
+				member.setBirth(rs.getString(++i));
+				member.setZipno(rs.getString(++i));
+				member.setAddress1(rs.getString(++i));
+				member.setAddress2(rs.getString(++i));
+				member.setTel1(rs.getString(++i));
+				member.setTel2(rs.getString(++i));
+				member.setTel3(rs.getString(++i));
+				member.setEmail(rs.getString(++i));
+				member.setRegdate(rs.getDate(++i));
+				// 회원정보 list에 저장
+				list.add(member);
+				System.out.println("Y");
+			}
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -130,55 +232,111 @@ public class MemberDao1 {
 				System.out.println(e.getMessage());
 			}
 		}
-		return result;
+		return list;
 	}
 
-	public int insertMember(Member member) {
-		int result = 0;
-		// 연결 얻기
-		// Connection conn = Connections.getInstance().getConnection();
-		conn = getConnection();
-
+	// 회원정보 조회
+	public Member selectMemberInfo(String memberId) {
+		// 멤버객체 생성
+		Member member = new Member();
 		PreparedStatement pstmt = null;
-		String sql = "insert into member2(id, password, name, birth, zipno, address1, address2, tel, email) "
-				+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		ResultSet rs = null;
+		String sql = "select * from member where id =? and use_flag='0'";
 		try {
-			// Autocommit disable;
-			conn.setAutoCommit(false);
-			// 3단계 - 1.쿼리 객체 설정
-			pstmt = conn.prepareStatement(sql);// 기본 정보 저장
-			pstmt.setString(1, member.getId());
-			pstmt.setString(2, member.getPassword());
-			pstmt.setString(3, member.getName());
-			pstmt.setString(4, member.getBirth());
-			pstmt.setString(5, member.getZipno());
-			pstmt.setString(6, member.getAddress1());
-			pstmt.setString(7, member.getAddress2());
-			pstmt.setString(8, member.getTel());
-			pstmt.setString(9, member.getEmail());
-
-			result = pstmt.executeUpdate();// 기본 정보 저장 처리
-			if (result > 0) {
-				conn.commit();// DB에 저장 처리
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int i = 0;
+				// 멤버객체 속성 저장
+				member.setId(rs.getString(++i));
+				member.setPassword(rs.getString(++i));
+				member.setName(rs.getString(++i));
+				member.setBirth(rs.getString(++i));
+				member.setZipno(rs.getString(++i));
+				member.setAddress1(rs.getString(++i));
+				member.setAddress2(rs.getString(++i));
+				member.setTel1(rs.getString(++i));
+				member.setTel2(rs.getString(++i));
+				member.setTel3(rs.getString(++i));
+				member.setEmail(rs.getString(++i));
 			}
-			System.out.println(result);
 		} catch (Exception e) {
-			try {
-				conn.rollback();
-			} catch (Exception ex) {
-			}
-			System.out.print(e.getMessage());
+			System.out.println(e.getMessage());
 		} finally {
 			try {
-				conn.setAutoCommit(true);// 예외 방생과 상관없이 처리
+				if (rs != null)
+					rs.close();
 				if (pstmt != null)
 					pstmt.close();
 				if (conn != null)
 					conn.close();
 			} catch (Exception e) {
-				System.out.print(e.getMessage());
+			}
+		}
+		// 멤버객체 리턴
+		return member;
+	}
+
+	// 회원정보 수정 메소드
+	public int updateMember(Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "update member " + " set name=?,zipno=?," + " address1=?,address2=?,tel1=?,tel2=?,tel3=?,"
+				+ " email=?" + " where id=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			int i = 0;
+			pstmt.setString(++i, member.getName());
+			// pstmt.setString(++i, member.getBirth());
+			pstmt.setString(++i, member.getZipno());
+			pstmt.setString(++i, member.getAddress1());
+			pstmt.setString(++i, member.getAddress2());
+			pstmt.setString(++i, member.getTel1());
+			pstmt.setString(++i, member.getTel2());
+			pstmt.setString(++i, member.getTel3());
+			pstmt.setString(++i, member.getEmail());
+			pstmt.setString(++i, member.getId());
+
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
 			}
 		}
 		return result;
-	}// inserMember()메소드 끝.
+	}// 회원정보 수정메소드 끝.
+
+	// 회원탈퇴 처리 메소드
+	public int deletMember(String id) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "update member set use_flag = '1' where id=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return result;
+	}
 }

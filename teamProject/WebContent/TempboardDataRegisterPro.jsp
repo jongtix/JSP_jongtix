@@ -1,3 +1,5 @@
+<%@page import="dto.SubBoard"%>
+<%@page import="dao.SubBoardDao"%>
 <%@page import="dao.BoardDao"%>
 <%@page import="dto.Board"%>
 <%@page import="sun.security.krb5.Confounder"%>
@@ -8,6 +10,14 @@
 <!-- 임시 boardData 생성 프로세스 -->
 <%
 	for (int i = 1; i < 111; i++) {
+		SubBoard sub = new SubBoard();
+		sub.setSub_writer("MemberId" + i);
+		sub.setSub_content("내용" + i);
+		sub.setSub_password("1111");
+		sub.setRef(93);
+
+		SubBoardDao d = SubBoardDao.getInstance();
+		d.insertSubBoard(sub);
 
 		Board board = new Board();
 

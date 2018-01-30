@@ -1,7 +1,6 @@
 package dao;
 
 import java.io.Reader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import dto.Member;
 public class MemberDao {
 	private static MemberDao instance;
 	private static SqlMapClient sqlMapper;
+
 	// 초기화
 	static {
 		try {
@@ -26,9 +26,10 @@ public class MemberDao {
 			System.out.println(e.getMessage());
 		}
 	}// static 끝.
-		// 생성자 private
 
+	// 생성자 private
 	private MemberDao() {
+
 	}
 
 	// getInstance public
@@ -62,5 +63,20 @@ public class MemberDao {
 
 	public int updateMember(Member member) throws Exception {
 		return sqlMapper.update("updateMember", member);
+	}
+
+	public int deleteMember(String id) throws Exception {
+		return sqlMapper.delete("deleteMember", id);
+	}
+
+	public int useCheck(String id, String password) throws Exception {
+		int result = -1;
+		Member member = new Member();
+		member.setId(id);
+		member.setPassword(password);
+		String dbpass = (String) sqlMapper.queryForObject("userCheck", member);
+		if (password.equals(dbpass))
+			result = 1;
+		return result;
 	}
 }

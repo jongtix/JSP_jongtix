@@ -5,6 +5,11 @@
 <head>
 <title>Q&A 게시글 조회 폼</title>
 <script type="text/javascript" src="/teamProject/js/script.js"></script>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+	</script>
+</c:if>
 </head>
 <body>
 	<div align="center">
@@ -43,9 +48,8 @@
 				<tr>
 					<td><input type="button" value="목록보기"
 						onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
-					<td align="center"><c:if test="${error != null}">${error}<br>
-						</c:if><input type="submit" value="글 수정"> <input type="button"
-						value="취소"
+					<td align="center"><input type="submit" value="글 수정">
+						<input type="button" value="취소"
 						onclick="location.href='viewQna.do?num=${num}&pageNum=${pageNum}'">
 						<input type="reset" value="다시작성"></td>
 				</tr>

@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -12,6 +13,10 @@ import dto.Member;
 
 public class MemberDao {
 	private static MemberDao instance;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql = "";
 
 	private MemberDao() {
 	}
@@ -35,6 +40,7 @@ public class MemberDao {
 		return conn;
 	}
 
+	/* 회원 추가 */
 	public int insertMember(Member member) {
 		Connection conn = null;
 		int result = 0;
@@ -61,10 +67,10 @@ public class MemberDao {
 			pstmt.setString(++i, String.valueOf(member.getUse_flag()));
 			pstmt.setString(++i, String.valueOf(member.getManager_flag()));
 
-			result = pstmt.executeUpdate();//
-			conn.commit();// 정상인 경우 db에 저장
+			result = pstmt.executeUpdate();
+			conn.commit();
 			conn.close();
-		} catch (Exception e) {// 비정상인 경우 rollback;
+		} catch (Exception e) {
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -72,10 +78,40 @@ public class MemberDao {
 			System.out.println(e.getMessage());
 		} finally {
 			try {
-				conn.setAutoCommit(true);// 자동 저장 기능 활성화
+				conn.setAutoCommit(true);
 				pstmt.close();
 				conn.close();
 			} catch (Exception e) {
+			}
+		}
+		return result;
+	}
+
+	/* 회원 확인 */
+	public int memberCheck(String id, String password) {
+		int result = -1;
+		try {
+			conn = getConnection();
+			sql = "select password from pj_member where id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString(1).equals(password)) // 확인
+					result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 		}
 		return result;

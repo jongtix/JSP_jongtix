@@ -23,7 +23,7 @@ public class MoveFaqAction implements CommandProcess {
 			error = "관리자ID와 비밀번호를 확인해주세요.";
 			view = "moveFaqForm.do";
 		} else if (result == 1) {
-			result = dao.moveFac(num);
+			result = dao.moveFaq(num);
 			if (result > 0) {
 				view = "listFaq.do";
 			} else {

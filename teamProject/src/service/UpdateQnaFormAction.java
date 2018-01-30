@@ -14,6 +14,7 @@ public class UpdateQnaFormAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
+		String error = (String) request.getAttribute("error");
 
 		Board board = new Board();
 		BoardDao dao = BoardDao.getInstance();
@@ -22,6 +23,7 @@ public class UpdateQnaFormAction implements CommandProcess {
 		request.setAttribute("num", num);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("board", board);
+		request.setAttribute("error", error);
 
 		return "board/updateQnaForm.jsp";
 	}

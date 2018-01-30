@@ -1,5 +1,6 @@
 <%@page import="dao.MemberDao"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
 %>
@@ -9,16 +10,14 @@
 	MemberDao dao = MemberDao.getInstance();
 	int result = dao.insertMember(member);
 	if (result > 0) {
-		out.print("<script>alert('저장 성공');location.href='list.jsp';</script>");
+		out.print("<script>");
+		out.print("alert('회원가입성공!');");
+		out.print("location.href='list.jsp';");
+		out.print("</script>");
 	} else {
-		out.print("<script>alert('저장 실패');history.back();</script>");
+		out.print("<script>");
+		out.print("alert('회원가입실패!');");
+		out.print("history.go(-1);");
+		out.print("</script>");
 	}
 %>
-<html>
-<head>
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>

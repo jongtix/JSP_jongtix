@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ** ibatis와 mybatis의 차이점 1) typeAlias가 configuration.xml로 이동. 2) sqlMap 
+	이 mapper로 변경. 3) class, resultClass,parameterClass 가 type, resultType, parameterType으로 
+	변경 4) 바인딩 변수 #변수# 이 #{변수}로 바뀜 -->
+<mapper namespace="Board">
+
+
+
+</mapper>

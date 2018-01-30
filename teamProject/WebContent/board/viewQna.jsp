@@ -4,15 +4,21 @@
 <html>
 <head>
 <title>Q&A 보기</title>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+	</script>
+</c:if>
 </head>
 <body>
 	<div align="center">
 		<h2>Q&A글 내용 보기</h2>
-		<form action="">
+		<form action="writeSubBoard.do">
+			<input type="hidden" value="${pageNum}" name="pageNum">
 			<table width="500" border="1" align="center">
 				<tr>
 					<th>글번호</th>
-					<td>${board.num}</td>
+					<td><input type="hidden" value="${board.num}" name="num">${board.num}</td>
 					<th>조회수</th>
 					<td>${board.readcount}</td>
 				</tr>
@@ -26,13 +32,57 @@
 
 				<tr>
 					<th>글제목</th>
-					<td colspan="3" class="left">${board.subject}</td>
+					<td colspan="3">${board.subject}</td>
 				</tr>
 				<tr>
 					<th>글내용</th>
-					<td colspan="3" class="left"><pre>
+					<td colspan="3"><pre>
    ${board.content}
    </pre></td>
+				</tr>
+				<c:if test="${total == 0}">
+					<tr>
+						<td colspan="4">댓글이 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${total != 0}">
+					<tr>
+						<th>댓글목록</th>
+
+						<td colspan="3"><table style="width: 300px">
+								<c:forEach var="s" items="${subList}" varStatus="n">
+									<tr>
+										<td height="1">${s.sub_content}</td>
+										<td height="1">${s.sub_writer}</td>
+										<td height="1">${s.reg_date}</td>
+										<td><input type="button" value="삭제"
+											onclick="location.href='deleteSubBoardForm.do?num=${board.num}&sub_num=${s.sub_num}&pageNum=${pageNum}&subPageNum=${subPageNum}'"></td>
+									</tr>
+								</c:forEach>
+
+								<tr>
+									<td colspan="4" align="center"><c:if
+											test="${pb.startPage > pb.BLOCKSIZE}">
+											<a
+												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
+										</c:if> <c:forEach var="i" begin="${pb.startPage}"
+											end="${pb.endPage}">
+											<a
+												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${i}">[${i}]</a>
+										</c:forEach> <c:if test="${pb.endPage < pb.pageCount}">
+											<a
+												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
+										</c:if></td>
+								</tr>
+							</table></td>
+					</tr>
+				</c:if>
+				<tr>
+					<th>댓글 등록</th>
+					<td><input type="text" name="sub_content"></td>
+					<td><input type="text" name="sub_writer"><br> <input
+						type="password" name="sub_password"></td>
+					<td><input type="submit" value="댓글달기"></td>
 				</tr>
 				<tr>
 					<td align="center"><input type="button" value="글목록"

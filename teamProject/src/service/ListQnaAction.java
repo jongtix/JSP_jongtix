@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.CommandProcess;
 import dao.BoardDao;
+import dao.SubBoardDao;
 import dto.Board;
+import dto.SubBoard;
 import util.Paging;
 import util.PagingBean;
 

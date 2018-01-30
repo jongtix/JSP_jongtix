@@ -4,6 +4,11 @@
 <head>
 <title>Insert title here</title>
 <script type="text/javascript" src="/teamProject/js/askDelete.js"></script>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+	</script>
+</c:if>
 </head>
 <body>
 	<div align="center">
@@ -22,9 +27,8 @@
 					<td><input type="password" name="password"></td>
 				</tr>
 				<tr height="30">
-					<td colspan=2 align="center"><c:if test="${!empty error}">${error}<br>
-						</c:if> <input type="submit" value="FAQ로 글 이동"> <input
-						type="button" value="글목록"
+					<td colspan=2 align="center"><input type="submit"
+						value="FAQ로 글 이동"> <input type="button" value="글목록"
 						onclick="location.href='listQna.do?pageNum=${pageNum}'">
 				</tr>
 			</table>

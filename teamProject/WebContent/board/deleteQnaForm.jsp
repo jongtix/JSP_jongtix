@@ -4,6 +4,11 @@
 <head>
 <title>Insert title here</title>
 <script type="text/javascript" src="/teamProject/js/askDelete.js"></script>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+	</script>
+</c:if>
 </head>
 <body>
 	<div align="center">
@@ -20,9 +25,8 @@
 				<tr height="30">
 					<td align="center"><input type="button" value="글목록"
 						onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
-					<td align="center"><c:if test="${!empty error}">${error}<br>
-						</c:if><input type="submit" value="글삭제"> <input type="button"
-						value="취소"
+					<td align="center"><input type="submit" value="글삭제"> <input
+						type="button" value="취소"
 						onclick="location.href='viewQna.do?num=${num}&pageNum=${pageNum}'">
 				</tr>
 			</table>

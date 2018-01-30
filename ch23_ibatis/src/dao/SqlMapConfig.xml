@@ -12,4 +12,5 @@
 		</dataSource>
 	</transactionManager>
 	<sqlMap resource="dao/Member.xml" />
+	<sqlMap resource="dao/Login.xml" />
 </sqlMapConfig>

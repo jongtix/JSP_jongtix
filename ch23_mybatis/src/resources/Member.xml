@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ** ibatis와 mybatis의 차이점 1) typeAlias가 configuration.xml로 이동. 2) sqlMap 
+	이 mapper로 변경. 3) class, resultClass,parameterClass 가 type, resultType, parameterType으로 
+	변경 4) 바인딩 변수 #변수# 이 #{변수}로 바뀜 -->
+<mapper namespace="Member">
+
+	<resultMap id="MemberResult" type="Member">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="reg_date" column="reg_date" />
+	</resultMap>
+
+	<select id="selectAllMembers" resultMap="MemberResult">
+		select * from member3
+		order by reg_date desc
+	</select>
+
+	<select id="selectMemberInfo" parameterType="String" resultType="Member">
+		select * from member3 where id=#{id}
+	</select>
+
+	<update id="updateMemberInfo" parameterType="Member">
+		update member3
+		set
+		name=#{name},
+		reg_date=#{reg_date}
+		where id=#{id}
+	</update>
+	<update id="updateMemberInfo2" parameterType="Member">
+		update member3
+		set
+		name=#{name},
+		password=#{password},
+		reg_date=#{reg_date}
+		where id=#{id}
+	</update>
+
+	<select id="selectPassword" parameterType="String" resultType="String">
+		select password from member3 where id = #{id}
+	</select>
+
+	<delete id="deleteMember" parameterType="String">
+		delete from member3
+		where id = #{id}
+	</delete>
+
+	<insert id="insertMember" parameterType="Member">
+		insert into member3
+		values(#{id}, #{password}, #{name}, sysdate)
+	</insert>
+
+	<select id="selectIdCount" parameterMap="String" resultType="Integer">
+		select count(*) from member3 where id = #{id}
+	</select>
+</mapper>

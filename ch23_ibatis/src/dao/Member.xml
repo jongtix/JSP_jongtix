@@ -16,15 +16,27 @@
 	</select>
 
 	<insert id="insertMember" parameterClass="dto.Member">
-		insert into member3
+		insert into
+		member3(id,password,name,reg_date)
 		values(#id#,#password#,#name#,sysdate)
 	</insert>
 
 	<select id="selectMemberInfo" parameterClass="String" resultMap="MemberResult">
-		select * from member3 where id = #id#
+		select * from member3 where id=#id#
 	</select>
 
 	<update id="updateMember" parameterClass="dto.Member">
-		update member3 set name = #name#, reg_date = #reg_date# where id = #id#
+		update member3 set
+		name=#name#, reg_date=#reg_date#
+		where id=#id#
 	</update>
+
+	<delete id="deleteMember" parameterClass="String">
+		delete member3 where
+		id=#id#
+	</delete>
+
+	<select id="userCheck" parameterClass="dto.Member" resultClass="String">
+		select password from member3 where id=#id#
+	</select>
 </sqlMap>
