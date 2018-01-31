@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>:even, :odd</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('h1').css('background', 'orange').filter(':even').css('color', 'red')
+				.end() // 앞의 filter를 종료하고 한단계 뒤로 감
+				.filter(':odd').css('color', 'blue');
+	});
+</script>
+</head>
+<body>
+	<h1>화요일</h1>
+	<h1>눈온다</h1>
+	<h1>귀찮다</h1>
+	<h1>학원 가기 싫다</h1>
+	<h1>이왕 지각한거</h1>
+	<h1>안 갈래</h1>
+</body>
+</html>

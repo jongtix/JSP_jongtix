@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>:first, :last</title>
+<style type="text/css">
+table {
+	table-layout: auto;
+	width: 75%;
+}
+
+td {
+	color: blue;
+	font-weight: bold;
+}
+
+.selectedstyle {
+	color: red;
+	font-size: 20pt;
+	background-color: pink;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('td:first').css({
+			'color' : 'red',
+			'font-size' : '20pt',
+			'background-color' : 'pink'
+		});
+	});
+</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>산딸기</td>
+			<td>집딸기</td>
+		</tr>
+		<tr>
+			<td>판딸기</td>
+			<td>죽은딸기</td>
+		</tr>
+		<tr>
+			<td>뱀딸기</td>
+			<td>알칼리딸기</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script>
+	$(function() {
+		var obj = {
+			name : '홍길동'
+		};//객체 생성
+		$.extend(obj, {
+			gender : 'male',
+			part : 'Base Guitar'
+		});
+		var output = "";
+		$.each(obj, function(key, item) {
+			output += key + " : " + item + "\n";
+		});
+		alert(output);
+	});
+</script>
+</head>
+<body>
+</body>
+</html>

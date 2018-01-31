@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XML make</title>
+<style type="text/css">
+div {
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	border: 2px solid red;
+	border-radius: 10px;
+	text-align: center;
+}
+</style>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+	var xml = '<friends>'
+			+ '<friend><name>홍길동</name><language>java</language></friend>'
+			+ '<friend><name>일지매</name><language>JSP</language></friend>'
+			+ '<friend><name>임꺽정</name><language>Spring</language></friend>'
+			+ '</friends>';
+	$(function() {
+		var xmlDoc = $.parseXML(xml);
+		$(xmlDoc).find('friend').each(function(index) { // 순서대로 처리하기 위해 index를 매개변수로 사용
+			var out = '<div><h1>' + $(this).find('name').text() + '</h1>';
+			out += '<p>' + $(this).find('language').text() + '</p></div>';
+			document.body.innerHTML += out;
+		});
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

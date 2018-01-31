@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+em {
+	font-size: 20pt;
+	line-height: 20pt;
+	margin: 20px;
+	color: blue;
+}
+</style>
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('p em').css('background', 'yellow').each(function() {
+			$('.result1').append(" " + $(this).text());
+		});//chainning 
+		$('div > em').css('background', 'pink').each(function() {
+			$('.result2').append(" " + $(this).text());
+		});
+		//$().css().each().append();
+	});
+</script>
+</head>
+<body>
+	<p>
+		<em>one</em><em>two</em><span>three</span>
+	</p>
+	<div>
+		<em>four</em><span><em>five</em></span><em>six</em>
+	</div>
+	<hr>
+	<div>
+		<span>ancestor descendant로 검색된 elements:</span><span class="result1"></span>
+	</div>
+	<div>
+		<span>parent &gt; child로 검색된 elements:</span> <span class="result2"></span>
+	</div>
+</body>
+</html>

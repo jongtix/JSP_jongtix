@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('div em').css('border', '3pt solid #f00').css('padding', '7px');
+		$('span em').css('border', '3pt dotted #0f0').css('padding', '7px');
+		console.log("div 갯수: " + $('div em').length);
+		console.log("span 갯수: " + $('span em').length);
+	})
+</script>
+</head>
+<body>
+	<div>
+		<em>2월 15일</em><em>쉬나요? </em><em>아닙니다.</em>
+	</div>
+	<span><em>오늘은 </em><em>수요일, </em><em>주의 중반입니다.</em></span>
+</body>
+</html>

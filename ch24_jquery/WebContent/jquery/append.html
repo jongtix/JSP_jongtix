@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.textstyle {
+	font-size: 14pt;
+	line-height: 20pt;
+	margin: 10px;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('*').addClass('textstyle');
+		$('em+a').css('background', 'yellow').each(function() { // em + a: em 바로 옆 a
+			$('.result1').append(this);
+		});
+	});
+</script>
+</head>
+<body>
+	<em>좋은 날씨</em>
+	<a>기온이 많이 올랐네</a>
+	<a>공기도 맑고</a>
+	<b>응</b>
+	<a>그래</a>
+	<em>잘 가</em>
+	<div>
+		<span>prev + next로 검색:</span> <span class="result1"></span>
+	</div>
+</body>
+</html>

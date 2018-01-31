@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>css 적용</title>
+<style type="text/css">
+.spotlight {
+	background-color: #ff0;
+}
+
+.redtext {
+	color: #f00;
+}
+
+.largetext {
+	font-size: 30pt;
+}
+
+.italictext {
+	font-style: italic;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('span').addClass('redtext');
+		$('div').addClass('spotlight');
+		$('#simpletext1').addClass('largetext');
+		$('.simpletext2').addClass('italictext');
+	});
+</script>
+</head>
+<body>
+	<span id="simpletext1">simple</span>
+	<div class="simpletext2">jQuery</div>
+	<span id="simpletext3">basic</span>
+	<div id="simpletext4">example</div>
+</body>
+</html>

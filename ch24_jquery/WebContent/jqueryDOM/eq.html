@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		/*
+		$('h1').first().css('background', 'yellow');
+		$('h1').last().css('background', 'pink');
+		*/
+		$('h1').eq(0).css('background', 'green');
+		$('h1').eq(3).css('background', 'cyan');
+		$('h1').eq(-1).css('background', 'blue');
+	});
+</script>
+</head>
+<body>
+	<h1>화요일</h1>
+	<h1>눈온다</h1>
+	<h1>귀찮다</h1>
+	<h1>학원 가기 싫다</h1>
+	<h1>이왕 지각한거</h1>
+	<h1>안 갈래</h1>
+</body>
+</html>

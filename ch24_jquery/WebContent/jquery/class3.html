@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>class 속성 적용</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script>
+	$(function() {
+		$('h1').css('color', 'red');
+		$('.k').css('background', 'pink');
+		$('h1.k').css('background-color', 'orange');
+		$('.k.b').css('color', 'blue');/* class가 이중으로 적용된 경우 */
+	});
+</script>
+</head>
+<body>
+	<h1>왜, 반말이야</h1>
+	<p>언니! 나, 싫어하죠?</p>
+	<h1 class="k">왜, 반말이야</h1>
+	<p>언니! 나, 싫어하죠?</p>
+	<h1>왜, 반말이야</h1>
+	<p class="k b">언니! 나, 싫어하죠?</p>
+	<h1>왜, 반말이야</h1>
+	<p class="k">언니! 나, 싫어하죠?</p>
+	<h1>왜, 반말이야</h1>
+	<p>언니! 나, 싫어하죠?</p>
+
+</body>
+</html>

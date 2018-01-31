@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>filter 메소드</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('h1').filter(function(index) { // 여기서 index는 0부터 시작
+			return index % 3 == 0;
+		}).css({
+			'background' : 'red',
+			'color' : 'white'
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>화요일</h1>
+	<h1>눈온다</h1>
+	<h1>귀찮다</h1>
+	<h1>학원 가기 싫다</h1>
+	<h1>이왕 지각한거</h1>
+	<h1>안 갈래</h1>
+</body>
+</html>

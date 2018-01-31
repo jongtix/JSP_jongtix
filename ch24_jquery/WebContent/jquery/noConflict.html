@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+.highlight {
+	background-color: yellow;
+}
+</style>
+<title>플러그인 충돌방지 noConflict()</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$.noConflict(); // 플러그인 충돌 방지
+	var J = jQuery; // $ 대신 J 사용
+	J(document).ready(function() {
+		J('h1').addClass('highlight');
+	});
+</script>
+</head>
+<body>
+	<h1>대박 사건</h1>
+</body>
+</html>
