@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
+<script type="text/javascript">
+	function chk() {
+		var params = "name=" + encodeURIComponent(frm.name.value);
+		sendRequest("hello.jsp", params, result, "POST");
+	}
+
+	function result() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				var text1 = httpRequest.responseText;
+				start = text1.indexOf("<body>");
+				end = text1.indexOf("</body>");
+				var text2 = text1.substring(start + 6, end);
+				document.getElementById('text').innerHTML = text2;
+				/* alert(text2); */
+			} else {
+				alert('오류');
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<form action="" name="frm">
+		<b>이름: </b><input type="text" name="name">
+		<p>
+			<input type="button" value="확인" onclick="chk()">
+		<p id="text"></p>
+	</form>
+</body>
+</html>

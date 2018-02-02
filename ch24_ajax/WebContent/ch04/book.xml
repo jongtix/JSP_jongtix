@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+	<book>
+		<title>이것이 자바다</title>
+		<author>홍길동</author>
+	</book>
+
+	<book>
+		<title>JSP</title>
+		<author>최길동</author>
+	</book>
+
+	<book>
+		<title>spring</title>
+		<author>임꺽정</author>
+	</book>
+</books>

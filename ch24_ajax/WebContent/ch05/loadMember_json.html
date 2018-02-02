@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/Member.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		new ajax.xhr.Request("books.jsp", "", memView, "GET");
+	}
+
+	function memView(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				var result = eval("(" + req.responseText + ")");
+				if (result.code == 'success') {
+					var mem = result.data.member;
+					var member = new Member(mem.id, mem.name, mem.sno);
+					alert(member.toString() + ", 나이: " + member.getAge());
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>

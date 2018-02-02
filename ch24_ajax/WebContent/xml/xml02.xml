@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+	<and>
+		YOU &amp; ME
+		<![CDATA[YOU & ME]]> <!-- 특수문자를 그대로 사용 -->
+		<!-- YOU & ME: 특수문자(&) 사용 불가 -->
+	</and>
+</test>

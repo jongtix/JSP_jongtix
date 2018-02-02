@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
+<script type="text/javascript">
+	var xmlDoc = null;
+	var xslDoc = null;
+	function loadBooks() {
+		sendRequest('book.xml', null, loadedBooksXML, 'GET');
+	}
+
+	function loadedBooksXML() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				xmlDoc = httpRequest.responseXML;
+				sendRequest('book.xsl', null, loadedBooksXSL, 'GET');
+			}
+		}
+	}
+
+	function loadedBooksXSL() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				xslDoc = httpRequest.responseXML;
+				doXSLT();
+			}
+		}
+	}
+
+	function doXSLT() {
+		if (xmlDoc == null || xslDoc == null) {
+			return;
+		}
+		var bookList = document.getElementById('bookList');
+		if (window.ActiveXObject) {
+			bookList.innerHTML = xmlDoc.transformNode(xslDoc);
+		} else {
+			var xsltProc = new XSLTProcessor();
+			xsltProc.importStylesheet(xslDoc);
+			var fragment = xsltProc.transformToFragment(xmlDoc, document);
+			bookList.appendChild(fragment);
+		}
+	}
+
+	window.onload = function() {
+		loadBooks();
+	}
+</script>
+</head>
+<body>
+	<h1>신규 도서 목록</h1>
+	<div id="bookList"></div>
+</body>
+</html>

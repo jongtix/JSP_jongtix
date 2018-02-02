@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load() - 문서 내용 삽입</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('button').click(function() {
+			$('#container').load('hello.html');
+		});
+	});
+</script>
+</head>
+<body>
+	<button>데이터 가져오기</button>
+	<div id="container"></div>
+</body>
+</html>

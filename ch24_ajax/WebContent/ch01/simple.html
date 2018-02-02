@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XMLHttpRequest</title>
+<script type="text/javascript">
+	var httpRequest = null;
+
+	/* xmlHttpRequest객체 구성하는 함수 */
+	function getHttpRequest() {
+		if (window.ActiveXObject) {
+			try {
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		} else {
+			return new XMLHttpRequest(); // IE가 아니면
+		}
+	}
+
+	/* onclick 이벤트 발생시 호출되는 메소드 */
+	function load(url) {
+		httpRequest = getHttpRequest(); // XMLHttpRequest객체를 얻음
+		httpRequest.onreadystatechange = viewMessage; // callback함수 지정
+
+		httpRequest.open('GET', url, true); // 초기화, 전송 방식, 경로 지정, true면 비동기 방식
+		httpRequest.send(null); // get방식이므로 send(body)에서 body는 null
+	}
+
+	/* onreadystatechange 핸들러의 callback함수 */
+	function viewMessage() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				alert(httpRequest.responseText);
+			} else {
+				alert('오류');
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="simple.txt" onclick="load('simple.txt')">
+	<input type="button" value="simple2.txt" onclick="load('simple2.txt')">
+	<input type="button" value="simple.jsp" onclick="load('simple.jsp')">
+	<input type="button" value="simple2.jsp" onclick="load('simple2.jsp')">
+</body>
+</html>

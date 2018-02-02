@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$.getScript('test.js'); // 스크립트 호출 메소드 getScript()
+		$('#sub').click(function() {
+			var name = $('#name').val();
+			console.log(name);
+			$('#msg').html(call(name)); // javascript로 만들어 놓은 call()함수 호출
+		});
+	})
+</script>
+</head>
+<body>
+	<h2>이름을 입력하세요.</h2>
+	<form action="">
+		<input type="text" name="name" id="name">
+		<p></p>
+		<input type="button" value="확인" id="sub">
+	</form>
+	<br>
+	<div id="msg"></div>
+</body>
+</html>

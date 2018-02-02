@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result>
+	<code>success</code>
+	<data>
+		<member>
+			<name>길동</name>
+			<id>kk</id>
+			<sno>9000001000000</sno>
+		</member>
+	</data>
+</result>

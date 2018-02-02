@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
+<script type="text/javascript">
+	function info() {
+		sendRequest('book.xml', null, bookView, 'GET');
+	}
+
+	function bookView() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				var xmlDoc = httpRequest.responseXML;
+				var bookList = xmlDoc.getElementsByTagName("book");
+				var msg = "책의 권수: " + bookList.length + "권\n";
+				for (var i = 0; i < bookList.length; i++) {
+					var book = bookList.item(i);
+					var title = book.getElementsByTagName("title").item(0).firstChild.nodeValue;
+					var author = book.getElementsByTagName("author").item(0).firstChild.nodeValue;
+					msg += title + "(" + author + ")\n";
+				}
+				alert(msg);
+			}
+		}
+	}
+</script>
+</head>
+<body onload="info()">alert책 정보 보기
+</body>
+</html>

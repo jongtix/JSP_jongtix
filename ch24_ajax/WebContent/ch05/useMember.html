@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
+<script type="text/javascript" src="../js/Member.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		var mem = new Member("Beginner", "홍길동", "9500001101024");
+		log("변경전");
+		log("회원: " + mem.toString());
+		log("나이: " + mem.getAge());
+		mem.setValue("Excellence", "홍길동", "9500001101024");
+		log("변경후");
+		log("회원: " + mem.toString());
+		log("나이: " + mem.getAge());
+	}
+</script>
+</head>
+<body>
+	<div id="console"></div>
+</body>
+</html>

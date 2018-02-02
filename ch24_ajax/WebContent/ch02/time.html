@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
+<script type="text/javascript">
+	function clock() {
+		var date = new Date();
+		var clock1 = document.getElementById('clock1');
+		var out = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 "
+				+ date.getDate() + "일 " + date.getHours() + "시"
+				+ date.getMinutes() + "분 " + date.getSeconds() + "초";
+		clock1.innerHTML = out;
+		setTimeout("clock()", 100);
+	}
+</script>
+</head>
+<body onclick="clock()">
+	현재 시간은
+	<span id="clock1"></span>입니다.
+</body>
+</html>

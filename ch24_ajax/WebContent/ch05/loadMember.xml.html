@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/Member.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		new ajax.xhr.Request("member_xml.xml", "", memView, "GET");
+	}
+	function memView(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				var docXml = req.responseXML;
+				var code = docXml.getElementsByTagName("code").item(0).firstChild.nodeValue;
+				if (code == 'success') {
+					var name = docXml.getElementsByTagName("name").item(0).firstChild.nodeValue;
+					var id = docXml.getElementsByTagName("id").item(0).firstChild.nodeValue;
+					var sno = docXml.getElementsByTagName("sno").item(0).firstChild.nodeValue;
+					var member = new Member(id, name, sno);
+					alert(member.toString() + ", 나이: " + member.getAge());
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>

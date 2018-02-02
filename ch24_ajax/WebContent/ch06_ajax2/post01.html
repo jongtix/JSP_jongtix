@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#submit').click(function() {
+			var name = $('#name').val();
+			var sendData = "name=" + name;
+			$.post('welcome.jsp', sendData, function(msg) { // post(url, parameter, 응답이 왔을 때 실행할 함수)
+				$('#msg').html(msg);
+			});
+			return false; // submit을 눌러도 페이지가 바뀌지 않도록
+		});
+	})
+</script>
+</head>
+<body>
+	<form action="">
+		<table>
+			<caption>
+				<h2>이름을 입력하세요.</h2>
+			</caption>
+			<tr>
+				<th>이름</th>
+				<td><input type="text" name="name" id="name"></td>
+				<td><input type="submit" value="확인" id="submit"></td>
+				<!-- <td><input type="button" value="확인" id="submit"></td> -->
+			</tr>
+		</table>
+	</form>
+	<hr>
+	<div id="msg"></div>
+</body>
+</html>

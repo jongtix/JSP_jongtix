@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+div {
+	width: 180px;
+	height: 80px;
+	margin: 3px;
+	float: left;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#menu1').mouseout(function() {
+			$('#msg1').load('menu.html');
+		});
+		$('#menu2').click(function() {
+			$('#msg2').load('menu.html');
+		});
+	})
+</script>
+</head>
+<body>
+	<div>
+		<a id="menu1">메뉴 선택</a>
+		<p></p>
+		<span id="msg1"></span>
+	</div>
+	<div>
+		<a id="menu2">메뉴 선택</a>
+		<p></p>
+		<span id="msg2"></span>
+	</div>
+</body>
+</html>
