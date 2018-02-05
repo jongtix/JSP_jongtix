@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#sub').click(function() {
+			var name = $('#name').val();
+			var pass = $('#pass').val();
+			var sendData = 'name=' + name + '&pass=' + pass;
+			$.ajaxSetup( // ajax 설정함수
+			{
+				type : 'POST', // 전송방식
+				url : 'checkIn.jsp', // url
+				dataType : 'text', // 응답데이터 타입
+				success : function(data) { // 콜백함수
+					$('#msg').html(data);
+				}
+			});
+			$.ajax({
+				data : sendData
+			}); // 데이터 전송처리 함수
+		});
+	});
+</script>
+</head>
+<body>
+	<form action="">
+		이름: <input type="text" name="name" id="name"><br> 암호: <input
+			type="password" name="pass" id="pass"><br> <input
+			type="button" id="sub" value="확인">
+	</form>
+	<br>
+	<div id="msg"></div>
+</body>
+</html>
