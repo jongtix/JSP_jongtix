@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>전자앨범</title>
+<link rel="stylesheet" href="css/common.css">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+   var itemOnNum = 1;
+   setInterval(onTimer, 10000);
+   var audio;
+
+   $(document).ready(function() {
+       changeItem(1);
+
+       audio = new Audio("music/bgm.mp3");
+       audio.volume = 0.5;
+       audio.loop = true;
+       audio.play();
+   });
+   function onTimer() {
+      if(itemOnNum < 4) {
+         itemOnNum++;
+      } else {
+         itemOnNum = 1;
+      }
+      changeItem(itemOnNum);
+  }
+  function changeItem($arg) {
+      $(".item").removeClass("on");
+      var selector = "#item" + $arg;
+      $(selector).addClass("on");
+ }
+</script>
+</head>
+<body>
+<div class="container">
+	<ul>
+		<li>
+			<div class="item" id="item1">
+				<div class="bgImage"></div>
+				<div class="typography">
+					<h1>스티브 잡스</h1>
+					<h2>위대한 목수는 아무도 보지 않는다고 해서 장롱 뒷면에 형편없는 나무를 쓰지 않습니다.</h2>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="item" id="item2">
+				<div class="bgImage"></div>
+				<div class="typography">
+					<h1>빌 게이츠</h1>
+					<h2>장기적 비전을 위해 단기적 손해를 감수한다. 이것이 성공의 비결이다.</h2>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="item" id="item3">
+				<div class="bgImage"></div>
+				<div class="typography">
+					<h1>리처드 스톨만</h1>
+					<h2>친구에게 내가 사용하는 SW를 빌려주는 것이 절도죄란 것인가?</h2>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="item" id="item4">
+				<div class="bgImage"></div>
+				<div class="typography">
+					<h1>에릭 슈미츠</h1>
+					<h2>혁신적인것과 영감을 주는것들을 계획하지 못하더라도 그것들에 대한 준비는 하고 있어야 그것을 마주하는 순간 그것들에 올라탈 수 있고 여러분들은 남들과 다른 무엇을 만들 수 있다 </h2>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</body>
+</html>
