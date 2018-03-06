@@ -35,7 +35,7 @@ public class SubBoardDao {
 		DataSource ds = null;
 		try {
 			init = new InitialContext();
-			ds = (DataSource) init.lookup("java:comp/env/jdbc/OracleDB");
+			ds = (DataSource) init.lookup("java:comp/env/jdbc/OraDB");
 			conn = ds.getConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
