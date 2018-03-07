@@ -9,11 +9,9 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 import dto.Board;
-import oracle.jdbc.OracleConnection.CommitOption;
 
 public class BoardDao {
 	private static BoardDao instance;
@@ -23,7 +21,6 @@ public class BoardDao {
 
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
-	private Statement stmt = null;
 	private ResultSet rs = null;
 	private DataSource ds = null;
 
@@ -70,7 +67,7 @@ public class BoardDao {
 				board.setRe_level(board.getRe_level() + 1);
 				board.setRe_step(board.getRe_step() + 1);
 				pstmt.close();
-			} else if(num==0){
+			} else if (num == 0) {
 				board.setRef(number);
 			}
 			pstmt = conn.prepareStatement(sql2);
@@ -179,7 +176,6 @@ public class BoardDao {
 		}
 		return list;
 	}
-	
 
 	public Board updateReadCount(int num) {
 		PreparedStatement pstmt = null;
@@ -291,8 +287,8 @@ public class BoardDao {
 		ResultSet rs = null;
 		int num = board.getNum();
 
-		String sql = "update pj_board set subject=?,email=?,  " 
-		+ "  reg_date=sysdate,content=? where num =? and flag = 2";
+		String sql = "update pj_board set subject=?,email=?,  "
+				+ "  reg_date=sysdate,content=? where num =? and flag = 2";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -300,8 +296,8 @@ public class BoardDao {
 			pstmt.setString(2, board.getEmail());
 			pstmt.setString(3, board.getContent());
 			pstmt.setInt(4, num);
-			 pstmt.executeUpdate();
-			 result = 1;
+			pstmt.executeUpdate();
+			result = 1;
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -319,34 +315,36 @@ public class BoardDao {
 		}
 		return result;
 	}
+
 	public int deleteBoard(int num) {
-		int result=0;
+		int result = 0;
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
 		String sql = "update pj_board set del = 'Y' where num =? and flag =2 ";
 		String sql2 = "delete from pj_item where item_id = ? ";
 		try {
-			  pstmt = conn.prepareStatement(sql);
-			  pstmt.setInt(1, num);
-			  result = pstmt.executeUpdate();
-			  pstmt.close();
-			  pstmt = conn.prepareStatement(sql2);
-			  pstmt.setInt(1, num);
-			  pstmt.executeUpdate();
-		}catch(Exception e) {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			}catch(Exception e) {				
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
 			}
-		}//finally 끝.
+		} // finally 끝.
 		return result;
-	}//deleteBoard()메소드 끝.
-	
-	
-	public List<Board> searchList(int startRow, int endRow,String search) {
+	}// deleteBoard()메소드 끝.
+
+	public List<Board> searchList(int startRow, int endRow, String search) {
 		List<Board> list = new ArrayList<>();
 		String sql = "select * from (select rownum rn, a.* from "
 				+ "  (select * from pj_board where flag = 2 order by ref desc,re_step)a)  where rn between ? and ? and content like ? or writer like ? or subject like ?";
@@ -355,9 +353,9 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			pstmt.setString(3, "%"+search+"%");
-			pstmt.setString(4, "%"+search+"%");
-			pstmt.setString(5, "%"+search+"%");
+			pstmt.setString(3, "%" + search + "%");
+			pstmt.setString(4, "%" + search + "%");
+			pstmt.setString(5, "%" + search + "%");
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Board board = new Board();
@@ -395,75 +393,83 @@ public class BoardDao {
 		}
 		return list;
 	}
+
 	public Board getMaxRead() {
 		Board board = new Board();
 		String sql = "select * from (select * from pj_board order by readcount desc) where rownum = 1 and flag = 2 and del='N'";
 		try {
-			  conn = getConnection();
-			  pstmt = conn.prepareStatement(sql);
-			  rs = pstmt.executeQuery();
-			  if(rs.next()) {
-					board.setNum(rs.getInt("num"));
-					board.setWriter(rs.getString("writer"));
-					board.setSubject(rs.getString("subject"));
-					board.setContent(rs.getString("content"));
-					board.setEmail(rs.getString("email"));
-					board.setReadcount(rs.getInt("readcount"));
-					board.setPassword(rs.getString("password"));
-					board.setRef(rs.getInt("ref"));
-					board.setRe_step(rs.getInt("re_step"));
-					board.setRe_level(rs.getInt("re_level"));
-					board.setIp(rs.getString("ip"));
-					board.setReg_date(rs.getDate("reg_date"));
-					board.setDel(rs.getString("del"));
-			  }
-		}catch(Exception e) {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				board.setNum(rs.getInt("num"));
+				board.setWriter(rs.getString("writer"));
+				board.setSubject(rs.getString("subject"));
+				board.setContent(rs.getString("content"));
+				board.setEmail(rs.getString("email"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setPassword(rs.getString("password"));
+				board.setRef(rs.getInt("ref"));
+				board.setRe_step(rs.getInt("re_step"));
+				board.setRe_level(rs.getInt("re_level"));
+				board.setIp(rs.getString("ip"));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setDel(rs.getString("del"));
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			try {
-				if(rs!=null) rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			}catch(Exception e) {		
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		}//finally 끝.
+		} // finally 끝.
 		return board;
 	}
+
 	public Board getNewBoard() {
 		Board board = new Board();
 		String sql = "select * from (select * from pj_board order by num desc) where rownum = 1 and flag = 2 and del='N'";
 		try {
-			  conn = getConnection();
-			  pstmt = conn.prepareStatement(sql);
-			  rs = pstmt.executeQuery();
-			  if(rs.next()) {
-					board.setNum(rs.getInt("num"));
-					board.setWriter(rs.getString("writer"));
-					board.setSubject(rs.getString("subject"));
-					board.setContent(rs.getString("content"));
-					board.setEmail(rs.getString("email"));
-					board.setReadcount(rs.getInt("readcount"));
-					board.setPassword(rs.getString("password"));
-					board.setRef(rs.getInt("ref"));
-					board.setRe_step(rs.getInt("re_step"));
-					board.setRe_level(rs.getInt("re_level"));
-					board.setIp(rs.getString("ip"));
-					board.setReg_date(rs.getDate("reg_date"));
-					board.setDel(rs.getString("del"));
-			  }
-		}catch(Exception e) {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				board.setNum(rs.getInt("num"));
+				board.setWriter(rs.getString("writer"));
+				board.setSubject(rs.getString("subject"));
+				board.setContent(rs.getString("content"));
+				board.setEmail(rs.getString("email"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setPassword(rs.getString("password"));
+				board.setRef(rs.getInt("ref"));
+				board.setRe_step(rs.getInt("re_step"));
+				board.setRe_level(rs.getInt("re_level"));
+				board.setIp(rs.getString("ip"));
+				board.setReg_date(rs.getDate("reg_date"));
+				board.setDel(rs.getString("del"));
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			try {
-				if(rs!=null) rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			}catch(Exception e) {		
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		}//finally 끝.
+		} // finally 끝.
 		return board;
 	}
-	
+
 }
