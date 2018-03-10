@@ -3,7 +3,7 @@ package QnAservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import controller.CommandProcess;
 
 public class DeleteQnaAction implements CommandProcess {
@@ -14,7 +14,7 @@ public class DeleteQnaAction implements CommandProcess {
 		String pageNum = request.getParameter("pageNum");
 		String password = request.getParameter("password");
 
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int result = dao.useCheck(num, password); // 정상 1, 비정상 -1
 		String view = "";
 		String error = "";

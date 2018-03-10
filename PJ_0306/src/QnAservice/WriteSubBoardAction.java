@@ -3,7 +3,7 @@ package QnAservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import QnAdao.MemberDao;
 import QnAdao.SubBoardDao;
 import QnAdto.SubBoard;
@@ -24,7 +24,7 @@ public class WriteSubBoardAction implements CommandProcess {
 		String subPageNum = request.getParameter("subPageNum");
 		int result = 0;
 
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		result = dao.memberCheck(sub_writer, sub_password); // 회원 체크
 		String error = null;
 		if (result == 1) {

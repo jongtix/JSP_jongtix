@@ -125,7 +125,7 @@ public class SubBoardDao {
 				int number = rs.getInt(1) + 1;
 				pstmt.close();
 
-				sql = "insert into pj_sub_board values(?, ?, ?, ?, ?, sysdate, 'N')";
+				sql = "insert into pj_sub_qnaboard values(?, ?, ?, ?, ?, sysdate)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
 				pstmt.setInt(++i, number);

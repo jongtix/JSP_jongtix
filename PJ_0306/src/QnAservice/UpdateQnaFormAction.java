@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import QnAdto.Board;
 import controller.CommandProcess;
 
@@ -17,7 +17,7 @@ public class UpdateQnaFormAction implements CommandProcess {
 		String error = (String) request.getAttribute("error");
 
 		Board board = new Board();
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		board = dao.getQnaBoard(num);
 
 		request.setAttribute("num", num);

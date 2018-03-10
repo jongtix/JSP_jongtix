@@ -36,7 +36,6 @@
 		board.setRe_step(0);
 		board.setRe_level(0);
 		board.setIp("127.0.0.1");
-		board.setDel("N");
 
 		/* java.sql.Date()생성자의 매개변수로 java.util.Date().getTime()를 넘김 */
 		Date conFromDate = new Date();

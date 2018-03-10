@@ -23,7 +23,6 @@ public class BoardDao {
 	private PreparedStatement pstmt = null;
 	private Statement stmt = null;
 	private ResultSet rs = null;
-	private DataSource ds = null;
 
 	public static BoardDao getInstance() {
 		if (instance == null)
@@ -32,9 +31,10 @@ public class BoardDao {
 	}
 
 	public Connection getConnection() {
+		
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OraDB");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OraDB");
 			conn = ds.getConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

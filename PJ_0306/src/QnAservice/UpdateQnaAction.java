@@ -3,7 +3,7 @@ package QnAservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import QnAdto.Board;
 import controller.CommandProcess;
 
@@ -21,7 +21,7 @@ public class UpdateQnaAction implements CommandProcess {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		Board board = new Board();
 		int result = dao.useCheck(num, password);
 		String view = "";

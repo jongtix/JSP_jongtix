@@ -12,7 +12,7 @@
 	</c:if>
 	<c:if test="${result == 0}">
 		<script>
-			alert('입력 실패');
+			alert('답변은 관리자만 가능합니다.');
 			history.back();
 		</script>
 	</c:if>

@@ -22,14 +22,14 @@ public class RentAction implements CommandProcess {
 		Board board = new Board();
 		BoardDao bdao = BoardDao.getInstance();
 		board = bdao.getBoard(num);
-		
+
 		Item item = new Item();
 		ItemDao idao = ItemDao.getInstance();
 		item = idao.getItem(num);
-		
+
 		Rent rent = new Rent();
 		RentDao rdao = RentDao.getInstance();
-		
+
 		int rent_id = num;
 		String rent_seller = board.getWriter();
 		String rent_buyer = request.getParameter("rent_buyer");
@@ -44,7 +44,7 @@ public class RentAction implements CommandProcess {
 		String deliveryname = request.getParameter("deliveryname");
 		String deliverytel = request.getParameter("deliverytel");
 		String deliveryaddress = request.getParameter("deliveryaddress");
-		
+
 		rent.setRent_id(rent_id);
 		rent.setRent_seller(rent_seller);
 		rent.setRent_buyer(rent_buyer);
@@ -59,10 +59,8 @@ public class RentAction implements CommandProcess {
 		rent.setDeliveryname(deliveryname);
 		rent.setDeliverytel(deliverytel);
 		rent.setDeliveryaddress(deliveryaddress);
-		
-		
+
 		int result = rdao.insert(rent);
-		
 
 		// 이동할 객체
 		request.setAttribute("result", result);

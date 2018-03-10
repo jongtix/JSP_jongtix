@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import QnAdao.SubBoardDao;
 import QnAdto.Board;
 import QnAdto.SubBoard;
@@ -17,7 +17,7 @@ public class ListQnaAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int total = dao.getQnaTotal();
 		Paging pg = new Paging();
 		PageBean pb = pg.getPaging(request, total);

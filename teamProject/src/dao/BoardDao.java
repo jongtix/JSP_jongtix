@@ -49,7 +49,7 @@ public class BoardDao {
 		int num = board.getNum(); // 글 존재 확인
 		try {
 			conn = getConnection();
-			sql = "select max(num) from pj_board";
+			sql = "select max(num) from pj_qnaboard";
 			// 게시판에서 가장 큰 글번호
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -63,7 +63,7 @@ public class BoardDao {
 					result = managerCheck(id, password);
 					if (result == 1) {
 						conn = getConnection();
-						sql = "update pj_board set re_step = re_step + 1 where ref = ? and re_step > ?";
+						sql = "update pj_qnaboard set re_step = re_step + 1 where ref = ? and re_step > ?";
 						// 답변 + 1
 						pstmt = conn.prepareStatement(sql);
 						int i = 0;
@@ -79,7 +79,7 @@ public class BoardDao {
 				} else if (num == 0) { // 답변글이 아닐 경우
 					board.setRef(number);
 				}
-				sql = "insert into pj_board(num, flag, writer, subject, content, email, readcount, password, ref, re_step, re_level, ip, reg_date) "
+				sql = "insert into pj_qnaboard(num, flag, writer, subject, content, email, readcount, password, ref, re_step, re_level, ip, reg_date) "
 						+ "values(?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
@@ -118,7 +118,7 @@ public class BoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_board where flag like '1%' and del != 'Y'";
+			sql = "select count(*) from pj_qnaboard where flag like '1%'";
 			// 카테고리가 1로 시작하고 지워지지 않은 글 선택
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -147,7 +147,7 @@ public class BoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_board where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y')";
+			sql = "select count(*) from pj_qnaboard where (flag like '11') or (flag like '1%' and readcount > 20)";
 			// FAQ로 옮겨진 게시글이거나 Q&A 글 중 조회수가 20 이상인 글 선택
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -176,7 +176,7 @@ public class BoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_board where flag like '1%' and del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_qnaboard where flag like '1%' order by ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -223,7 +223,7 @@ public class BoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_board where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y') order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_qnaboard where (flag like '11') or (flag like '1%' and readcount > 20) order by ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -244,7 +244,6 @@ public class BoardDao {
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -269,7 +268,7 @@ public class BoardDao {
 	public void updateReadCount(int num) {
 		try {
 			conn = getConnection();
-			sql = "update pj_board set readcount = readcount + 1 where num = ?";
+			sql = "update pj_qnaboard set readcount = readcount + 1 where num = ?";
 			// 조회수 + 1
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -293,7 +292,7 @@ public class BoardDao {
 		Board board = new Board();
 		try {
 			conn = getConnection();
-			sql = "select * from pj_board where num = ? and flag like '1%' and del != 'Y'";
+			sql = "select * from pj_qnaboard where num = ? and flag like '1%'";
 			// 카테고리가 1로 시작하고 지워지지 않은 글 선택
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -313,7 +312,6 @@ public class BoardDao {
 				board.setRe_level(rs.getInt(++i));
 				board.setIp(rs.getString(++i));
 				board.setReg_date(rs.getDate(++i));
-				board.setDel(rs.getString(++i));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -337,7 +335,7 @@ public class BoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_board set subject = ?, email = ?, content = ? where num = ?";
+			sql = "update pj_qnaboard set subject = ?, email = ?, content = ? where num = ?";
 			// 제목 이메일 내용 수정
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getSubject());
@@ -366,7 +364,7 @@ public class BoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_board set flag = 11 where num = ?";
+			sql = "update pj_qnaboard set flag = 11 where num = ?";
 			// 카테고리를 11로 변경
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -391,7 +389,7 @@ public class BoardDao {
 		int result = -1;
 		try {
 			conn = getConnection();
-			sql = "select password from pj_board where num = ?";
+			sql = "select password from pj_qnaboard where num = ?";
 			// 게시판의 글쓴이 비밀번호 선택
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -452,7 +450,7 @@ public class BoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_board set del = 'Y' where num = ?";
+			sql = "delete pj_qnaboard where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			result = pstmt.executeUpdate();
@@ -476,7 +474,7 @@ public class BoardDao {
 		boolean isTrue = false;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_board where ref = ? and num != ?";
+			sql = "select count(*) from pj_qnaboard where ref = ? and num != ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, num);

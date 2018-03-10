@@ -10,7 +10,7 @@ public class Board {
 	private String content;
 	private String email;
 	private int readcount;
-	private String password;
+	private String filename;
 	private int ref;
 	private int re_step;
 	private int re_level;
@@ -74,12 +74,12 @@ public class Board {
 		this.readcount = readcount;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	public int getRef() {

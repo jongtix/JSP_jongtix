@@ -3,7 +3,7 @@ package QnAservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import controller.CommandProcess;
 
 public class MoveFaqAction implements CommandProcess {
@@ -15,7 +15,7 @@ public class MoveFaqAction implements CommandProcess {
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int result = dao.managerCheck(id, password); // 정상 1, 비정상 -1
 		String view = "";
 		String error = "";

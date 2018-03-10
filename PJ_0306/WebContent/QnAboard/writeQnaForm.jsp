@@ -1,20 +1,27 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-	String id = (String)session.getAttribute("id");
+<%-- <%
+	String id = (String) session.getAttribute("id");
 	request.setAttribute("id", id);
-%>
+%> --%>
 <!doctype html>
 <html lang="ko">
-  <head>
-  	<meta name="viewprot" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <meta charset="utf-8">
-    <title>Q&A 글 작성</title>
-  </head>
-  <body>
-	<jsp:include page="/module/top.jsp"/>
+<head>
+<meta name="viewprot" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap.css">
+<meta charset="utf-8">
+<title>Q&A 글 작성</title>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+		location.href = 'start.do';
+	</script>
+</c:if>
+</head>
+<body>
+	<jsp:include page="/module/top.jsp" />
 	<div class="container">
 		<form action="writeQnaPro.do" method="post">
 			<input type="hidden" name="num" value="${board.num}"> <input
@@ -37,19 +44,16 @@
 				</tr>
 				<tr>
 					<th>작성자ID</th>
-					<td><input type="text" name="writer" required></td>
+					<td><input type="text" name="writer" value="${id}"
+						readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>email</th>
 					<td><input type="text" name="email" required></td>
 				</tr>
 				<tr>
-					<th>비밀번호</th>
-					<td><input type="password" name="password" required></td>
-				</tr>
-				<tr>
-					<th>비밀번호 확인</th>
-					<td><input type="password" name="password2" required></td>
+					<th>첨부파일</th>
+					<td><input type="file" name="file"></td>
 				</tr>
 				<tr>
 					<th>내용</th>
@@ -68,8 +72,9 @@
 			</table>
 		</form>
 	</div>
-	<jsp:include page="/module/bottom.jsp"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-  </body>
+	<jsp:include page="/module/bottom.jsp" />
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+</body>
 </html>

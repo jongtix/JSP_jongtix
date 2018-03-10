@@ -12,20 +12,20 @@ import javax.sql.DataSource;
 
 import QnAdto.Board;
 
-public class BoardDao {
-	private static BoardDao instance;
+public class QnaBoardDao {
+	private static QnaBoardDao instance;
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private String sql = "";
 
-	private BoardDao() {
+	private QnaBoardDao() {
 
 	}
 
-	public static BoardDao getInstance() {
+	public static QnaBoardDao getInstance() {
 		if (instance == null)
-			instance = new BoardDao();
+			instance = new QnaBoardDao();
 		return instance;
 	}
 
@@ -59,9 +59,11 @@ public class BoardDao {
 				pstmt.close();
 				if (num != 0) { // 답변글일 경우
 					String id = board.getWriter();
-					String password = board.getPassword();
-					result = managerCheck(id, password);
-					if (result == 1) {
+					boolean isTrue = isManager(id);
+					/*
+					 * String password = board.getPassword(); result = managerCheck(id, password);
+					 */
+					if (isTrue) {
 						conn = getConnection();
 						sql = "update pj_QnAboard set re_step = re_step + 1 where ref = ? and re_step > ?";
 						// 답변 + 1
@@ -79,8 +81,8 @@ public class BoardDao {
 				} else if (num == 0) { // 답변글이 아닐 경우
 					board.setRef(number);
 				}
-				sql = "insert into pj_QnAboard(num, flag, writer, subject, content, email, readcount, password, ref, re_step, re_level, ip, reg_date) "
-						+ "values(?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)";
+				sql = "insert into pj_QnAboard(num, flag, writer, subject, content, email, filename, readcount, ref, re_step, re_level, ip, reg_date) "
+						+ "values(?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, sysdate)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
 				pstmt.setInt(++i, number);
@@ -89,7 +91,7 @@ public class BoardDao {
 				pstmt.setString(++i, board.getSubject());
 				pstmt.setString(++i, board.getContent());
 				pstmt.setString(++i, board.getEmail());
-				pstmt.setString(++i, board.getPassword());
+				pstmt.setString(++i, board.getFilename());
 				pstmt.setInt(++i, board.getRef());
 				pstmt.setInt(++i, board.getRe_step());
 				pstmt.setInt(++i, board.getRe_level());
@@ -118,7 +120,7 @@ public class BoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_QnAboard where flag like '1%' and del != 'Y'";
+			sql = "select count(*) from pj_QnAboard where flag like '1%'";
 			// 카테고리가 1로 시작하고 지워지지 않은 글 선택
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -176,7 +178,7 @@ public class BoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and del != 'Y' order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' order by ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -190,14 +192,13 @@ public class BoardDao {
 				b.setSubject(rs.getString(++i));
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
+				b.setFilename(rs.getString(++i));
 				b.setReadcount(rs.getInt(++i));
-				b.setPassword(rs.getString(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -259,13 +260,12 @@ public class BoardDao {
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
 				b.setReadcount(rs.getInt(++i));
-				b.setPassword(rs.getString(++i));
+				b.setFilename(rs.getString(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -305,14 +305,13 @@ public class BoardDao {
 				b.setSubject(rs.getString(++i));
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
+				b.setFilename(rs.getString(++i));
 				b.setReadcount(rs.getInt(++i));
-				b.setPassword(rs.getString(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -361,7 +360,7 @@ public class BoardDao {
 		Board board = new Board();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and del != 'Y' order by num asc) a) where num = ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' order by num asc) a) where num = ?";
 			// 카테고리가 1로 시작하고 지워지지 않은 글 선택
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -374,14 +373,13 @@ public class BoardDao {
 				board.setSubject(rs.getString(++i));
 				board.setContent(rs.getString(++i));
 				board.setEmail(rs.getString(++i));
+				board.setFilename(rs.getString(++i));
 				board.setReadcount(rs.getInt(++i));
-				board.setPassword(rs.getString(++i));
 				board.setRef(rs.getInt(++i));
 				board.setRe_step(rs.getInt(++i));
 				board.setRe_level(rs.getInt(++i));
 				board.setIp(rs.getString(++i));
 				board.setReg_date(rs.getDate(++i));
-				board.setDel(rs.getString(++i));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -520,12 +518,12 @@ public class BoardDao {
 		boolean isTrue = false;
 		try {
 			conn = getConnection();
-			sql = "select MANAGER_FLAG from pj_member where id = ?";
+			sql = "select count(*) from pj_member where id = ? and manager_flag = 'Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getString("MANAGER_FLAG").equals("T")) // 확인
+				if (rs.getInt(1) > 0) // 확인
 					isTrue = true;
 			}
 		} catch (Exception e) {

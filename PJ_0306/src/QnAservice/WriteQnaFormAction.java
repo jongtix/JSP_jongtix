@@ -2,7 +2,9 @@ package QnAservice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import QnAdao.QnaBoardDao;
 import QnAdto.Board;
 import controller.CommandProcess;
 
@@ -10,6 +12,12 @@ public class WriteQnaFormAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		if (id == null || id.equals("")) {
+			request.setAttribute("error", "글 작성은 회원만 가능합니다.");
+		}
+
 		Board board = new Board();
 		int num = 0, flag = 0, ref = 0, re_step = 0, re_level = 0;
 		String pageNum = request.getParameter("pageNum");
@@ -28,6 +36,7 @@ public class WriteQnaFormAction implements CommandProcess {
 
 		request.setAttribute("board", board);
 		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("id", id);
 
 		return "QnAboard/writeQnaForm.jsp";
 	}

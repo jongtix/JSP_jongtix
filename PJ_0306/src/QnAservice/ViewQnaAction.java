@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
-import QnAdao.BoardDao;
+import QnAdao.QnaBoardDao;
 import QnAdao.SubBoardDao;
 import QnAdto.Board;
 import QnAdto.SubBoard;
@@ -31,7 +31,7 @@ public class ViewQnaAction implements CommandProcess {
 		String pageNum = request.getParameter("pageNum");
 		String subPageNum = request.getParameter("subPageNum");
 
-		BoardDao dao = BoardDao.getInstance();
+		QnaBoardDao dao = QnaBoardDao.getInstance();
 		dao.updateReadCount(num);
 		Board board = dao.getQnaBoard(num);
 
