@@ -87,33 +87,27 @@ public class MemberDao {
 		return result;
 	}
 
-	/* 회원 확인 */
-	public int memberCheck(String id, String password) {
-		int result = -1;
-		try {
-			conn = getConnection();
-			sql = "select password from pj_member where id = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				if (rs.getString(1).equals(password)) // 확인
-					result = 1;
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return result;
-	}
+	/*
+	 * 회원 확인 public int memberCheck(String id, String password) { int result = -1;
+	 * try { conn = getConnection(); sql =
+	 * "select password from pj_member where id = ?"; pstmt =
+	 * conn.prepareStatement(sql); pstmt.setString(1, id); rs =
+	 * pstmt.executeQuery(); if (rs.next()) { if (rs.getString(1).equals(password))
+	 * // 확인 result = 1; } } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { try { if (rs != null)
+	 * rs.close(); if (pstmt != null) pstmt.close(); if (conn != null) conn.close();
+	 * } catch (Exception e) { System.out.println(e.getMessage()); } } return
+	 * result; }
+	 * 
+	 * 매니저 확인 public boolean isManager(String id) { boolean isTrue = false; try {
+	 * conn = getConnection(); sql =
+	 * "select MANAGER_FLAG from pj_member where id = ?"; pstmt =
+	 * conn.prepareStatement(sql); pstmt.setString(1, id); rs =
+	 * pstmt.executeQuery(); if (rs.next()) { if
+	 * (rs.getString("MANAGER_FLAG").equals("T")) // 확인 isTrue = true; } } catch
+	 * (Exception e) { System.out.println(e.getMessage()); } finally { try { if (rs
+	 * != null) rs.close(); if (pstmt != null) pstmt.close(); if (conn != null)
+	 * conn.close(); } catch (Exception e) { System.out.println(e.getMessage()); } }
+	 * return isTrue; }
+	 */
 }

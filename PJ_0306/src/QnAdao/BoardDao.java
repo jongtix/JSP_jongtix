@@ -218,12 +218,80 @@ public class BoardDao {
 		return list;
 	}
 
+	/* Q&A 게시판 검색 */
+	public List<Board> selectQnaListWith(int startRow, int endRow, String searchCondition, String searchKeyword) {
+		List<Board> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			searchKeyword = "%" + searchCondition + "%";
+			if (searchCondition.equals("all")) {
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and (title like ? or content like ? or writer like ?) order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, searchKeyword);
+				pstmt.setString(2, searchKeyword);
+				pstmt.setString(3, searchKeyword);
+				pstmt.setInt(4, startRow);
+				pstmt.setInt(5, endRow);
+			} else if (searchCondition.equals("title")) {
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and title like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt.setString(1, searchKeyword);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			} else if (searchCondition.equals("content")) {
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and content like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt.setString(1, searchKeyword);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			} else if (searchCondition.equals("writer")) {
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and writer like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt.setString(1, searchKeyword);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Board b = new Board();
+				int i = 1;
+				b.setNum(rs.getInt(++i));
+				b.setFlag(rs.getInt(++i));
+				b.setWriter(rs.getString(++i));
+				b.setSubject(rs.getString(++i));
+				b.setContent(rs.getString(++i));
+				b.setEmail(rs.getString(++i));
+				b.setReadcount(rs.getInt(++i));
+				b.setPassword(rs.getString(++i));
+				b.setRef(rs.getInt(++i));
+				b.setRe_step(rs.getInt(++i));
+				b.setRe_level(rs.getInt(++i));
+				b.setIp(rs.getString(++i));
+				b.setReg_date(rs.getDate(++i));
+				b.setDel(rs.getString(++i));
+
+				list.add(b);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return list;
+	}
+
 	/* FAQ 게시판 */
 	public List<Board> selectFaqList(int startRow, int endRow) {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y') order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where (flag like '11') or (flag like '1%' and readcount > 20) order by readcount desc) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -417,12 +485,72 @@ public class BoardDao {
 		return result;
 	}
 
+	/* 회원 확인 */
+	public int memberCheck(String id, String password) {
+		int result = -1;
+		try {
+			conn = getConnection();
+			sql = "select password from pj_member where id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString(1).equals(password)) // 확인
+					result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+	}
+
+	/* 관리자 확인 */
+	public boolean isManager(String id) {
+		boolean isTrue = false;
+		try {
+			conn = getConnection();
+			sql = "select MANAGER_FLAG from pj_member where id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString("MANAGER_FLAG").equals("T")) // 확인
+					isTrue = true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return isTrue;
+	}
+
 	/* 관리자 확인 */
 	public int managerCheck(String id, String password) {
 		int result = -1;
 		try {
 			conn = getConnection();
-			sql = "select password from pj_QnAmember where id = ? and manager_flag = 'Y'";
+			sql = "select password from pj_member where id = ? and manager_flag = 'Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();

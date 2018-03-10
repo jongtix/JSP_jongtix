@@ -3,6 +3,7 @@ package QnAservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import QnAdao.BoardDao;
 import QnAdao.MemberDao;
 import QnAdao.SubBoardDao;
 import QnAdto.SubBoard;
@@ -20,9 +21,11 @@ public class WriteSubBoardAction implements CommandProcess {
 		String sub_content = request.getParameter("sub_content");
 		String sub_password = request.getParameter("sub_password");
 		int ref = Integer.parseInt(request.getParameter("num"));
+		String subPageNum = request.getParameter("subPageNum");
+		int result = 0;
 
-		MemberDao dao = MemberDao.getInstance();
-		int result = dao.memberCheck(sub_writer, sub_password); // 회원 체크
+		BoardDao dao = BoardDao.getInstance();
+		result = dao.memberCheck(sub_writer, sub_password); // 회원 체크
 		String error = null;
 		if (result == 1) {
 			SubBoardDao sub = SubBoardDao.getInstance();
@@ -42,13 +45,13 @@ public class WriteSubBoardAction implements CommandProcess {
 			error = "댓글은 회원만 쓸 수 있습니다.";
 		}
 
-		String subPageNum = request.getParameter("subPageNum");
-
 		request.setAttribute("num", num);
 		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("subPageNum", subPageNum);
+		request.setAttribute("result", result);
 		request.setAttribute("error", error);
 
-		return "viewQna.do";
+		return "QnAboard/writeSubBoardPro.jsp";
 	}
 
 }

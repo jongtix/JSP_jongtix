@@ -9,11 +9,9 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 import dto.Board;
-import oracle.jdbc.OracleConnection.CommitOption;
 
 public class BoardDao {
 	private static BoardDao instance;

@@ -1,117 +1,116 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-	String id = (String)session.getAttribute("id");
-	request.setAttribute("id", id);
-%>
 <!doctype html>
 <html lang="ko">
-  <head>
-  	<meta name="viewprot" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <meta charset="utf-8">
-    <title>Q&A 글 읽기</title>
-    <c:if test="${error != null}">
+<head>
+<meta name="viewprot" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap.css">
+<meta charset="utf-8">
+<title>Q&A 글 읽기</title>
+<c:if test="${error != null}">
 	<script type="text/javascript">
 		alert('${error}');
+		history.back();
 	</script>
-	</c:if>
-  </head>
-  <body>
-	<jsp:include page="/module/top.jsp"/>
+</c:if>
+</head>
+<body>
+	<jsp:include page="/module/top.jsp" />
 	<div class="container">
 		<div align="center">
-		<h2>Q&A글 내용 보기</h2>
-		<form action="writeSubBoard.do">
-			<input type="hidden" value="${pageNum}" name="pageNum">
-			<table width="500" border="1" align="center">
-				<tr>
-					<th>글번호</th>
-					<td><input type="hidden" value="${board.num}" name="num">${board.num}</td>
-					<th>조회수</th>
-					<td>${board.readcount}</td>
-				</tr>
+			<h2>Q&A글 내용 보기</h2>
+			<form action="writeSubBoard.do">
+				<input type="hidden" value="${pageNum}" name="pageNum">
+				<table width="500" border="1" align="center">
+					<tr>
+						<th>글번호</th>
+						<td><input type="hidden" value="${board.num}" name="num">${board.num}</td>
+						<th>조회수</th>
+						<td>${board.readcount}</td>
+					</tr>
 
-				<tr>
-					<th>작성자ID</th>
-					<td>${board.writer}</td>
-					<th>작성일</th>
-					<td>${board.reg_date}</td>
-				</tr>
+					<tr>
+						<th>작성자ID</th>
+						<td>${board.writer}</td>
+						<th>작성일</th>
+						<td>${board.reg_date}</td>
+					</tr>
 
-				<tr>
-					<th>글제목</th>
-					<td colspan="3">${board.subject}</td>
-				</tr>
-				<tr>
-					<th>글내용</th>
-					<td colspan="3"><pre>
+					<tr>
+						<th>글제목</th>
+						<td colspan="3">${board.subject}</td>
+					</tr>
+					<tr>
+						<th>글내용</th>
+						<td colspan="3"><pre>
    ${board.content}
    </pre></td>
-				</tr>
-				<c:if test="${total == 0}">
-					<tr>
-						<td colspan="4">댓글이 없습니다.</td>
 					</tr>
-				</c:if>
-				<c:if test="${total != 0}">
-					<tr>
-						<th>댓글목록</th>
+					<c:if test="${total == 0}">
+						<tr>
+							<td colspan="4">댓글이 없습니다.</td>
+						</tr>
+					</c:if>
+					<c:if test="${total != 0}">
+						<tr>
+							<th>댓글목록</th>
 
-						<td colspan="3"><table style="width: 300px">
-								<c:forEach var="s" items="${subList}" varStatus="n">
+							<td colspan="3"><table style="width: 300px">
+									<c:forEach var="s" items="${subList}" varStatus="n">
+										<tr>
+											<td height="1">${s.sub_content}</td>
+											<td height="1">${s.sub_writer}</td>
+											<td height="1">${s.reg_date}</td>
+											<td><input type="button" value="삭제"
+												onclick="location.href='deleteSubBoardForm.do?num=${board.num}&sub_num=${s.sub_num}&pageNum=${pageNum}&subPageNum=${subPageNum}'"></td>
+										</tr>
+									</c:forEach>
+
 									<tr>
-										<td height="1">${s.sub_content}</td>
-										<td height="1">${s.sub_writer}</td>
-										<td height="1">${s.reg_date}</td>
-										<td><input type="button" value="삭제"
-											onclick="location.href='deleteSubBoardForm.do?num=${board.num}&sub_num=${s.sub_num}&pageNum=${pageNum}&subPageNum=${subPageNum}'"></td>
+										<td colspan="4" align="center"><c:if
+												test="${pb.startPage > pb.BLOCKSIZE}">
+												<a
+													href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
+											</c:if> <c:forEach var="i" begin="${pb.startPage}"
+												end="${pb.endPage}">
+												<a
+													href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${i}">[${i}]</a>
+											</c:forEach> <c:if test="${pb.endPage < pb.pageCount}">
+												<a
+													href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
+											</c:if></td>
 									</tr>
-								</c:forEach>
-
-								<tr>
-									<td colspan="4" align="center"><c:if
-											test="${pb.startPage > pb.BLOCKSIZE}">
-											<a
-												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
-										</c:if> <c:forEach var="i" begin="${pb.startPage}"
-											end="${pb.endPage}">
-											<a
-												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${i}">[${i}]</a>
-										</c:forEach> <c:if test="${pb.endPage < pb.pageCount}">
-											<a
-												href="viewQna.do?num=${board.num}&pageNum=${pageNum}&subPageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
-										</c:if></td>
-								</tr>
-							</table></td>
+								</table></td>
+						</tr>
+					</c:if>
+					<tr>
+						<th>댓글 등록</th>
+						<td><input type="text" name="sub_content"></td>
+						<td><input type="text" name="sub_writer"><br> <input
+							type="password" name="sub_password"></td>
+						<td><input type="submit" value="댓글달기"></td>
 					</tr>
-				</c:if>
-				<tr>
-					<th>댓글 등록</th>
-					<td><input type="text" name="sub_content"></td>
-					<td><input type="text" name="sub_writer"><br> <input
-						type="password" name="sub_password"></td>
-					<td><input type="submit" value="댓글달기"></td>
-				</tr>
-				<tr>
-					<td align="center"><input type="button" value="글목록"
-						onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
-					<td colspan="3" align="center"><input type="button"
-						value="글수정"
-						onclick="location.href='updateQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
-						<input type="button" value="글삭제"
-						onclick="location.href='deleteQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
-						<input type="button" value="답글쓰기"
-						onclick="location.href='writeQnaForm.do?pageNum=${pageNum}&num=${board.num}&flag=${board.flag}&ref=${board.ref}&re_step=${board.re_step}&re_level=${board.re_level}'">
-					</td>
-				</tr>
-			</table>
-		</form>
+					<tr>
+						<td align="center"><input type="button" value="글목록"
+							onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
+						<td colspan="3" align="center"><input type="button"
+							value="글수정"
+							onclick="location.href='updateQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
+							<input type="button" value="글삭제"
+							onclick="location.href='deleteQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
+							<input type="button" value="답글쓰기"
+							onclick="location.href='writeQnaForm.do?pageNum=${pageNum}&num=${board.num}&flag=${board.flag}&ref=${board.ref}&re_step=${board.re_step}&re_level=${board.re_level}'">
+						</td>
+					</tr>
+				</table>
+			</form>
 		</div>
 	</div>
-	<jsp:include page="/module/bottom.jsp"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-  </body>
+	<jsp:include page="/module/bottom.jsp" />
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+</body>
 </html>

@@ -1,46 +1,45 @@
--- °Ô½ÃÆÇ
+-- ï¿½Ô½ï¿½ï¿½ï¿½
 CREATE TABLE pj_board (
-    NUM         NUMBER PRIMARY KEY, -- ±Û¹øÈ£
-    FLAG        NUMBER DEFAULT 0 NOT NULL, -- Ä«Å×°í¸®
-    WRITER      VARCHAR2(20 BYTE) NOT NULL, -- ÀÛ¼ºÀÚ
-    SUBJECT     VARCHAR2(50 BYTE) NOT NULL, -- Á¦¸ñ
-    CONTENT     VARCHAR2(2000 BYTE) NOT NULL, -- ³»¿ë
-    EMAIL       VARCHAR2(30 BYTE), -- ÀÌ¸ÞÀÏ
-    READCOUNT   NUMBER DEFAULT 0, -- Á¶È¸¼ö
-    PASSWORD    VARCHAR2(20 BYTE) NOT NULL, -- ºñ¹Ð¹øÈ£
-    REF         NUMBER NOT NULL, -- ÂüÁ¶¹øÈ£
+    NUM         NUMBER PRIMARY KEY, -- ï¿½Û¹ï¿½È£
+    FLAG        NUMBER DEFAULT 0 NOT NULL, -- Ä«ï¿½×°ï¿½
+    WRITER      VARCHAR2(20 BYTE) NOT NULL, -- ï¿½Û¼ï¿½ï¿½ï¿½
+    SUBJECT     VARCHAR2(50 BYTE) NOT NULL, -- ï¿½ï¿½ï¿½ï¿½
+    CONTENT     VARCHAR2(2000 BYTE) NOT NULL, -- ï¿½ï¿½ï¿½ï¿½
+    EMAIL       VARCHAR2(30 BYTE), -- ï¿½Ì¸ï¿½ï¿½ï¿½
+    READCOUNT   NUMBER DEFAULT 0, -- ï¿½ï¿½È¸ï¿½ï¿½
+    PASSWORD    VARCHAR2(20 BYTE) NOT NULL, -- ï¿½ï¿½Ð¹ï¿½È£
+    REF         NUMBER NOT NULL, -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
     RE_STEP     NUMBER DEFAULT 0,
     RE_LEVEL    NUMBER DEFAULT 0,
     IP          VARCHAR2(30 BYTE) NOT NULL,
-    REG_DATE    DATE DEFAULT SYSDATE, -- µî·ÏÀÏ
-    DEL         CHAR(1 BYTE) DEFAULT 'N' -- »èÁ¦¿©ºÎ
+    REG_DATE    DATE DEFAULT SYSDATE, -- ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 select * from (select * from pj_board order by num desc) where rownum = 1 and flag = 2 and del='N';
 drop table pj_board;
 select * from (select * from pj_board order by readcount desc) where rownum = 1;
 --------------------------------------------------------------------
--- ´ñ±Û
+-- ï¿½ï¿½ï¿½
 drop table pj_sub_board;
 CREATE TABLE pj_sub_board (
     sub_num      NUMBER PRIMARY KEY,
-    sub_WRITER     VARCHAR2(20 BYTE) NOT NULL, -- ÀÛ¼ºÀÚ
-    sub_CONTENT    VARCHAR2(2000 BYTE) NOT NULL, -- ³»¿ë
-    sub_PASSWORD   VARCHAR2(20 BYTE) NOT NULL, -- ºñ¹Ð¹øÈ£
-    REF        NUMBER NOT NULL, -- ÂüÁ¶¹øÈ£
-    REG_DATE   DATE DEFAULT SYSDATE, -- µî·ÏÀÏ
-    DEL        CHAR(1 BYTE) DEFAULT 'N' -- »èÁ¦¿©ºÎ
+    sub_WRITER     VARCHAR2(20 BYTE) NOT NULL, -- ï¿½Û¼ï¿½ï¿½ï¿½
+    sub_CONTENT    VARCHAR2(2000 BYTE) NOT NULL, -- ï¿½ï¿½ï¿½ï¿½
+    sub_PASSWORD   VARCHAR2(20 BYTE) NOT NULL, -- ï¿½ï¿½Ð¹ï¿½È£
+    REF        NUMBER NOT NULL, -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
+    REG_DATE   DATE DEFAULT SYSDATE, -- ï¿½ï¿½ï¿½ï¿½ï¿½
+    DEL        CHAR(1 BYTE) DEFAULT 'N' -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 
 select * from pj_sub_board;
 --------------------------------------------------------------------
--- ¸â¹ö
+-- ï¿½ï¿½ï¿½
 
 CREATE TABLE pj_member (
-    ID             VARCHAR2(20 BYTE), -- À¯Àú¾ÆÀÌµð
+    ID             VARCHAR2(20 BYTE), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
     PASSWORD       VARCHAR2(20 BYTE),
     NAME           VARCHAR2(20 BYTE),
-    RRNUM1         VARCHAR2(6), -- ÁÖ¹Îµî·Ï¹øÈ£ ¾ÕÀÚ¸®
-    RRNUM2         VARCHAR2(7), -- ÁÖ¹Îµî·Ï¹øÈ£ µÞÀÚ¸®
+    RRNUM1         VARCHAR2(6), -- ï¿½Ö¹Îµï¿½Ï¹ï¿½È£ ï¿½ï¿½ï¿½Ú¸ï¿½
+    RRNUM2         VARCHAR2(7), -- ï¿½Ö¹Îµï¿½Ï¹ï¿½È£ ï¿½ï¿½ï¿½Ú¸ï¿½
     ZIPNO          VARCHAR2(7 BYTE),
     ADDRESS1       VARCHAR2(80 BYTE),
     ADDRESS2       VARCHAR2(50 BYTE),
@@ -48,52 +47,52 @@ CREATE TABLE pj_member (
     TEL2           VARCHAR2(4 BYTE),
     TEL3           VARCHAR2(4 BYTE),
     EMAIL          VARCHAR2(20 BYTE),
-    REGDATE        DATE DEFAULT SYSDATE, -- °¡ÀÔÀÏ
-    USE_FLAG       CHAR(1 BYTE) DEFAULT 0, -- Å»Åð ¿©ºÎ
-    MANAGER_FLAG   CHAR(1) DEFAULT 0 -- ¸Å´ÏÀú ¿©ºÎ
+    REGDATE        DATE DEFAULT SYSDATE, -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    USE_FLAG       CHAR(1 BYTE) DEFAULT 0, -- Å»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    MANAGER_FLAG   CHAR(1) DEFAULT 0 -- ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 );
 drop table pj_member;
 desc pj_item;
 --------------------------------------------------------------------
--- »óÇ°
+-- ï¿½ï¿½Ç°
 
 CREATE TABLE pj_item (
-    num            NUMBER, -- ±Û¹øÈ£
+    num            NUMBER, -- ï¿½Û¹ï¿½È£
     ITEM_ID      NUMBER PRIMARY KEY,
-    ITEM_KIND    VARCHAR2(30 BYTE), -- »óÇ° À¯Çü
+    ITEM_KIND    VARCHAR2(30 BYTE), -- ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
     ITEM_NAME    VARCHAR2(100 BYTE),
     ITEM_PRICE   NUMBER(20),
-    ITEM_COUNT   NUMBER(5), -- ÆÇ¸Å »óÇ° ¼ö
+    ITEM_COUNT   NUMBER(5), -- ï¿½Ç¸ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½
     ITEM_IMAGE   VARCHAR2(100 BYTE) DEFAULT 'nothing.jpg',
-    startday       DATE, -- ·»Æ® ½ÃÀÛÀÏ
-    endday         DATE, -- ·»Æ® Á¾·áÀÏ
-    trans_type     VARCHAR2(30), -- °Å·¡ À¯Çü
-    REG_DATE     DATE -- »óÇ° µî·ÏÀÏ
+    startday       DATE, -- ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    endday         DATE, -- ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    trans_type     VARCHAR2(30), -- ï¿½Å·ï¿½ ï¿½ï¿½ï¿½ï¿½
+    REG_DATE     DATE -- ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 drop table pj_item;
 alter table pj_item modify(item_image varchar2(50) DEFAULT 'nothing.jpg');
 --------------------------------------------------------------------
--- ·»Æ®
+-- ï¿½ï¿½Æ®
 drop table pj_rent;
 CREATE TABLE pj_rent (
     rent_id           NUMBER PRIMARY KEY,
     rent_seller       VARCHAR2(20),
     rent_buyer        VARCHAR2(20),
     ITEM_ID         NUMBER,
-    ITEM_KIND       VARCHAR2(10 BYTE), -- »óÇ° À¯Çü
+    ITEM_KIND       VARCHAR2(10 BYTE), -- ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
     ITEM_NAME       VARCHAR2(100 BYTE),
     ITEM_PRICE      NUMBER(20),
-    ITEM_COUNT      NUMBER(5), -- ÆÇ¸Å »óÇ° ¼ö
+    ITEM_COUNT      NUMBER(5), -- ï¿½Ç¸ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½
     ITEM_IMAGE      VARCHAR2(100 BYTE) DEFAULT 'nothing.jpg',
-    startday          DATE, -- ·»Æ® ½ÃÀÛÀÏ
-    endday            DATE, -- ·»Æ® Á¾·áÀÏ
-    trans_type        VARCHAR2(30), -- °Å·¡ À¯Çü
+    startday          DATE, -- ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    endday            DATE, -- ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    trans_type        VARCHAR2(30), -- ï¿½Å·ï¿½ ï¿½ï¿½ï¿½ï¿½
     deliveryname      VARCHAR2(20),
     deliverytel       VARCHAR2(15),
     deliveryaddress   VARCHAR2(200),
-    sanction          VARCHAR2(10) default 'ÁØºñÁß',
+    sanction          VARCHAR2(10) default 'ï¿½Øºï¿½ï¿½ï¿½',
     resanction        VARCHAR2(10),
-    REG_DATE        DATE -- »óÇ° µî·ÏÀÏ
+    REG_DATE        DATE -- ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 
 select count(*)+1 from pj_item;

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import QnAdao.BoardDao;
 import QnAdao.SubBoardDao;
@@ -19,7 +21,12 @@ public class ViewQnaAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		System.out.println(id);
+		if (id == null || id.equals("")) {
+			request.setAttribute("error", "글은 회원만 볼 수 있습니다.");
+		}
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
 		String subPageNum = request.getParameter("subPageNum");
