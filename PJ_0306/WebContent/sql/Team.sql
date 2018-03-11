@@ -119,5 +119,3 @@ CREATE TABLE pj_rent (
     resanction        VARCHAR2(10),
     reg_date          DATE -- 상품 등록일
 );
-
-select * from pj_board;

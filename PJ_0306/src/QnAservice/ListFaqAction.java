@@ -18,6 +18,7 @@ public class ListFaqAction implements CommandProcess {
 		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int total = dao.getFaqTotal();
 		Paging pg = new Paging();
+		System.out.println("pageNum: " + request.getParameter("pageNum"));
 		PageBean pb = pg.getPaging(request, total);
 		List<Board> list = dao.selectFaqList(pb.getStartRow(), pb.getEndRow());
 

@@ -1,10 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-	String id = (String) session.getAttribute("id");
-	request.setAttribute("id", id);
-%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -13,6 +9,12 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.css">
 <meta charset="utf-8">
 <title>Q&A</title>
+<c:if test="${error != null}">
+	<script type="text/javascript">
+		alert('${error}');
+		history.back();
+	</script>
+</c:if>
 </head>
 <body>
 	<jsp:include page="/module/top.jsp" />
@@ -101,7 +103,8 @@
 				<c:if test="${pb.endPage < pb.pageCount}">
 					<a href="listQna.do?pageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
 				</c:if>
-				<a href="writeQnaForm.do?pageNum=${pb.currentPage}"><b>글쓰기</b></a> <br>
+				<a href="writeQnaForm.do?pageNum=${pb.currentPage}&chk='N'"><b>글쓰기</b></a>
+				<br>
 		</div>
 	</div>
 	<jsp:include page="/module/bottom.jsp" />

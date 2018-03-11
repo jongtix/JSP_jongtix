@@ -6,10 +6,8 @@ public class SubBoard {
 	private int sub_num;
 	private String sub_writer;
 	private String sub_content;
-	private String sub_password;
 	private int ref;
 	private Date reg_date;
-	private String del;
 
 	public int getSub_num() {
 		return sub_num;
@@ -35,14 +33,6 @@ public class SubBoard {
 		this.sub_content = sub_content;
 	}
 
-	public String getSub_password() {
-		return sub_password;
-	}
-
-	public void setSub_password(String sub_password) {
-		this.sub_password = sub_password;
-	}
-
 	public int getRef() {
 		return ref;
 	}
@@ -57,14 +47,6 @@ public class SubBoard {
 
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
-	}
-
-	public String getDel() {
-		return del;
-	}
-
-	public void setDel(String del) {
-		this.del = del;
 	}
 
 }

@@ -4,9 +4,10 @@
 <head>
 <title>Insert title here</title>
 <script type="text/javascript" src="/teamProject/js/askDelete.js"></script>
-<c:if test="${error != null}">
+<c:if test="${result < 0}">
 	<script type="text/javascript">
-		alert('${error}');
+		alert('글 쓴이만 삭제할 수 있습니다.');
+		history.back();
 	</script>
 </c:if>
 </head>
@@ -16,6 +17,7 @@
 		<form action="deleteSubBoardPro.do" method="post" name="delForm"
 			onsubmit="return ask()">
 			<table border="1" width="360">
+				<caption>삭제하시려면 비밀번호를 한번 더 입력해 주세요.</caption>
 				<tr height="30">
 					<th>비밀번호</th>
 					<td><input type="password" name="sub_password"> <input

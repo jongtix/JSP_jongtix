@@ -14,9 +14,24 @@ public class WriteQnaFormAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
+		String chk = request.getParameter("chk");
+		String email = null;
+		QnaBoardDao dao = QnaBoardDao.getInstance();
+		boolean isManager = dao.isManager(id);
 		if (id == null || id.equals("")) {
 			request.setAttribute("error", "글 작성은 회원만 가능합니다.");
+		} else {
+
 		}
+		if (chk.equals("Y")) {
+			if (isManager) {
+
+			} else {
+				request.setAttribute("error", "답글은 관리자만 작성할 수 있습니다.");
+			}
+		}
+		email = dao.getEmail(id);
+		request.setAttribute("email", email);
 
 		Board board = new Board();
 		int num = 0, flag = 0, ref = 0, re_step = 0, re_level = 0;

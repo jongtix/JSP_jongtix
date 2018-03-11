@@ -17,26 +17,31 @@ public class MoveFaqAction implements CommandProcess {
 
 		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int result = dao.managerCheck(id, password); // 정상 1, 비정상 -1
-		String view = "";
-		String error = "";
+		/*
+		 * String view = ""; String error = "";
+		 */
 		if (result == -1) {
-			error = "관리자ID와 비밀번호를 확인해주세요.";
-			view = "moveFaqForm.do";
+			/* request.setAttribute("pageNum", pageNum); */
+			request.setAttribute("error", "관리자ID와 비밀번호를 확인해주세요.");
+			/*
+			 * error = "관리자ID와 비밀번호를 확인해주세요."; view = "moveFaqForm.do";
+			 */
 		} else if (result == 1) {
 			result = dao.moveFaq(num);
 			if (result > 0) {
-				view = "listFaq.do";
+
 			} else {
-				error = "이동 실패";
-				view = "moveFaqForm.do";
+				/* request.setAttribute("pageNum", pageNum); */
+				request.setAttribute("error", "이동 실패");
+				/*
+				 * error = "이동 실패"; view = "moveFaqForm.do";
+				 */
 			}
 		}
 
 		request.setAttribute("num", num);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("error", error);
 
-		return view;
+		return "QnAboard/moveFaqPro.jsp";
 	}
 
 }

@@ -48,7 +48,7 @@ public class SubBoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_sub_board where ref = ?";
+			sql = "select count(*) from pj_sub_qnaboard where ref = ?";
 			// ref가 글 번호와 일치하고 지워지지 않은 댓글 선택
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ref);
@@ -77,7 +77,7 @@ public class SubBoardDao {
 		List<SubBoard> subList = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_sub_board where ref = ? order by sub_num desc) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_sub_qnaboard where ref = ? order by sub_num desc) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, startRow);
@@ -89,10 +89,8 @@ public class SubBoardDao {
 				s.setSub_num(rs.getInt(++i));
 				s.setSub_writer(rs.getString(++i));
 				s.setSub_content(rs.getString(++i));
-				s.setSub_password(rs.getString(++i));
 				s.setRef(rs.getInt(++i));
 				s.setReg_date(rs.getDate(++i));
-				s.setDel(rs.getString(++i));
 
 				subList.add(s);
 			}
@@ -114,10 +112,10 @@ public class SubBoardDao {
 	}
 
 	public int insertSubBoard(SubBoard subBoard) {
-		int result = 0;
+		int result = -1;
 		try {
 			conn = getConnection();
-			sql = "select max(sub_num) from pj_sub_board";
+			sql = "select max(sub_num) from pj_sub_qnaboard";
 			// 게시판에서 가장 큰 글번호
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -125,13 +123,12 @@ public class SubBoardDao {
 				int number = rs.getInt(1) + 1;
 				pstmt.close();
 
-				sql = "insert into pj_sub_board values(?, ?, ?, ?, ?, sysdate, 'N')";
+				sql = "insert into pj_sub_qnaboard values(?, ?, ?, ?, sysdate)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
 				pstmt.setInt(++i, number);
 				pstmt.setString(++i, subBoard.getSub_writer());
 				pstmt.setString(++i, subBoard.getSub_content());
-				pstmt.setString(++i, subBoard.getSub_password());
 				pstmt.setInt(++i, subBoard.getRef());
 
 				result = pstmt.executeUpdate();
@@ -153,18 +150,27 @@ public class SubBoardDao {
 		return result;
 	}
 
-	public int useCheck(int sub_num, String sub_password) {
+	public int useCheck(int sub_num, String id, String sub_password) {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "select SUB_PASSWORD from pj_sub_board where sub_num = ?";
-			// 게시판의 글쓴이 비밀번호 선택
+			sql = "select password from pj_member where id = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sub_num);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getString(1).equals(sub_password)) // 확인
-					result = 1;
+				if (rs.getString(1).equals(sub_password)) { // 비밀번호가 맞으면
+					sql = "select sub_writer from pj_sub_qnaboard where sub_num = ?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, sub_num);
+					rs = pstmt.executeQuery();
+					if (rs.next()) {
+						if (rs.getString(1).equals(id)) // 확인
+							result = 1;
+					}
+				} else { // 비밀번호가 틀리면
+					result = -1;
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -187,7 +193,7 @@ public class SubBoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_sub_board set del = 'Y' where sub_num = ?";
+			sql = "delete from pj_sub_qnaboard where sub_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sub_num);
 			result = pstmt.executeUpdate();

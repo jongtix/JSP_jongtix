@@ -79,8 +79,8 @@
 		} while (true);
 		m.setRegdate(new java.sql.Date(new Date(randomDate1).getTime()));
 
-		m.setUse_flag('N');
-		m.setManager_flag('N');
+		m.setUse_flag('0');
+		m.setManager_flag('0');
 
 		MemberDao dao = MemberDao.getInstance();
 		dao.insertMember(m);

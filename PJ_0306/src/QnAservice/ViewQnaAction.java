@@ -21,17 +21,12 @@ public class ViewQnaAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
-		if (id == null || id.equals("")) {
-			request.setAttribute("error", "글은 회원만 볼 수 있습니다.");
-		}
+
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
-		String subPageNum = request.getParameter("subPageNum");
+		String chk = request.getParameter("chk");
 
 		QnaBoardDao dao = QnaBoardDao.getInstance();
-		dao.updateReadCount(num);
 		Board board = dao.getQnaBoard(num);
 
 		SubBoardDao subDao = SubBoardDao.getInstance();
@@ -47,6 +42,7 @@ public class ViewQnaAction implements CommandProcess {
 		request.setAttribute("total", total);
 		request.setAttribute("pb", pb);
 		request.setAttribute("subPageNum", pb.getPageNum());
+		request.setAttribute("faqChk", chk);
 
 		return "QnAboard/viewQna.jsp";
 	}

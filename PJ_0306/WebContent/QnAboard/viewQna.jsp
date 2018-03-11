@@ -12,7 +12,7 @@
 <c:if test="${error != null}">
 	<script type="text/javascript">
 		alert('${error}');
-		location.href = 'start.do';
+		history.back();
 	</script>
 </c:if>
 </head>
@@ -29,6 +29,7 @@
 						<td><input type="hidden" value="${board.num}" name="num">${board.num}</td>
 						<th>조회수</th>
 						<td>${board.readcount}</td>
+						<th align="center">첨부파일</th>
 					</tr>
 
 					<tr>
@@ -36,6 +37,9 @@
 						<td>${board.writer}</td>
 						<th>작성일</th>
 						<td>${board.reg_date}</td>
+						<td rowspan="3" align="center"><img
+							src="refFiles/${board.filename}" width="300" height="300"
+							alt="첨부파일이 없습니다."></td>
 					</tr>
 
 					<tr>
@@ -50,14 +54,14 @@
 					</tr>
 					<c:if test="${total == 0}">
 						<tr>
-							<td colspan="4">댓글이 없습니다.</td>
+							<td colspan="5">댓글이 없습니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${total != 0}">
 						<tr>
 							<th>댓글목록</th>
 
-							<td colspan="3"><table style="width: 300px">
+							<td colspan="4"><table style="width: 600px">
 									<c:forEach var="s" items="${subList}" varStatus="n">
 										<tr>
 											<td height="1">${s.sub_content}</td>
@@ -87,21 +91,27 @@
 					</c:if>
 					<tr>
 						<th>댓글 등록</th>
-						<td><input type="text" name="sub_content"></td>
-						<td><input type="text" name="sub_writer"><br> <input
-							type="password" name="sub_password"></td>
-						<td><input type="submit" value="댓글달기"></td>
+						<td colspan="4"><input type="text" name="sub_content"
+							size="70"> <!-- <td><input type="text" name="sub_writer"><br> <input
+							type="password" name="sub_password"></td> --> <input
+							type="submit" value="댓글달기"></td>
 					</tr>
 					<tr>
-						<td align="center"><input type="button" value="글목록"
-							onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
-						<td colspan="3" align="center"><input type="button"
+						<c:if test="${faqChk!='Y'}">
+							<td align="center"><input type="button" value="글목록"
+								onclick="location.href='listQna.do?pageNum=${pageNum}'"></td>
+						</c:if>
+						<c:if test="${faqChk=='Y'}">
+							<td align="center"><input type="button" value="글목록"
+								onclick="location.href='listFaq.do?pageNum=${pageNum}'"></td>
+						</c:if>
+						<td colspan="4" align="center"><input type="button"
 							value="글수정"
 							onclick="location.href='updateQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
 							<input type="button" value="글삭제"
 							onclick="location.href='deleteQnaForm.do?num=${board.num}&pageNum=${pageNum}'">
 							<input type="button" value="답글쓰기"
-							onclick="location.href='writeQnaForm.do?pageNum=${pageNum}&num=${board.num}&flag=${board.flag}&ref=${board.ref}&re_step=${board.re_step}&re_level=${board.re_level}'">
+							onclick="location.href='writeQnaForm.do?pageNum=${pageNum}&num=${board.num}&flag=${board.flag}&ref=${board.ref}&re_step=${board.re_step}&re_level=${board.re_level}&chk=Y'">
 						</td>
 					</tr>
 				</table>

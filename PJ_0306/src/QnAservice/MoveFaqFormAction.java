@@ -17,11 +17,8 @@ public class MoveFaqFormAction implements CommandProcess {
 		String pageNum = request.getParameter("pageNum");
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
-		System.out.println("id: " + id);
-		String error = null;
 		if (!QnaBoardDao.getInstance().isManager(id)) {
-			error = "Manager 권한이 필요합니다.";
-			request.setAttribute("error", error);
+			request.setAttribute("error", "Manager 권한이 필요합니다.");
 		}
 		Board board = new Board();
 		QnaBoardDao dao = QnaBoardDao.getInstance();

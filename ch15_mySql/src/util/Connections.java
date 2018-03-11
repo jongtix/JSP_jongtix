@@ -24,7 +24,7 @@ public class Connections {
 		Connection conn = null;
 		DataSource ds = null;
 		try {
-			String envDb = "jdbc/MysqlDB";
+			String envDb = "jdbc/OraDB";
 			Context init = new InitialContext();
 			ds = (DataSource) init.lookup("java:comp/env/" + envDb);
 			conn = ds.getConnection();

@@ -15,7 +15,9 @@
 	String emailDomain = request.getParameter("email2");
 	String email = emailId + "@" + emailDomain;
 
-	member.setTel(tel);
+	member.setTel1(tel1);
+	member.setTel2(tel2);
+	member.setTel3(tel3);
 	member.setEmail(email);
 %>
 <%

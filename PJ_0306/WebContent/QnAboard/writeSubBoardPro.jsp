@@ -12,7 +12,7 @@
 	</c:if>
 	<c:if test="${result<0}">
 		<script>
-			alert(${error});
+			alert('${error}');
 			history.back();
 		</script>
 	</c:if>

@@ -16,21 +16,22 @@
 <c:if test="${error != null}">
 	<script type="text/javascript">
 		alert('${error}');
-		location.href = 'start.do';
+		history.back();
 	</script>
 </c:if>
 </head>
 <body>
 	<jsp:include page="/module/top.jsp" />
 	<div class="container">
-		<form action="writeQnaPro.do" method="post">
+		<form action="writeQnaPro.do" method="post"
+			enctype="multipart/form-data">
 			<input type="hidden" name="num" value="${board.num}"> <input
 				type="hidden" name="flag" value="${board.flag}"> <input
 				type="hidden" name="ref" value="${board.ref}"> <input
 				type="hidden" name="re_level" value="${board.re_level}"> <input
 				type="hidden" name="re_step" value="${board.re_step}"> <input
 				type="hidden" name="pageNum" value="${pageNum}">
-			<table border="1">
+			<table width="400" border="1">
 				<caption>
 					<b>Q&A 글 작성</b>
 				</caption>
@@ -49,7 +50,7 @@
 				</tr>
 				<tr>
 					<th>email</th>
-					<td><input type="text" name="email" required></td>
+					<td><input type="text" name="email" required value="${email}"></td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>

@@ -26,7 +26,7 @@ public class WriteQnaAction implements CommandProcess {
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String filename = request.getParameter("filename");
 		int ref = Integer.parseInt(request.getParameter("ref"));
 		int re_level = Integer.parseInt(request.getParameter("re_level"));
 		int re_step = Integer.parseInt(request.getParameter("re_step"));
@@ -37,7 +37,7 @@ public class WriteQnaAction implements CommandProcess {
 		board.setSubject(subject);
 		board.setContent(content);
 		board.setEmail(email);
-		board.setPassword(password);
+		board.setFilename(filename);
 		board.setRef(ref);
 		board.setRe_step(re_step);
 		board.setRe_level(re_level);

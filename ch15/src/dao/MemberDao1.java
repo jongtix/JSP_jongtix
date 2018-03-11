@@ -32,7 +32,7 @@ public class MemberDao1 {
 	public int userCheck(String id, String password) {
 		int result = 2;// 정상1, 패스워드 이상0, 아이디 없을 때 2
 		PreparedStatement pstmt = null;
-		String sql = "select password from member where id=? and use_flag='0'";
+		String sql = "select password from member2 where id=? and use_flag='0'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class MemberDao1 {
 	public int userCheck(String id) {
 		int result = 2;// 아이디가 있을 때1, 아이디 없을 때 2
 		PreparedStatement pstmt = null;
-		String sql = "select count(*) from member where id=?";
+		String sql = "select count(*) from member2 where id=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -104,7 +104,7 @@ public class MemberDao1 {
 		int result = 2;
 		email = "%" + email + "%";// 와일드카드 문자 처리
 		System.out.print("email=" + email);
-		String sql = "select count(*) from member where email like ? and use_flag='0'";
+		String sql = "select count(*) from member2 where email like ? and use_flag='0'";
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -145,7 +145,7 @@ public class MemberDao1 {
 
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "insert into member(id, password, name, birth, zipno,"
+		String sql = "insert into member2(id, password, name, birth, zipno,"
 				+ "                            address1, address2, tel1,tel2,tel3, email)"
 				+ " values(?,?,?,?,?,?,?,?,?,?,?)";
 		try {
@@ -189,7 +189,7 @@ public class MemberDao1 {
 	public ArrayList<Member> getMemberList() {
 		ArrayList<Member> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
-		String sql = "select * from member where use_flag='0' order by id";
+		String sql = "select * from member2 where use_flag='0' order by id";
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
@@ -241,7 +241,7 @@ public class MemberDao1 {
 		Member member = new Member();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from member where id =? and use_flag='0'";
+		String sql = "select * from member2 where id =? and use_flag='0'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -283,7 +283,7 @@ public class MemberDao1 {
 	public int updateMember(Member member) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "update member " + " set name=?,zipno=?," + " address1=?,address2=?,tel1=?,tel2=?,tel3=?,"
+		String sql = "update member2 " + " set name=?,zipno=?," + " address1=?,address2=?,tel1=?,tel2=?,tel3=?,"
 				+ " email=?" + " where id=?";
 		try {
 			conn = getConnection();
@@ -319,7 +319,7 @@ public class MemberDao1 {
 	public int deletMember(String id) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "update member set use_flag = '1' where id=?";
+		String sql = "update member2 set use_flag = '1' where id=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

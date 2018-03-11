@@ -364,7 +364,6 @@ public class QnaBoardDao {
 		try {
 			conn = getConnection();
 			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' order by num asc) a) where num = ?";
-			// 카테고리가 1로 시작하고 지워지지 않은 글 선택
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -406,13 +405,14 @@ public class QnaBoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_QnAboard set subject = ?, email = ?, content = ? where num = ?";
+			sql = "update pj_QnAboard set subject = ?, content = ?, email = ?, filename = ? where num = ?";
 			// 제목 이메일 내용 수정
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getSubject());
-			pstmt.setString(2, board.getEmail());
-			pstmt.setString(3, board.getContent());
-			pstmt.setInt(4, board.getNum());
+			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, board.getEmail());
+			pstmt.setString(4, board.getFilename());
+			pstmt.setInt(5, board.getNum());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -436,7 +436,6 @@ public class QnaBoardDao {
 		try {
 			conn = getConnection();
 			sql = "update pj_QnAboard set flag = 11 where num = ?";
-			// 카테고리를 11로 변경
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			result = pstmt.executeUpdate();
@@ -456,17 +455,48 @@ public class QnaBoardDao {
 	}
 
 	/* 글쓴이 확인 */
-	public int useCheck(int num, String password) {
+	public int useCheck(int num, String id) {
 		int result = -1;
 		try {
 			conn = getConnection();
-			sql = "select password from pj_QnAboard where num = ?";
-			// 게시판의 글쓴이 비밀번호 선택
+			sql = "select writer from pj_QnAboard where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getString(1).equals(password)) // 확인
+				if (rs.getString(1).equals(id)) // 확인
+					result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+	}
+
+	/* 댓글 글쓴이 확인 */
+	public int useCheckSub(int num, String id) {
+		int result = -1;
+		try {
+			conn = getConnection();
+			sql = "select sub_writer from pj_sub_QnAboard where ref = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				System.out.println(rs.getString(1));
+				System.out.println(id);
+				if (rs.getString(1).equals(id)) // 확인
 					result = 1;
 			}
 		} catch (Exception e) {
@@ -526,8 +556,6 @@ public class QnaBoardDao {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("errorChk");
-				System.out.println(rs.getInt(1));
 				if (rs.getInt(1) > 0) {// 확인
 					System.out.println(rs.getInt(1));
 					isTrue = true;
@@ -585,7 +613,7 @@ public class QnaBoardDao {
 		int result = 0;
 		try {
 			conn = getConnection();
-			sql = "update pj_QnAboard set del = 'Y' where num = ?";
+			sql = "delete pj_QnAboard where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			result = pstmt.executeUpdate();
@@ -634,5 +662,34 @@ public class QnaBoardDao {
 			}
 		}
 		return isTrue;
+	}
+
+	/* 이메일 얻기 */
+	public String getEmail(String id) {
+		String email = "";
+		try {
+			conn = getConnection();
+			sql = "select email from pj_member where id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				email = rs.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return email;
 	}
 }
