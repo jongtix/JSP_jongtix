@@ -397,7 +397,7 @@ public class BoardDao {
 
 	public Board getMaxRead() {
 		Board board = new Board();
-		String sql = "select * from (select * from pj_board order by readcount desc) where rownum = 1 and flag = 2 and del='N'";
+		String sql = "select * from (select * from pj_board order by readcount desc) where rownum = 1 and flag = 2";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -415,7 +415,6 @@ public class BoardDao {
 				board.setRe_level(rs.getInt("re_level"));
 				board.setIp(rs.getString("ip"));
 				board.setReg_date(rs.getDate("reg_date"));
-				board.setDel(rs.getString("del"));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -436,7 +435,7 @@ public class BoardDao {
 
 	public Board getNewBoard() {
 		Board board = new Board();
-		String sql = "select * from (select * from pj_board order by num desc) where rownum = 1 and flag = 2 and del='N'";
+		String sql = "select * from (select * from pj_board order by num desc) where rownum = 1 and flag = 2";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -12,7 +12,6 @@
 <%
 	for (int i = 1; i < 111; i++) {
 
-		Board board = new Board();
 		Member m = new Member();
 
 		m.setId("MemberId" + i);

@@ -149,7 +149,7 @@ public class QnaBoardDao {
 		int total = 0;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_QnAboard where (flag like '11' and del != 'Y') or (flag like '1%' and readcount > 20 and del != 'Y')";
+			sql = "select count(*) from pj_QnAboard where (flag like '11') or (flag like '1%' and readcount > 20)";
 			// FAQ로 옮겨진 게시글이거나 Q&A 글 중 조회수가 20 이상인 글 선택
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -224,9 +224,9 @@ public class QnaBoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			searchKeyword = "%" + searchCondition + "%";
+			searchKeyword = "%" + searchKeyword + "%";
 			if (searchCondition.equals("all")) {
-				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and (title like ? or content like ? or writer like ?) order by ref desc, re_step) a) where rn between ? and ?";
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and (subject like ? or content like ? or writer like ?) order by ref desc, re_step) a) where rn between ? and ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, searchKeyword);
 				pstmt.setString(2, searchKeyword);
@@ -234,17 +234,20 @@ public class QnaBoardDao {
 				pstmt.setInt(4, startRow);
 				pstmt.setInt(5, endRow);
 			} else if (searchCondition.equals("title")) {
-				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and title like ? order by ref desc, re_step) a) where rn between ? and ?";
+				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and subject like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, searchKeyword);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 			} else if (searchCondition.equals("content")) {
 				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and content like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, searchKeyword);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 			} else if (searchCondition.equals("writer")) {
 				sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' and writer like ? order by ref desc, re_step) a) where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, searchKeyword);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
@@ -259,8 +262,8 @@ public class QnaBoardDao {
 				b.setSubject(rs.getString(++i));
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
-				b.setReadcount(rs.getInt(++i));
 				b.setFilename(rs.getString(++i));
+				b.setReadcount(rs.getInt(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
@@ -366,7 +369,7 @@ public class QnaBoardDao {
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				int i = 0;
+				int i = 1;
 				board.setNum(rs.getInt(++i));
 				board.setFlag(rs.getInt(++i));
 				board.setWriter(rs.getString(++i));
@@ -518,13 +521,17 @@ public class QnaBoardDao {
 		boolean isTrue = false;
 		try {
 			conn = getConnection();
-			sql = "select count(*) from pj_member where id = ? and manager_flag = 'Y'";
+			sql = "select count(*) from pj_member where id = ? and manager_flag = '1'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getInt(1) > 0) // 확인
+				System.out.println("errorChk");
+				System.out.println(rs.getInt(1));
+				if (rs.getInt(1) > 0) {// 확인
+					System.out.println(rs.getInt(1));
 					isTrue = true;
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -548,7 +555,7 @@ public class QnaBoardDao {
 		int result = -1;
 		try {
 			conn = getConnection();
-			sql = "select password from pj_member where id = ? and manager_flag = 'Y'";
+			sql = "select password from pj_member where id = ? and manager_flag = '1'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();

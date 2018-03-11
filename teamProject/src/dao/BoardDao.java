@@ -59,8 +59,10 @@ public class BoardDao {
 				pstmt.close();
 				if (num != 0) { // 답변글일 경우
 					String id = board.getWriter();
-					String password = board.getPassword();
-					result = managerCheck(id, password);
+					result = managerCheck(id);
+					/*
+					 * String password = board.getPassword(); result = managerCheck(id, password);
+					 */
 					if (result == 1) {
 						conn = getConnection();
 						sql = "update pj_qnaboard set re_step = re_step + 1 where ref = ? and re_step > ?";
@@ -79,8 +81,8 @@ public class BoardDao {
 				} else if (num == 0) { // 답변글이 아닐 경우
 					board.setRef(number);
 				}
-				sql = "insert into pj_qnaboard(num, flag, writer, subject, content, email, readcount, password, ref, re_step, re_level, ip, reg_date) "
-						+ "values(?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)";
+				sql = "insert into pj_qnaboard(num, flag, writer, subject, content, email, filename, readcount, ref, re_step, re_level, ip, reg_date) "
+						+ "values(?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, sysdate)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
 				pstmt.setInt(++i, number);
@@ -89,7 +91,7 @@ public class BoardDao {
 				pstmt.setString(++i, board.getSubject());
 				pstmt.setString(++i, board.getContent());
 				pstmt.setString(++i, board.getEmail());
-				pstmt.setString(++i, board.getPassword());
+				pstmt.setString(++i, board.getFilename());
 				pstmt.setInt(++i, board.getRef());
 				pstmt.setInt(++i, board.getRe_step());
 				pstmt.setInt(++i, board.getRe_level());
@@ -190,14 +192,13 @@ public class BoardDao {
 				b.setSubject(rs.getString(++i));
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
+				b.setFilename(rs.getString(++i));
 				b.setReadcount(rs.getInt(++i));
-				b.setPassword(rs.getString(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
 				b.setReg_date(rs.getDate(++i));
-				b.setDel(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -237,8 +238,8 @@ public class BoardDao {
 				b.setSubject(rs.getString(++i));
 				b.setContent(rs.getString(++i));
 				b.setEmail(rs.getString(++i));
+				b.setFilename(rs.getString(++i));
 				b.setReadcount(rs.getInt(++i));
-				b.setPassword(rs.getString(++i));
 				b.setRef(rs.getInt(++i));
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
@@ -305,8 +306,8 @@ public class BoardDao {
 				board.setSubject(rs.getString(++i));
 				board.setContent(rs.getString(++i));
 				board.setEmail(rs.getString(++i));
+				board.setFilename(rs.getString(++i));
 				board.setReadcount(rs.getInt(++i));
-				board.setPassword(rs.getString(++i));
 				board.setRef(rs.getInt(++i));
 				board.setRe_step(rs.getInt(++i));
 				board.setRe_level(rs.getInt(++i));
@@ -426,6 +427,36 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (rs.getString(1).equals(password))
+					result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return result;
+	}
+
+	/* 관리자 확인 */
+	public int managerCheck(String id) {
+		int result = -1;
+		try {
+			conn = getConnection();
+			sql = "select count(*) from pj_member where id = ? and manager_flag = 'Y'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getInt(1) > 0)
 					result = 1;
 			}
 		} catch (Exception e) {

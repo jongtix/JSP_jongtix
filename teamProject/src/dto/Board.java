@@ -9,14 +9,13 @@ public class Board {
 	private String subject;
 	private String content;
 	private String email;
+	private String filename;
 	private int readcount;
-	private String password;
 	private int ref;
 	private int re_step;
 	private int re_level;
 	private String ip;
 	private Date reg_date;
-	private String del;
 
 	public int getNum() {
 		return num;
@@ -66,20 +65,20 @@ public class Board {
 		this.email = email;
 	}
 
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	public int getReadcount() {
 		return readcount;
 	}
 
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public int getRef() {
@@ -120,14 +119,6 @@ public class Board {
 
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
-	}
-
-	public String getDel() {
-		return del;
-	}
-
-	public void setDel(String del) {
-		this.del = del;
 	}
 
 }

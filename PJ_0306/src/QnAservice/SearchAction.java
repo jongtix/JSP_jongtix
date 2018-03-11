@@ -11,7 +11,7 @@ import controller.CommandProcess;
 import util.PageBean;
 import util.Paging;
 
-public class searchAction implements CommandProcess {
+public class SearchAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -19,6 +19,7 @@ public class searchAction implements CommandProcess {
 		int total = dao.getQnaTotal();
 		String searchCondition = request.getParameter("searchCondition");
 		String searchKeyword = request.getParameter("searchKeyword");
+		System.out.println(searchCondition);
 		Paging pg = new Paging();
 		PageBean pb = pg.getPaging(request, total);
 		List<Board> list = dao.selectQnaListWith(pb.getStartRow(), pb.getEndRow(), searchCondition, searchKeyword);

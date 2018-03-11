@@ -5,17 +5,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import QnAdao.QnaBoardDao;
 import QnAdao.SubBoardDao;
 import QnAdto.Board;
 import QnAdto.SubBoard;
 import controller.CommandProcess;
-import util.Paging;
 import util.PageBean;
+import util.Paging;
 
-public class ViewQnaAction implements CommandProcess {
+public class ViewProAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -48,7 +47,7 @@ public class ViewQnaAction implements CommandProcess {
 		request.setAttribute("pb", pb);
 		request.setAttribute("subPageNum", pb.getPageNum());
 
-		return "QnAboard/viewQna.jsp";
+		return "viewQna.do";
 	}
 
 }
