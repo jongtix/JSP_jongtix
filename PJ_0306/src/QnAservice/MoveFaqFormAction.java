@@ -15,14 +15,21 @@ public class MoveFaqFormAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
+
+		QnaBoardDao dao = QnaBoardDao.getInstance();
+		System.out.println("num: " + num);
+		boolean isFaq = dao.isFaq(num);
+		if (isFaq) {
+			request.setAttribute("error", "이미 FAQ 게시판에 있는 글입니다.");
+		}
+
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		if (!QnaBoardDao.getInstance().isManager(id)) {
 			request.setAttribute("error", "Manager 권한이 필요합니다.");
 		}
-		Board board = new Board();
-		QnaBoardDao dao = QnaBoardDao.getInstance();
-		board = dao.getQnaBoard(num);
+		/* Board board = new Board(); */
+		/* board = dao.getQnaBoard(num); */
 
 		request.setAttribute("num", num);
 		request.setAttribute("pageNum", pageNum);

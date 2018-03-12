@@ -32,9 +32,7 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성자ID</th>
-					<th>email</th>
 					<th>조회수</th>
-					<th>IP</th>
 					<th>작성일</th>
 					<th>관리자 메뉴</th>
 				</tr>
@@ -64,9 +62,7 @@
 										<img alt="" src="images/hot.gif">
 									</c:if></td>
 								<td><a href="mailto:${board.email}">${board.writer}</a></td>
-								<td><a href="mailto:${board.email}">${board.email}</a></td>
 								<td>${board.readcount}</td>
-								<td>${board.ip}</td>
 								<td><fmt:formatDate value="${board.reg_date}" type="date"
 										pattern="yyyy-MM-dd" /></td>
 								<td><a
@@ -77,34 +73,37 @@
 						<c:set var="rowNum" value="${rowNum - 1}" />
 					</c:forEach>
 				</c:if>
+				<tr>
+					<td colspan="6" align="center" style="border-right: 0px solid red">
+						<form action="search.do" method="post">
+							<select id="searchCondition" name="searchCondition">
+								<option value="all"
+									<c:if test="${searchCondition == 'all'}">selected="selected"</c:if>>전체</option>
+								<option value="title"
+									<c:if test="${searchCondition == 'title'}">selected="selected"</c:if>>제목</option>
+								<option value="content"
+									<c:if test="${searchCondition == 'content'}">selected="selected"</c:if>>내용</option>
+								<option value="writer"
+									<c:if test="${searchCondition == 'writer'}">selected="selected"</c:if>>작성자</option>
+							</select> <input type="text" id="searchKeyword" name="searchKeyword"
+								<c:if test="${searchKeyword != null}">value='${searchKeyword}'</c:if>>
+							<input type="submit" value="검색">
+						</form>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" align="center"><c:if
+							test="${pb.startPage > pb.BLOCKSIZE}">
+							<a href="listQna.do?pageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
+						</c:if> <c:forEach var="i" begin="${pb.startPage}" end="${pb.endPage}">
+							<a href="listQna.do?pageNum=${i}">[${i}]</a>
+						</c:forEach> <c:if test="${pb.endPage < pb.pageCount}">
+							<a href="listQna.do?pageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
+						</c:if></td>
+					<td align="center"><a
+						href="writeQnaForm.do?pageNum=${pb.currentPage}&chk='N'"><b>글쓰기</b></a></td>
+				</tr>
 			</table>
-			<form action="search.do" method="post">
-				<select id="searchCondition" name="searchCondition">
-					<option value="all"
-						<c:if test="${searchCondition == 'all'}">selected="selected"</c:if>>전체</option>
-					<option value="title"
-						<c:if test="${searchCondition == 'title'}">selected="selected"</c:if>>제목</option>
-					<option value="content"
-						<c:if test="${searchCondition == 'content'}">selected="selected"</c:if>>내용</option>
-					<option value="writer"
-						<c:if test="${searchCondition == 'writer'}">selected="selected"</c:if>>작성자</option>
-				</select> <input type="text" id="searchKeyword" name="searchKeyword"
-					<c:if test="${searchKeyword != null}">value='${searchKeyword}'</c:if>>
-				<input type="submit" value="검색">
-			</form>
-			<p>
-
-				<c:if test="${pb.startPage > pb.BLOCKSIZE}">
-					<a href="listQna.do?pageNum=${pb.startPage - pb.BLOCKSIZE}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${pb.startPage}" end="${pb.endPage}">
-					<a href="listQna.do?pageNum=${i}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${pb.endPage < pb.pageCount}">
-					<a href="listQna.do?pageNum=${pb.startPage + pb.BLOCKSIZE}">[다음]</a>
-				</c:if>
-				<a href="writeQnaForm.do?pageNum=${pb.currentPage}&chk='N'"><b>글쓰기</b></a>
-				<br>
 		</div>
 	</div>
 	<jsp:include page="/module/bottom.jsp" />

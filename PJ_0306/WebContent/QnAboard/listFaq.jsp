@@ -30,9 +30,7 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성자ID</th>
-					<th>email</th>
 					<th>조회수</th>
-					<th>IP</th>
 					<th>작성일</th>
 				</tr>
 				<c:set var="rowNum" value="${pb.rowNum}" />
@@ -50,7 +48,7 @@
 						</tr>
 					</c:if> --%>
 						<tr>
-							<td>${rowNum}</td>
+							<td>${total - rowNum + 1}</td>
 							<td><c:if test="${board.re_level > 0}">
 									<img alt="" src="images/level.gif"
 										width="${board.re_level * 10}" height="5">
@@ -61,9 +59,7 @@
 									<img alt="" src="images/hot.gif">
 								</c:if></td>
 							<td><a href="mailto:${board.email}">${board.writer}</a></td>
-							<td><a href="mailto:${board.email}">${board.email}</a></td>
 							<td>${board.readcount}</td>
-							<td>${board.ip}</td>
 							<td><fmt:formatDate value="${board.reg_date}" type="date"
 									pattern="yyyy-MM-dd" /></td>
 						</tr>

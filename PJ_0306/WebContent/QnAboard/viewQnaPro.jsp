@@ -6,7 +6,7 @@
 <c:if test="${error != null}">
 	<script type="text/javascript">
 		alert('${error}');
-		history.back();
+		location.href = 'start.do';
 	</script>
 </c:if>
 <script type="text/javascript">
