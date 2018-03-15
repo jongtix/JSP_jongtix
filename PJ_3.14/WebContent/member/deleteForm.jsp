@@ -17,8 +17,6 @@
 	<div class="container">
 		<h2>회원 탈퇴</h2>
 		<form action="deleteMemberPro.do" method="post" name="delForm">
-			<input type="hidden" name="num" value="${num}"> <input
-				type="hidden" name="pageNum" value="${pageNum}">
 			<table class="table" style="width: 500px;">
 				<caption>회원 탈퇴를 원하시면 비밀번호를 입력해주세요.</caption>
 				<tr height="30">

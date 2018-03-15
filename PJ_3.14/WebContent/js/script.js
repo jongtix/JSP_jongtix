@@ -155,6 +155,7 @@ function execDaumPostcode() {
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('zipno').value = data.zonecode; //5자리 새우편번호 사용
             document.getElementById('address1').value = fullRoadAddr;
+            document.getElementById('jibunAddress').value = data.jibunAddress;
 
             // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
             if(data.autoRoadAddress) {

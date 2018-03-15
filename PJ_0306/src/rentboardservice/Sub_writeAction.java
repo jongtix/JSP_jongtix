@@ -2,6 +2,7 @@ package rentboardservice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.CommandProcess;
 import dao.BoardDao;
@@ -17,11 +18,19 @@ public class Sub_writeAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		String password = (String) session.getAttribute("password");
+		if (id == null || id.equals("")) {
+			request.setAttribute("error", "댓글은 회원만 작성할 수 있습니다.");
+		}
+
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
-		String sub_writer = request.getParameter("sub_writer");
+		String sub_writer = id;
 		String sub_content = request.getParameter("sub_content");
-		String sub_password = request.getParameter("sub_password");
+		String sub_password = password;
 
 		BoardDao bdao = BoardDao.getInstance();
 		bdao.updateReadCount(num);
