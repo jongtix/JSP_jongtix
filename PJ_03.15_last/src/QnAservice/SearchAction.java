@@ -15,11 +15,12 @@ public class SearchAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		request.setCharacterEncoding("utf-8");
 		QnaBoardDao dao = QnaBoardDao.getInstance();
 		int total = dao.getQnaTotal();
 		String searchCondition = request.getParameter("searchCondition");
 		String searchKeyword = request.getParameter("searchKeyword");
-		System.out.println(searchCondition);
+		System.out.println(searchKeyword);
 		Paging pg = new Paging();
 		PageBean pb = pg.getPaging(request, total);
 		List<Board> list = dao.selectQnaListWith(pb.getStartRow(), pb.getEndRow(), searchCondition, searchKeyword);

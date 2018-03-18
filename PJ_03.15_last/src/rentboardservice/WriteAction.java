@@ -26,7 +26,7 @@ public class WriteAction implements CommandProcess {
 		MultipartRequest imageUp = null;
 		String saveFolder = "/imageFile";
 		String encType = "utf-8";
-		int maxSize = 5 * 1024 * 1024;
+		int maxSize = 50 * 1024 * 1024;
 		ServletContext context = request.getServletContext();
 		realFolder = context.getRealPath(saveFolder);
 
@@ -37,7 +37,7 @@ public class WriteAction implements CommandProcess {
 			String name = (String) files.nextElement();
 			filename = imageUp.getFilesystemName(name);
 		}
-		
+
 		// 게시판
 
 		Board board = new Board();
@@ -45,7 +45,7 @@ public class WriteAction implements CommandProcess {
 		board.setIp(request.getRemoteAddr());
 		BoardDao bdao = BoardDao.getInstance();
 		String num = imageUp.getParameter("num");
-		//String num =request.getParameter("num");
+		// String num =request.getParameter("num");
 
 		String writer = imageUp.getParameter("writer");
 		String subject = imageUp.getParameter("subject");
@@ -65,15 +65,13 @@ public class WriteAction implements CommandProcess {
 		board.setRef(ref);
 		board.setRe_step(re_step);
 		board.setRe_level(re_level);
-		
+
 		int result = bdao.insert(board);
 
-		
 		request.setAttribute("result", result);
 		request.setAttribute("board", board);
 		// 아이템
-		
-		
+
 		Item item = new Item();
 
 		String item_kind = imageUp.getParameter("item_kind");
@@ -81,9 +79,8 @@ public class WriteAction implements CommandProcess {
 		String item_price = imageUp.getParameter("item_price");
 		String item_count = imageUp.getParameter("item_count");
 		String startday = imageUp.getParameter("startday") + imageUp.getParameter("startTime");
-		String endday = imageUp.getParameter("endday")  + imageUp.getParameter("endTime");
+		String endday = imageUp.getParameter("endday") + imageUp.getParameter("endTime");
 		String trans_type = imageUp.getParameter("trans_type");
-		
 
 		item.setItem_kind(item_kind);
 		item.setItem_name(item_name);
@@ -94,8 +91,8 @@ public class WriteAction implements CommandProcess {
 		item.setEndday(endday);
 		item.setTrans_type(trans_type);
 		ItemDao idao = ItemDao.getInstance();
-		
-		int itemresult = idao.insertItem(item,board);
+
+		int itemresult = idao.insertItem(item, board);
 
 		request.setAttribute("item", item);
 		request.setAttribute("itemresult", itemresult);

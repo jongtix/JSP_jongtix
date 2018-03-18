@@ -15,7 +15,7 @@ public class Board {
 	private int re_step;
 	private int re_level;
 	private String ip;
-	private Date reg_date;
+	private String reg_date;
 
 	public int getNum() {
 		return num;
@@ -113,11 +113,11 @@ public class Board {
 		this.ip = ip;
 	}
 
-	public Date getReg_date() {
+	public String getReg_date() {
 		return reg_date;
 	}
 
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
 

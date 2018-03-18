@@ -74,17 +74,17 @@
 					<td colspan="6" align="center" style="border-right: 0px solid red">
 						<form action="search.do" method="post">
 							<select id="searchCondition" name="searchCondition">
-								<option value="all">
-									<c:if test="${searchCondition == 'all'}"></c:if>전체
+								<option value="all"
+									<c:if test="${searchCondition == 'all'}">selected="selected"</c:if>>전체
 								</option>
-								<option value="title">
-									<c:if test="${searchCondition == 'title'}"></c:if>제목
+								<option value="title"
+									<c:if test="${searchCondition == 'title'}">selected="selected"</c:if>>제목
 								</option>
-								<option value="content">
-									<c:if test="${searchCondition == 'content'}"></c:if>내용
+								<option value="content"
+									<c:if test="${searchCondition == 'content'}">selected="selected"</c:if>>내용
 								</option>
-								<option value="writer">
-									<c:if test="${searchCondition == 'writer'}"></c:if>작성자
+								<option value="writer"
+									<c:if test="${searchCondition == 'writer'}">selected="selected"</c:if>>작성자
 								</option>
 							</select> <input type="text" id="searchKeyword" name="searchKeyword"
 								<c:if test="${searchKeyword != null}">value='${searchKeyword}'</c:if>>

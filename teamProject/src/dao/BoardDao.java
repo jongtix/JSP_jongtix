@@ -82,7 +82,7 @@ public class BoardDao {
 					board.setRef(number);
 				}
 				sql = "insert into pj_qnaboard(num, flag, writer, subject, content, email, filename, readcount, ref, re_step, re_level, ip, reg_date) "
-						+ "values(?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, sysdate)";
+						+ "values(?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?)";
 				pstmt = conn.prepareStatement(sql);
 				int i = 0;
 				pstmt.setInt(++i, number);
@@ -96,6 +96,7 @@ public class BoardDao {
 				pstmt.setInt(++i, board.getRe_step());
 				pstmt.setInt(++i, board.getRe_level());
 				pstmt.setString(++i, board.getIp());
+				pstmt.setString(++i, board.getReg_date());
 				result = pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -198,7 +199,7 @@ public class BoardDao {
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
-				b.setReg_date(rs.getDate(++i));
+				b.setReg_date(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -244,7 +245,7 @@ public class BoardDao {
 				b.setRe_step(rs.getInt(++i));
 				b.setRe_level(rs.getInt(++i));
 				b.setIp(rs.getString(++i));
-				b.setReg_date(rs.getDate(++i));
+				b.setReg_date(rs.getString(++i));
 
 				list.add(b);
 			}
@@ -312,7 +313,7 @@ public class BoardDao {
 				board.setRe_step(rs.getInt(++i));
 				board.setRe_level(rs.getInt(++i));
 				board.setIp(rs.getString(++i));
-				board.setReg_date(rs.getDate(++i));
+				board.setReg_date(rs.getString(++i));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

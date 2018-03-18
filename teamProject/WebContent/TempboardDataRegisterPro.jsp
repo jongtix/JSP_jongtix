@@ -43,7 +43,9 @@
 		long ttl = conFromDate.parse("Jan 1, 1990 0:0:0");
 		long now = conFromDate.getTime();
 		long randomDate = (long) (Math.random() * (now - ttl)) + ttl;
-		board.setReg_date(new java.sql.Date(new Date(randomDate).getTime()));
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		board.setReg_date(dt.format(new Date(randomDate)));
+		out.println(board.getReg_date());
 
 		BoardDao dao = BoardDao.getInstance();
 		int result = dao.insertQna(board);

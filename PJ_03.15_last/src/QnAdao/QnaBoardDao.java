@@ -178,7 +178,7 @@ public class QnaBoardDao {
 		List<Board> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' order by ref desc, re_step) a) where rn between ? and ?";
+			sql = "select * from (select rownum rn, a.* from (select * from pj_QnAboard where flag like '1%' order by reg_date desc, ref desc, re_step) a) where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);

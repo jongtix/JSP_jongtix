@@ -15,7 +15,7 @@ public class Member {
 	private String tel2;
 	private String tel3;
 	private String email;
-	private Date regdate;
+	private String regdate;
 	private char use_flag;
 	private char manager_flag;
 
@@ -115,11 +115,11 @@ public class Member {
 		this.email = email;
 	}
 
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
 
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 

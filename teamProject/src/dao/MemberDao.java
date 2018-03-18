@@ -63,7 +63,7 @@ public class MemberDao {
 			pstmt.setString(++i, member.getTel2());
 			pstmt.setString(++i, member.getTel3());
 			pstmt.setString(++i, member.getEmail());
-			pstmt.setDate(++i, member.getRegdate());
+			pstmt.setString(++i, member.getRegdate());
 			pstmt.setString(++i, String.valueOf(member.getUse_flag()));
 			pstmt.setString(++i, String.valueOf(member.getManager_flag()));
 

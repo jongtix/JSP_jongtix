@@ -56,8 +56,7 @@
 								</c:if></td>
 							<td><a href="mailto:${board.email}">${board.writer}</a></td>
 							<td>${board.readcount}</td>
-							<td><fmt:formatDate value="${board.reg_date}" type="date"
-									pattern="yyyy-MM-dd" /></td>
+							<td>${board.reg_date}</td>
 						</tr>
 						<c:set var="rowNum" value="${rowNum - 1}" />
 					</c:forEach>
